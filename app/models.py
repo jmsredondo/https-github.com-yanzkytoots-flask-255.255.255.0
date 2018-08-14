@@ -1,5 +1,7 @@
-from app import db
+from app import db, ma
 
+
+# MODELS #
 
 class Book(db.Model):
 
@@ -16,3 +18,14 @@ class Book(db.Model):
         self.book_name = book_name
         self.author = author
         self.description = description
+
+
+# SCHEMAS #
+
+class BookSchema(ma.Schema):
+    class Meta:
+        fields = ('book_name', 'author', 'description')
+
+
+book_schema = BookSchema()
+books_schema = BookSchema(many=True)
