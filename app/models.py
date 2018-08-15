@@ -39,11 +39,37 @@ class Book(db.Model):
         self.description = description
 
 
+class Genre(db.Model):
+
+    __tablename__ = 'genres'
+
+    id = db.Column(db.Integer, primary_key=True)
+    genre = db.Column(db.String(300), unique=True, nullable=False)
+    type = db.Column(db.String(120))
+
+    def __init__(self, genre, type):
+        self.genre = genre
+        self.type = type
+
 # SCHEMAS #
+
 
 class BookSchema(ma.Schema):
     class Meta:
         fields = ('book_name', 'author', 'description')
+
+
+book_schema = BookSchema()
+books_schema = BookSchema(many=True)
+
+
+class GenreSchema(ma.Schema):
+    class Meta:
+        fields = ('genre', 'type')
+
+
+genre_schema = GenreSchema()
+genres_schema = GenreSchema(many=True)
 
 
 class UserLogin(ma.Schema):
@@ -52,5 +78,4 @@ class UserLogin(ma.Schema):
 
 
 userAuth = UserLogin()
-book_schema = BookSchema()
-books_schema = BookSchema(many=True)
+
