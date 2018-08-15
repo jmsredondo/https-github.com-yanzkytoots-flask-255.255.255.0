@@ -1,12 +1,42 @@
-from flask import jsonify, request
+from flask import jsonify, request, render_template, redirect
+from werkzeug.security import generate_password_hash
+
 from app import app
 from app.models import *
 
 
-@app.route('/')
-@app.route('/index')
-def index():
-    return "Hello, World!"
+@app.route('/', methods=['POST', 'GET'])
+def login():
+    """if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        userLogin = User.query.get(username, password)
+        print(userLogin)
+
+        return render_template('test.html')"""
+
+    return render_template('index.html')
+
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        hashedpassword = generate_password_hash(password)
+        firstname = request.form.get('firstname')
+        lastname = request.form.get('lastname')
+        phone = request.form.get('phone')
+        email = request.form.get('email')
+
+        new_user = User(username, hashedpassword, firstname, lastname, phone, email)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return redirect('/#success')
+
+    return render_template('registration.html')
 
 
 @app.route("/book", methods=["POST"])
