@@ -7,15 +7,18 @@ from app.models import *
 
 @app.route('/', methods=['POST', 'GET'])
 def login():
-    """if request.method == 'POST':
+    if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
+        hashedpassword = generate_password_hash(password)
 
-        userLogin = User.query.get(username, password)
-        print(userLogin)
+        user = User.query.all()
+        for u in user:
 
-        return render_template('test.html')"""
+            if u.username == username and u.password == password:
+                return render_template('dashboard.html')
 
+        return redirect('/#loginFailed')
     return render_template('index.html')
 
 
