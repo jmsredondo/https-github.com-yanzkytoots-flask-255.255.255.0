@@ -23,13 +23,13 @@ class User(db.Model):
 
 
 class Book(db.Model):
+
     __tablename__ = 'books'
 
     id = db.Column(db.Integer, primary_key=True)
     book_name = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000))
-
     # image
     # genre
 
@@ -37,6 +37,15 @@ class Book(db.Model):
         self.book_name = book_name
         self.author = author
         self.description = description
+
+
+class BookSchema(ma.Schema):
+    class Meta:
+        fields = ('book_name', 'author', 'description')
+
+
+book_schema = BookSchema()
+books_schema = BookSchema(many=True)
 
 
 class Genre(db.Model):
@@ -50,17 +59,6 @@ class Genre(db.Model):
     def __init__(self, genre, type):
         self.genre = genre
         self.type = type
-
-# SCHEMAS #
-
-
-class BookSchema(ma.Schema):
-    class Meta:
-        fields = ('book_name', 'author', 'description')
-
-
-book_schema = BookSchema()
-books_schema = BookSchema(many=True)
 
 
 class GenreSchema(ma.Schema):
