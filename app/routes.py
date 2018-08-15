@@ -1,8 +1,7 @@
 from flask import jsonify, request, render_template, redirect
-from werkzeug.security import generate_password_hash
-
 from app import app
 from app.models import *
+from werkzeug.security import generate_password_hash
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -20,6 +19,36 @@ def login():
 
         return redirect('/#loginFailed')
     return render_template('index.html')
+
+
+@app.route('/dashboard', methods=['GET'])
+def dashboard():
+    return render_template('dashboard.html')
+
+
+@app.route('/users', methods=['GET'])
+def users():
+    return render_template('tables.html')
+
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    return render_template('login.html')
+
+
+@app.route('/shookedbtn', methods=['GET'])
+def shookedbtn():
+    return render_template('dashboard.html')
+
+
+@app.route('/gen', methods=['GET'])
+def gen():
+    return render_template('gen.html')
+
+
+@app.route('/libr', methods=['GET'])
+def libr():
+    return render_template('libr.html')
 
 
 @app.route('/register', methods=['POST', 'GET'])
@@ -42,6 +71,8 @@ def register():
     return render_template('registration.html')
 
 
+# Books Controller #
+
 @app.route("/book", methods=["POST"])
 def book_add():
     book_name = request.form.get('book_name')
@@ -52,14 +83,14 @@ def book_add():
     db.session.add(new_book)
     db.session.commit()
 
-    return jsonify({'message': 'OK'}), 200
+    return jsonify({'message': 'OK'})
 
 
 @app.route("/book", methods=["GET"])
 def book_get():
     all_books = Book.query.all()
     result = books_schema.dump(all_books)
-    return jsonify({'message': 'OK'}), 200
+    return jsonify(result.data), 200
 
 
 @app.route("/book/<pk>", methods=["GET"])
@@ -90,3 +121,46 @@ def book_delete(pk):
     db.session.commit()
 
     return book_schema.jsonify(book)
+
+
+# Genres Controller #
+
+@app.route("/genre", methods=["POST"])
+def genre_add():
+    genre_name = request.form.get('genre')
+    type = request.form.get('type')
+
+    new_genre = Genre(genre_name, type)
+    db.session.add(new_genre)
+    db.session.commit()
+
+    return jsonify({'message': 'OK'}), 200
+
+
+@app.route("/genre", methods=["GET"])
+def genre_get():
+    all_genres = Genre.query.all()
+    result = genres_schema.dump(all_genres)
+    return jsonify(result.data)
+
+
+@app.route("/genre/<pk>", methods=["PUT"])
+def genre_update(pk):
+    genre = Genre.query.get(pk)
+    genre_name = request.form.get('genre')
+    type = request.form.get('type')
+
+    genre.genre = genre_name
+    genre.type = type
+
+    db.session.commit()
+    return genre_schema.jsonify(genre), 200
+
+
+@app.route("/genre/<pk>", methods=["DELETE"])
+def genre_delete(pk):
+    genre = Genre.query.get(pk)
+    db.session.delete(genre)
+    db.session.commit()
+
+    return genre_schema.jsonify(genre), 200
