@@ -19,6 +19,36 @@ def login():
     return render_template('index.html')
 
 
+@app.route('/dashboard', methods=['GET'])
+def dashboard():
+    return render_template('dashboard.html')
+
+
+@app.route('/users', methods=['GET'])
+def users():
+    return render_template('tables.html')
+
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    return render_template('login.html')
+
+
+@app.route('/shookedbtn', methods=['GET'])
+def shookedbtn():
+    return render_template('dashboard.html')
+
+
+@app.route('/gen', methods=['GET'])
+def gen():
+    return render_template('gen.html')
+
+
+@app.route('/libr', methods=['GET'])
+def libr():
+    return render_template('libr.html')
+
+
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
