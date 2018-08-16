@@ -50,9 +50,16 @@ def gen():
 def libr():
     return render_template('libr.html')
 
+
 @app.route('/landing', methods=['GET'])
 def landing():
-    return render_template('landing.html')
+    return render_template('#')
+
+
+@app.route('/boks', methods=['GET'])
+def boks():
+    return render_template('boks.html')
+
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -171,7 +178,6 @@ def genre_delete(pk):
 
 @app.route("/genre/addbook/<pk>", methods=["POST"])
 def genre_addbook(pk):
-
     genre = Genre.query.get(pk)
     book_id = request.form.get('id')
     book = Book.query.get(int(book_id))
@@ -185,7 +191,6 @@ def genre_addbook(pk):
 
 @app.route("/genre/<pk>", methods=["GET"])
 def genre_detail(pk):
-
     genre = Genre.query.get(pk)
     all_books = genre.books
 
