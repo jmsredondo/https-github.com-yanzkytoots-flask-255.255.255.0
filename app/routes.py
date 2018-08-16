@@ -1,7 +1,13 @@
 from flask import jsonify, request, render_template, redirect
 from app import app
 from app.models import *
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user
+
+
+def __init__(self, username, password):
+    self.username = username
+    self.password = password
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -13,9 +19,8 @@ def login():
 
         user = User.query.all()
         for u in user:
-
-            if u.username == username and u.password == password:
-                return render_template('dashboard.html')
+            if u.username == username and check_password_hash(u.password, password):
+                return redirect('/dashboard')
 
         return redirect('/#loginFailed')
     return render_template('index.html')
@@ -50,9 +55,11 @@ def gen():
 def libr():
     return render_template('libr.html')
 
+
 @app.route('/landing', methods=['GET'])
 def landing():
     return render_template('landing.html')
+
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():

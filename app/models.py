@@ -1,4 +1,11 @@
+
+
 from app import db, ma
+from flask_login import UserMixin
+
+
+
+
 
 
 # MODELS #
@@ -23,7 +30,6 @@ class User(db.Model):
 
 
 class Category(db.Model):
-
     __tablename__ = 'categories'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -32,13 +38,13 @@ class Category(db.Model):
 
 
 class Book(db.Model):
-
     __tablename__ = 'books'
 
     id = db.Column(db.Integer, primary_key=True)
     book_name = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000))
+
     # image
 
     def __init__(self, book_name, author, description):
@@ -48,7 +54,6 @@ class Book(db.Model):
 
 
 class Genre(db.Model):
-
     __tablename__ = 'genres'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -88,4 +93,3 @@ class UserLogin(ma.Schema):
 
 
 userAuth = UserLogin()
-
