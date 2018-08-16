@@ -50,7 +50,6 @@ def gen():
 def libr():
     return render_template('libr.html')
 
-
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
