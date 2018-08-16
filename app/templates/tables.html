@@ -32,9 +32,6 @@
 
       <a class="navbar-brand mr-3" href="/dashboard"><h2>Shooked</h2></a>
 
-      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="/dashboard">
-        <i class="fas fa-bars"></i>
-      </button>
 
       <!-- Navbar Search -->
       <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-5 my-8 my-md-0">
@@ -64,27 +61,27 @@
     <div id="wrapper">
 
       <!-- Sidebar -->
-      <ul class="sidebar navbar-nav">
+      <ul class="sidebar navbar-nav dropdown">
         <li class="nav-item">
           <a class="nav-link" href="/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </a>
         </li>
-        <li class="nav-item dropdown active">
-          <a class="nav-link dropdown-toggle" href="/users" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <li class="nav-item active">
+          <a class="nav-link" href="/users" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
             <span>User Lists</span>
           </a>
         </li>
-               <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="/gen" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               <li class="nav-item">
+          <a class="nav-link" href="/gen" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
             <span>Genre</span>
           </a>
         </li>
-           <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="/libr" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <li class="nav-item">
+          <a class="nav-link" href="/libr" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
             <span>Library</span>
           </a>
