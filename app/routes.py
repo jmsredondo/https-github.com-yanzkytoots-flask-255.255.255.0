@@ -50,6 +50,9 @@ def gen():
 def libr():
     return render_template('libr.html')
 
+@app.route('/landing', methods=['GET'])
+def landing():
+    return render_template('landing.html')
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
