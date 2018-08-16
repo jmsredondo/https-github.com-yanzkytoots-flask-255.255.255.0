@@ -39,15 +39,12 @@ class Book(db.Model):
     book_name = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000))
-    genres = db.relationship('Genre', secondary=Category, lazy='subquery',
-                             backref=db.backref('books', lazy=True))
     # image
 
-    def __init__(self, book_name, author, description, genres):
+    def __init__(self, book_name, author, description):
         self.book_name = book_name
         self.author = author
         self.description = description
-        self.genres = genres
 
 
 class Genre(db.Model):
@@ -57,6 +54,8 @@ class Genre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     genre = db.Column(db.String(120), unique=True, nullable=False)
     type = db.Column(db.String(120))
+    books = db.relationship('Book', secondary='categories', lazy='subquery',
+                            backref=db.backref('genres', lazy=True))
 
     def __init__(self, genre, type):
         self.genre = genre
