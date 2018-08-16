@@ -62,6 +62,13 @@ class Genre(db.Model):
         self.type = type
 
 
+class Library(db.Model):
+    __tablename__ = 'libraries'
+
+    id = db.Column(db.Integer, primary_key=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
 # SCHEMA #
 
 class BookSchema(ma.Schema):
