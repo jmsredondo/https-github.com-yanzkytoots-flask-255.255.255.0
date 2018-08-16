@@ -93,7 +93,7 @@ def book_add():
     db.session.add(new_book)
     db.session.commit()
 
-    return jsonify({'message': 'OK'})
+    return jsonify({'message': 'OK'}), 200
 
 
 @app.route("/book", methods=["GET"])
@@ -106,7 +106,7 @@ def book_get():
 @app.route("/book/<pk>", methods=["GET"])
 def book_detail(pk):
     book = Book.query.get(pk)
-    return book_schema.jsonify(book)
+    return book_schema.jsonify(book), 200
 
 
 @app.route("/book/<pk>", methods=["PUT"])
@@ -121,7 +121,7 @@ def book_update(pk):
     book.description = description
 
     db.session.commit()
-    return book_schema.jsonify(book)
+    return book_schema.jsonify(book), 200
 
 
 @app.route("/book/<pk>", methods=["DELETE"])
@@ -130,7 +130,7 @@ def book_delete(pk):
     db.session.delete(book)
     db.session.commit()
 
-    return book_schema.jsonify(book)
+    return book_schema.jsonify(book), 200
 
 
 # Genres Controller #
@@ -151,7 +151,7 @@ def genre_add():
 def genre_get():
     all_genres = Genre.query.all()
     result = genres_schema.dump(all_genres)
-    return jsonify(result.data)
+    return jsonify(result.data), 200
 
 
 @app.route("/genre/<pk>", methods=["PUT"])
@@ -174,3 +174,26 @@ def genre_delete(pk):
     db.session.commit()
 
     return genre_schema.jsonify(genre), 200
+
+
+@app.route("/genre/addbook/<pk>", methods=["POST"])
+def genre_addbook(pk):
+
+    genre = Genre.query.get(pk)
+    book_id = request.form.get('id')
+    book = Book.query.get(int(book_id))
+
+    genre.books.append(book)
+    db.session.add(genre)
+    db.session.commit()
+
+    return genre_schema.jsonify(genre), 200
+
+
+@app.route("/genre/<pk>", methods=["GET"])
+def genre_detail(pk):
+
+    genre = Genre.query.get(pk)
+    all_books = genre.books
+
+    return books_schema.jsonify(all_books)
