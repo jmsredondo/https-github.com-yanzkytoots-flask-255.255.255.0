@@ -39,6 +39,8 @@ class Book(db.Model):
     book_name = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000))
+    books = db.relationship('Book', secondary='categories', lazy='subquery',
+                            backref=db.backref('genres', lazy=True))
     # image
 
     def __init__(self, book_name, author, description):
@@ -66,7 +68,7 @@ class Genre(db.Model):
 
 class BookSchema(ma.Schema):
     class Meta:
-        fields = ('book_name', 'author', 'description', 'genres')
+        fields = ('book_name', 'author', 'description')
 
 
 book_schema = BookSchema()
