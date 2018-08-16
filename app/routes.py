@@ -1,4 +1,6 @@
 from flask import jsonify, request, render_template, redirect
+from sqlalchemy.orm import Session, session
+
 from app import app
 from app.models import *
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -12,15 +14,15 @@ def __init__(self, username, password):
 
 @app.route('/', methods=['POST', 'GET'])
 def login():
+    username = request.form.get('username')
+    password = request.form.get('password')
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        hashedpassword = generate_password_hash(password)
 
         user = User.query.all()
         for u in user:
             if u.username == username and check_password_hash(u.password, password):
-                return redirect('/dashboard')
+
+                return render_template('dashboard.html', name=username)
 
         return redirect('/#loginFailed')
     return render_template('index.html')
@@ -38,7 +40,7 @@ def users():
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    return render_template('login.html')
+    return render_template('index.html')
 
 
 @app.route('/shookedbtn', methods=['GET'])
@@ -178,7 +180,6 @@ def genre_delete(pk):
 
 @app.route("/genre/addbook/<pk>", methods=["POST"])
 def genre_addbook(pk):
-
     genre = Genre.query.get(pk)
     book_id = request.form.get('id')
     book = Book.query.get(int(book_id))
@@ -192,7 +193,6 @@ def genre_addbook(pk):
 
 @app.route("/genre/<pk>", methods=["GET"])
 def genre_detail(pk):
-
     genre = Genre.query.get(pk)
     all_books = genre.books
 
