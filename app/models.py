@@ -22,6 +22,15 @@ class User(db.Model):
         self.email = email
 
 
+class Category(db.Model):
+
+    __tablename__ = 'categories'
+
+    id = db.Column(db.Integer, primary_key=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    genre_id = db.Column(db.Integer, db.ForeignKey('genres.id'), nullable=False)
+
+
 class Book(db.Model):
 
     __tablename__ = 'books'
@@ -30,22 +39,15 @@ class Book(db.Model):
     book_name = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000))
+    genres = db.relationship('Genre', secondary=Category, lazy='subquery',
+                             backref=db.backref('books', lazy=True))
     # image
-    # genre
 
-    def __init__(self, book_name, author, description):
+    def __init__(self, book_name, author, description, genres):
         self.book_name = book_name
         self.author = author
         self.description = description
-
-
-class BookSchema(ma.Schema):
-    class Meta:
-        fields = ('book_name', 'author', 'description')
-
-
-book_schema = BookSchema()
-books_schema = BookSchema(many=True)
+        self.genres = genres
 
 
 class Genre(db.Model):
@@ -53,12 +55,23 @@ class Genre(db.Model):
     __tablename__ = 'genres'
 
     id = db.Column(db.Integer, primary_key=True)
-    genre = db.Column(db.String(300), unique=True, nullable=False)
+    genre = db.Column(db.String(120), unique=True, nullable=False)
     type = db.Column(db.String(120))
 
     def __init__(self, genre, type):
         self.genre = genre
         self.type = type
+
+
+# SCHEMA #
+
+class BookSchema(ma.Schema):
+    class Meta:
+        fields = ('book_name', 'author', 'description', 'genres')
+
+
+book_schema = BookSchema()
+books_schema = BookSchema(many=True)
 
 
 class GenreSchema(ma.Schema):
