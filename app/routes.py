@@ -59,7 +59,13 @@ def libr():
 
 @app.route('/landing', methods=['GET'])
 def landing():
-    return render_template('landing.html')
+    return render_template('#')
+
+
+@app.route('/boks', methods=['GET'])
+def boks():
+    return render_template('boks.html')
+
 
 
 @app.route('/register', methods=['POST', 'GET'])
