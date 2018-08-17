@@ -1,0 +1,31 @@
+Team 3: 255.255.255.0 (aka Slash 24)
+
+(Hybrid) Front end with back end team:
+Ian Alinso + Mia Dianne Calva
+- HTML Pages w/ Jinja
+- Web Forms
+- Admin UI (Almost done)
+- User UI (Partial progress)
+- User Login and Hashing of Password (w/o Tokens and Session handling yet)
+- API for CRUD of Users (Complete but w/o validation yet)
+
+(Pure) Back end team
+Alexandrea Oliveros + Justin Lee Foronda
+- Database Design and Creation
+- Implementing Schemas using flask-marshmallow
+- API for CRUD of Books and Genres (Complete but w/o validation yet)
+- API for adding Books to Genres (Complete but w/o validation yet)
+- API for adding Books to User Library (No GET method and no validation yet)
+
+Plans to finish by the end of this week:
+- Unit tests - Priority
+- Complete APIs with validation with correct responses (back end side) - Priority
+- Restructure project by implementing Flask Blueprints - Priority
+- Finish Tokens and Session handling
+- Complete web forms
+- Around 80% completion for validation in front end side
+
+Plans for next week:
+(Hopefully) it will be: 
+- Purely integration from front end to back end (Jquery/ Ajax things) and
+- Integration tests
