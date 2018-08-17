@@ -1,21 +1,28 @@
 from flask import jsonify, request, render_template, redirect
+from sqlalchemy.orm import Session, session
+
 from app import app
 from app.models import *
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user
+
+
+def __init__(self, username, password):
+    self.username = username
+    self.password = password
 
 
 @app.route('/', methods=['POST', 'GET'])
 def login():
+    username = request.form.get('username')
+    password = request.form.get('password')
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        hashedpassword = generate_password_hash(password)
 
         user = User.query.all()
         for u in user:
+            if u.username == username and check_password_hash(u.password, password):
 
-            if u.username == username and u.password == password:
-                return render_template('dashboard.html')
+                return render_template('dashboard.html', name=username)
 
         return redirect('/#loginFailed')
     return render_template('index.html')
@@ -33,7 +40,7 @@ def users():
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    return render_template('login.html')
+    return render_template('index.html')
 
 
 @app.route('/shookedbtn', methods=['GET'])
@@ -59,6 +66,7 @@ def landing():
 @app.route('/boks', methods=['GET'])
 def boks():
     return render_template('boks.html')
+
 
 
 @app.route('/register', methods=['POST', 'GET'])
