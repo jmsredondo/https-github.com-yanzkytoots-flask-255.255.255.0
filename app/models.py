@@ -89,10 +89,11 @@ genre_schema = GenreSchema()
 genres_schema = GenreSchema(many=True)
 
 
-class UserLogin(ma.Schema):
+class UserSchema(ma.Schema):
     class Meta:
-        fields = ('username', 'password')
+        fields = ('username', 'firstname', 'lastname', 'phone', 'email')
 
 
-userAuth = UserLogin()
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
 

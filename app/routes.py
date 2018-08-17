@@ -28,7 +28,9 @@ def dashboard():
 
 @app.route('/users', methods=['GET'])
 def users():
-    return render_template('tables.html')
+    all_users = User.query.all()
+    result = users_schema.dump(all_users)
+    return jsonify(result.data), 200
 
 
 @app.route('/logout', methods=['GET'])
