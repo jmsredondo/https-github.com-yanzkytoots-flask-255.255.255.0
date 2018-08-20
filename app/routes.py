@@ -190,3 +190,28 @@ def genre_detail(pk):
     all_books = genre.books
 
     return books_schema.jsonify(all_books)
+
+
+@app.route("/library", methods=["POST"])
+def library_add():
+
+    book_id = request.form.get('book_id')
+    user_id = request.form.get('id')
+
+    user = User.query.get(user_id)
+    book = Book.query.get(book_id)
+
+    user.books.append(book)
+    db.session.add(user)
+    db.session.commit()
+
+    return jsonify(('msg', 'ok')), 200
+
+
+"""@app.route("/library", methods=["GET"])
+def library_get():
+
+    user_id = request.form.get('id')
+    user = User.query.get(1)
+    library = User.books
+    return book_schema.jsonify(library)"""

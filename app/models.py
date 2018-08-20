@@ -12,6 +12,8 @@ class User(db.Model):
     lastname = db.Column(db.String(300), index=True)
     phone = db.Column(db.Integer, index=True)
     email = db.Column(db.String(300), index=True)
+    books = db.relationship('Book', secondary='libraries', lazy='subquery',
+                            backref=db.backref('users', lazy=True))
 
     def __init__(self, username, password, firstname, lastname, phone, email):
         self.username = username
@@ -39,8 +41,6 @@ class Book(db.Model):
     book_name = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000))
-    books = db.relationship('Book', secondary='categories', lazy='subquery',
-                            backref=db.backref('genres', lazy=True))
     # image
 
     def __init__(self, book_name, author, description):
