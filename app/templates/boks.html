@@ -28,17 +28,17 @@
 
   <body id="page-top">
 
-    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+    <nav class="navbar navbar-expand navbar-dark bg-warning static-top">
 
       <a class="navbar-brand mr-3" href="/dashboard"><h2>Shooked</h2></a>
-
+        <i class="fas fa-book-reader"></i>
 
       <!-- Navbar Search -->
       <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-5 my-8 my-md-0">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
+            <button class="btn btn-dark" type="button">
               <i class="fas fa-search"></i>
             </button>
           </div>
@@ -47,7 +47,7 @@
 
       <!-- Navbar -->
  <div class="dropdown">
-    <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">Username
+    <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Username
     <span class="caret"></span></button>
     <ul class="dropdown-menu">
       <a href="">logout</a>
@@ -110,54 +110,44 @@
           <div class="card mb-3">
             <div class="card-header">
               <i class="fas fa-table"></i>
-              Library Table</div>
+              Book Table</div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>User Name</th>
-                      <th>Email</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Phone</th>
+                      <th>Book Name</th>
+                      <th>Author Name</th>
+                      <th>Description</th>
                     </tr>
                   </thead>
-                  <tfoot>
-
-                  </tfoot>
                   <tbody>
                     <tr>
                       <td>Tiger Nixon</td>
                       <td>System Architect</td>
                       <td>Edinburgh</td>
-                      <td>61</td>
-                      <td>2011/04/25</td>
                     </tr>
                     <tr>
                       <td>Garrett Winters</td>
                       <td>Accountant</td>
                       <td>Tokyo</td>
-                      <td>63</td>
-                      <td>2011/07/25</td>
                     </tr>
                     <tr>
                       <td>Ashton Cox</td>
                       <td>Junior Technical Author</td>
                       <td>San Francisco</td>
-                      <td>66</td>
-                      <td>2009/01/12</td>
                     </tr>
 
                   </tbody>
                 </table>
               </div>
             </div>
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+            <div class="card-footer small text-muted">Shooked E-book</div>
           </div>
 
           <p class="small text-center text-muted my-5">
-            <em>More table examples coming soon...</em>
+            <em></em>
+              <a href="/addbook" class="btn btn-info" role="button">Add Book</a>
           </p>
 
         </div>
@@ -167,7 +157,7 @@
         <footer class="sticky-footer">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
-              <span>Copyright © Your Website 2018</span>
+              <span>Copyright © Shooked E-book 2018</span>
             </div>
           </div>
         </footer>

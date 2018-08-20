@@ -17,16 +17,16 @@
 		<form action="/register" method="POST">
 			<h1>Welcome</h1>
 			<div>
-				<input type="text" placeholder="Username" name="username" required="" />
+				<input type="text" placeholder="Username" name="username" min="6" max="8" required="" />
 			</div>
 			<div>
-				<input type="text" placeholder="Firstname" name="firstname" required="" />
+				<input type="text" placeholder="Firstname" min="3" max="9" name="firstname" required="" />
 			</div>
             <div>
-				<input type="text" placeholder="Lastname" name="lastname" required=""  />
+				<input type="text" placeholder="Lastname" min="2" max="9" name="lastname" required=""  />
 			</div>
             <div>
-				<input type="text" placeholder="Email" name="email" required=""  />
+				<input type="text" placeholder="Email" min="" name="email" required=""  />
 			</div>
             <div>
 				<input type="text" placeholder="Phone" name="phone" required=""  />
