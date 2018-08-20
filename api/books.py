@@ -1,5 +1,5 @@
 # Books Controller #
-from flask import request, jsonify
+from flask import request, jsonify, json
 from app.models import *
 from api import mod
 
@@ -15,7 +15,9 @@ def book_add():
     db.session.add(new_book)
     db.session.commit()
 
-    return jsonify({'message': 'OK'}), 200
+    response = jsonify({'message' : 'OK'})
+    response.status_code = 200
+    return response
 
 
 @mod.route("/book", methods=["GET"])
@@ -23,14 +25,18 @@ def book_add():
 def book_get():
     all_books = Book.query.all()
     result = books_schema.dump(all_books)
-    return jsonify(result.data), 200
+    response = jsonify(result.data)
+    response.status_code = 200
+    return response
 
 
 @mod.route("/book/<pk>", methods=["GET"])
 # Get a specific book
 def book_detail(pk):
     book = Book.query.get(pk)
-    return book_schema.jsonify(book), 200
+    response = book_schema.jsonify(book)
+    response.status_code = 200
+    return response
 
 
 @mod.route("/book/<pk>", methods=["PUT"])
@@ -46,7 +52,10 @@ def book_update(pk):
     book.description = description
 
     db.session.commit()
-    return book_schema.jsonify(book), 200
+
+    response = book_schema.jsonify(book)
+    response.status_code = 200
+    return response
 
 
 @mod.route("/book/<pk>", methods=["DELETE"])
@@ -56,4 +65,6 @@ def book_delete(pk):
     db.session.delete(book)
     db.session.commit()
 
-    return book_schema.jsonify(book), 200
+    response = book_schema.jsonify(book)
+    response.status_code = 200
+    return response
