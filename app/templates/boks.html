@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Shooked - Lists of Library</title>
+    <title>Shooked - User Directory</title>
 
     <!-- Bootstrap core CSS-->
 
@@ -61,32 +61,32 @@
     <div id="wrapper">
 
       <!-- Sidebar -->
-      <ul class="sidebar navbar-nav">
+      <ul class="sidebar navbar-nav dropdown">
         <li class="nav-item">
           <a class="nav-link" href="/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </a>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item">
           <a class="nav-link" href="/users" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="far fa-address-book"></i>
             <span>User Lists</span>
           </a>
         </li>
-        <li class="nav-item">
+               <li class="nav-item">
           <a class="nav-link" href="/gen" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
             <span>Genre</span>
           </a>
         </li>
-          <li class="nav-item active">
+           <li class="nav-item">
           <a class="nav-link" href="/libr" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-book-open"></i>
             <span>Library</span>
           </a>
         </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown active">
           <a class="nav-link" href="/boks" id="pagesDropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-book-open"></i>
             <span>Books</span>
@@ -103,22 +103,22 @@
             <li class="breadcrumb-item">
               <a href="#">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">Library Lists</li>
+            <li class="breadcrumb-item active">Users Lists</li>
           </ol>
 
           <!-- DataTables Example -->
           <div class="card mb-3">
             <div class="card-header">
               <i class="fas fa-table"></i>
-              Library Table</div>
+              Book Table</div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Book ID</th>
-                      <th>User ID</th>
+                      <th>Book Name</th>
+                      <th>Author Name</th>
+                      <th>Description</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -137,6 +137,7 @@
                       <td>Junior Technical Author</td>
                       <td>San Francisco</td>
                     </tr>
+
                   </tbody>
                 </table>
               </div>
@@ -146,6 +147,7 @@
 
           <p class="small text-center text-muted my-5">
             <em></em>
+              <a href="/addbook" class="btn btn-info" role="button">Add Book</a>
           </p>
 
         </div>

@@ -1,21 +1,25 @@
 from flask import jsonify, request, render_template, redirect
 from app import app
 from app.models import *
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
+def __init__(self, username, password):
+    self.username = username
+    self.password = password
 
 
 @app.route('/', methods=['POST', 'GET'])
 def login():
+    username = request.form.get('username')
+    password = request.form.get('password')
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        hashedpassword = generate_password_hash(password)
 
         user = User.query.all()
         for u in user:
+            if u.username == username and check_password_hash(u.password, password):
 
-            if u.username == username and u.password == password:
-                return render_template('dashboard.html')
+                return render_template('dashboard.html', name=username)
 
         return redirect('/#loginFailed')
     return render_template('index.html')
@@ -23,17 +27,20 @@ def login():
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
+
     return render_template('dashboard.html')
 
 
 @app.route('/users', methods=['GET'])
 def users():
-    return render_template('tables.html')
+    all_users = User.query.all()
+    result = users_schema.dump(all_users)
+    return jsonify(result.data), 200
 
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    return render_template('login.html')
+    return render_template('index.html')
 
 
 @app.route('/shookedbtn', methods=['GET'])
@@ -50,9 +57,25 @@ def gen():
 def libr():
     return render_template('libr.html')
 
+
 @app.route('/landing', methods=['GET'])
 def landing():
-    return render_template('landing.html')
+    return render_template('#')
+
+
+@app.route('/addgenre', methods=['GET'])
+def addgenre():
+    return render_template('addgenre.html')
+
+@app.route('/addbook', methods=['GET'])
+def addbook():
+    return render_template('addbook.html')
+
+@app.route('/boks', methods=['GET'])
+def boks():
+    return render_template('boks.html')
+
+
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -72,6 +95,7 @@ def register():
         return redirect('/#success')
 
     return render_template('registration.html')
+<<<<<<< HEAD
 
 
 # Books Controller #
@@ -215,3 +239,5 @@ def library_get():
     user = User.query.get(1)
     library = User.books
     return book_schema.jsonify(library)"""
+=======
+>>>>>>> fe972578f02771f530e5ee3b7b1a3a1e18f00a2e
