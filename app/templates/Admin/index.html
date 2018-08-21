@@ -23,36 +23,38 @@
       <!-- Bootstrap core JavaScript-->
       <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
       <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
-
+         <style type="text/css">
+             html {
+                 background: {{ url_for('static', filename='static/images/bookbgo.jpg') }} no-repeat center center fixed;
+                 -webkit-background-size: cover;
+                 -moz-background-size: cover;
+                 -o-background-size: cover;
+                 background-size: cover;
+             }
+         </style>
   </head>
 
 
     <body id="page-top">
 
-    <nav class="navbar navbar-expand navbar-dark bg-warning static-top">
-
-        <a class="navbar-brand mr-3" href="/"><h2>Shooked</h2></a>
-            <i class="fas fa-book-reader"></i>
-
-    </nav>
-
-
-    <!-- Masthead -->
+        <!-- Masthead -->
     <header class="masthead text-white text-center">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
+            <div class="fixed-top font-weight-bold font-italic">
+                <span style="font-size: 120px; ">Shooked</span></div>
           <div class="col-xl-9 mx-auto">
             <h1 class="mb-5">An online E-Book Library for everyone</h1>
           </div>
-          <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-            <form>
-              <div class="form-row" >
-                  <a href="/signin" class="btn btn-block btn-secondary btn-lg-none">Sign In</a>
-                  <a href="/signup" class="btn btn-block btn-secondary btn-lg-none">Sign Up</a>
+          <div class="col-md-5 col-lg-4 col-xl-4 mx-auto">
+              <div class="float-md-left">
+                  <a href="/signin" class="btn btn-block btn-lg btn-warning">Sign In</a></div>
+              <div class="float-md-right">
+                  <a href="/signup" class="btn btn-block btn-lg btn-warning">Sign Up</a></div>
                 </div>
               </div>
-            </form>
+
           </div>
         </div>
       </div>
