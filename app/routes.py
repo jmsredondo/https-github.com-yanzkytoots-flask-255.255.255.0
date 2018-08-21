@@ -30,9 +30,9 @@ def dashboard():
 
 @app.route('/user', methods=['GET'])
 def users():
-    all_users = User.query.all()
-    result = users_schema.dump(all_users)
-    return jsonify(result.data), 200
+    all_users = requests.get('http://localhost:80/user').content
+    result = json.loads(all_users)
+    return render_template('Admin/tables.html', users=result)
 
 
 @app.route('/logout', methods=['GET'])
