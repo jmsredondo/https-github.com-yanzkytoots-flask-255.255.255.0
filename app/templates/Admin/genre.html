@@ -141,9 +141,16 @@
                     <th style="width:50%;">Genre Type</th>
                 </tr>
 
+
                 {% for genre in genres %}
-                    <p>{{ genre.id }} {{ genre.genre }} {{ genre.type }}</p>
+                    <tr>
+                <td>{{ genre.genre }}</td>
+                        <td>{{ genre.type }}</td>
+                    </tr>
+
+
                 {% endfor %}
+
 
             </table>
 
