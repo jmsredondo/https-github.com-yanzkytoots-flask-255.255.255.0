@@ -1,15 +1,9 @@
-<<<<<<< HEAD
 import requests
-from flask import jsonify, request, render_template, redirect, json
-=======
-from flask import jsonify, request, render_template, redirect, session
-from pip._vendor import requests
-from sqlalchemy.dialects.mysql import json
-
->>>>>>> 1d015bfdcd1de0992ee0ad5812e942f6601d1414
-from app import app
-from app.models import *
+from flask import jsonify, request, render_template, redirect, session, json
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from app.models import *
+from app import app
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -34,13 +28,6 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route('/genre', methods=['GET'])
-def genre():
-    all_genres = requests.get('http://localhost:80/genre').content
-    result = json.loads(all_genres)
-    return render_template('addgenre.html', genres=result)
-
-
 @app.route('/users', methods=['GET'])
 def users():
     all_users = User.query.all()
@@ -59,13 +46,13 @@ def shookedbtn():
 
 
 @app.route('/genre', methods=['GET'])
-def genre():
+def genre_get():
     all_genres = requests.get('http://localhost:80/genre').content
     result = json.loads(all_genres)
-    return render_template('addgenre.html', genres=result)
+    return render_template('genre.html', genres=result)
 
 
-@app.route('/libr', methods=['GET'])
+@app.route('/library', methods=['GET'])
 def libr():
     return render_template('libr.html')
 
@@ -75,17 +62,12 @@ def landing():
     return render_template('#')
 
 
-@app.route('/addgenre', methods=['GET'])
-def addgenre():
-    return render_template('addgenre.html')
-
-
-@app.route('/addbook', methods=['GET'])
+@app.route('/book', methods=['GET'])
 def addbook():
     return render_template('addbook.html')
 
 
-@app.route('/boks', methods=['GET'])
+@app.route('/books', methods=['GET'])
 def boks():
     return render_template('boks.html')
 
