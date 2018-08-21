@@ -139,21 +139,9 @@
                     <th style="width:30%;">Author Name</th>
                     <th style="width:40%;">Description</th>
                 </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Germany</td>
-                    <td>This is an interesting book </td>
-                </tr>
-                <tr>
-                    <td>Berglunds snabbkop</td>
-                    <td>Sweden</td>
-                    <td>This is an interesting book </td>
-                </tr>
-                <tr>
-                    <td>Island Trading</td>
-                    <td>UK</td>
-                    <td>This is an interesting book </td>
-                </tr>
+                {% for book in books %}
+                    <p>{{ book.name }} {{ book.author }} {{ book.description }}</p>
+                {% endfor %}
             </table>
 
             <script>

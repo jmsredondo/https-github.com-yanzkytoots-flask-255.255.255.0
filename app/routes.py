@@ -49,7 +49,7 @@ def shookedbtn():
 def genre_get():
     all_genres = requests.get('http://localhost:80/genre').content
     result = json.loads(all_genres)
-    return render_template('genre.html', genres=result)
+    return render_template('Admin/genre.html', genres=result)
 
 
 @app.route('/library', methods=['GET'])
@@ -64,12 +64,14 @@ def landing():
 
 @app.route('/book', methods=['GET'])
 def addbook():
-    return render_template('addbook.html')
+    all_books = requests.get('http://localhost:80/book').content
+    result = json.loads(all_books)
+    return render_template('Admin/books.html', books=result)
 
 
 @app.route('/books', methods=['GET'])
 def boks():
-    return render_template('boks.html')
+    return render_template('Admin/books.html')
 
 
 @app.route('/register', methods=['POST', 'GET'])
