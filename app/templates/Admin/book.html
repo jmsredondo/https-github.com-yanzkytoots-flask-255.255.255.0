@@ -139,6 +139,8 @@
                     <th style="width:30%;">Author Name</th>
                     <th style="width:40%;">Description</th>
                 </tr>
+
+                {{ books }}
                 {% for book in books %}
                     <p>{{ book.name }} {{ book.author }} {{ book.description }}</p>
                 {% endfor %}

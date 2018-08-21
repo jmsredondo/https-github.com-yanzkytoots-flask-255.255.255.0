@@ -28,7 +28,7 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route('/users', methods=['GET'])
+@app.route('/user', methods=['GET'])
 def users():
     all_users = User.query.all()
     result = users_schema.dump(all_users)
@@ -63,15 +63,15 @@ def landing():
 
 
 @app.route('/book', methods=['GET'])
-def addbook():
+def book():
     all_books = requests.get('http://localhost:80/book').content
     result = json.loads(all_books)
-    return render_template('Admin/books.html', books=result)
+    return render_template('Admin/book.html', books=result)
 
 
-@app.route('/books', methods=['GET'])
+@app.route('/book', methods=['GET'])
 def boks():
-    return render_template('Admin/books.html')
+    return render_template('Admin/book.html')
 
 
 @app.route('/register', methods=['POST', 'GET'])
