@@ -80,7 +80,11 @@ def genre_addbook(pk):
 
 @app.route("/category/<pk>", methods=["GET"])
 # View books by category
+<<<<<<< HEAD
 def genre_books(pk):
+=======
+def genre_detailboks(pk):
+>>>>>>> 1d015bfdcd1de0992ee0ad5812e942f6601d1414
     genre = Genre.query.get(pk)
     all_books = genre.books
 

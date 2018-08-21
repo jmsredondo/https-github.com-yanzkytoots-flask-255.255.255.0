@@ -21,6 +21,13 @@
     <!-- Custom styles for this template-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sb-admin.css') }}" />
 
+      <!-- Bootstrap core JavaScript-->
+      <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+      <!-- Core plugin JavaScript-->
+      <script src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
+
 
   </head>
 
@@ -30,12 +37,12 @@
       <div class="card card-register mx-auto mt-5">
         <div class="card-header">Register an Account in Shooked</div>
         <div class="card-body">
-          <form>
+          <form action="/register" method="POST">
             <div class="form-group">
               <div class="form-row">
                 <div class="col-md-6">
                   <div class="form-label-group">
-                    <input type="text" id="userName" class="form-control" placeholder="User name" required="required" autofocus="autofocus">
+                    <input name="name" type="text" id="userName" class="form-control" placeholder="User name" required="required" autofocus="autofocus">
                     <label for="userName">User name</label>
                   </div>
                 </div>
@@ -86,7 +93,7 @@
                 </div>
               </div>
             </div>
-            <a class="btn btn-primary btn-block" href="login.html">Register</a>
+            <input type="submit" class="btn btn-primary btn-block" value="Register">
           </form>
           <div class="text-center">
             <a class="d-block small mt-3" href="login.html">Login Page</a>

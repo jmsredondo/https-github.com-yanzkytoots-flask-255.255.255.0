@@ -1,35 +1,44 @@
+<<<<<<< HEAD
 import requests
 from flask import jsonify, request, render_template, redirect, json
+=======
+from flask import jsonify, request, render_template, redirect, session
+from pip._vendor import requests
+from sqlalchemy.dialects.mysql import json
+
+>>>>>>> 1d015bfdcd1de0992ee0ad5812e942f6601d1414
 from app import app
 from app.models import *
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-def __init__(self, username, password):
-    self.username = username
-    self.password = password
-
-
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
-    username = request.form.get('username')
-    password = request.form.get('password')
+    if 'username' in session:
+        return redirect('/dashboard')
     if request.method == 'POST':
-
+        username = request.form.get('username')
+        password = request.form.get('password')
         user = User.query.all()
         for u in user:
-            if u.username == username and check_password_hash(u.password, password):
-
-                return render_template('dashboard.html', name=username)
-
+            if u.username == username and u.password == password:
+                session['user'] = username
+                return redirect('/dashboard')
         return redirect('/#loginFailed')
-    return render_template('index.html')
+
+    return render_template('login.html')
 
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
-
     return render_template('dashboard.html')
+
+
+@app.route('/genre', methods=['GET'])
+def genre():
+    all_genres = requests.get('http://localhost:80/genre').content
+    result = json.loads(all_genres)
+    return render_template('addgenre.html', genres=result)
 
 
 @app.route('/users', methods=['GET'])
@@ -99,4 +108,3 @@ def register():
         return redirect('/#success')
 
     return render_template('registration.html')
-
