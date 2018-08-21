@@ -101,13 +101,13 @@
           </a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="/users" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link" href="/user" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="far fa-address-book"></i>
             <span>User Lists</span>
           </a>
         </li>
                <li class="nav-item">
-          <a class="nav-link" href="/gen" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link" href="/genre" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
             <span>Genre</span>
           </a>
@@ -119,7 +119,7 @@
           </a>
         </li>
           <li class="nav-item dropdown">
-              <a class="nav-link" href="/boks" id="pagesDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link" href="/book" id="pagesDropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <i class="fas fa-book-open"></i>
                   <span>Books</span>
               </a>
@@ -133,7 +133,7 @@
           <!-- Breadcrumbs-->
 
           <!-- DataTables Example -->
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for genre.." title="Type in a name" style="width:25%; float: right;">
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for user.." title="Type in a name" style="width:25%; float: right;">
 
             <table id="myTable">
                 <tr class="header">
@@ -143,27 +143,20 @@
                     <th style="width:20%;">Email</th>
                     <th style="width:20%;">Phone</th>
                 </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Berglunds snabbkop</td>
-                    <td>Sweden</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Island Trading</td>
-                    <td>UK</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                </tr>
+
+                {% for user in users %}
+                    <tr>
+
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td>{{ user.email }}</td>
+
+
+
+                    </tr>
+                {% endfor %}
 
             </table>
 
