@@ -1,5 +1,5 @@
 # Genres Controller #
-from flask import request, jsonify
+from flask import request
 from app.models import *
 from api import app
 
@@ -14,15 +14,18 @@ def genre_add():
     db.session.add(new_genre)
     db.session.commit()
 
-    return jsonify({'message': 'OK'}), 200
+    response = genre_schema.jsonify(new_genre)
+    response.status_code = 200
+    return response
 
 
 @app.route("/genre", methods=["GET"])
 # Get all genres
 def genre_get():
     all_genres = Genre.query.all()
-    result = genres_schema.dump(all_genres)
-    return jsonify(result.data), 200
+    response = genres_schema.jsonify(all_genres)
+    response.status_code = 200
+    return response
 
 
 @app.route("/genre/<pk>", methods=["GET"])
@@ -45,7 +48,10 @@ def genre_update(pk):
     genre.type = type
 
     db.session.commit()
-    return genre_schema.jsonify(genre), 200
+
+    response = genre_schema.jsonify(genre)
+    response.status_code = 200
+    return response
 
 
 @app.route("/genre/<pk>", methods=["DELETE"])
@@ -74,7 +80,7 @@ def genre_addbook(pk):
 
 @app.route("/category/<pk>", methods=["GET"])
 # View books by category
-def genre_detail(pk):
+def genre_books(pk):
     genre = Genre.query.get(pk)
     all_books = genre.books
 

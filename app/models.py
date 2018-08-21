@@ -71,9 +71,8 @@ class Library(db.Model):
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
+
 # SCHEMA #
-
-
 class BookSchema(ma.Schema):
     class Meta:
         fields = ('id', 'book_name', 'author', 'description')

@@ -1,4 +1,5 @@
-from flask import jsonify, request, render_template, redirect
+import requests
+from flask import jsonify, request, render_template, redirect, json
 from app import app
 from app.models import *
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -48,9 +49,11 @@ def shookedbtn():
     return render_template('dashboard.html')
 
 
-@app.route('/gen', methods=['GET'])
-def gen():
-    return render_template('gen.html')
+@app.route('/genre', methods=['GET'])
+def genre():
+    all_genres = requests.get('http://localhost:80/genre').content
+    result = json.loads(all_genres)
+    return render_template('addgenre.html', genres=result)
 
 
 @app.route('/libr', methods=['GET'])
