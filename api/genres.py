@@ -25,6 +25,15 @@ def genre_get():
     return jsonify(result.data), 200
 
 
+@app.route("/genre/<pk>", methods=["GET"])
+# Get a specific genre
+def genre_detail(pk):
+    genre = Genre.query.get(pk)
+    response = genre_schema.jsonify(genre)
+    response.status_code = 200
+    return response
+
+
 @app.route("/genre/<pk>", methods=["PUT"])
 # Edit a specific genre's details
 def genre_update(pk):
@@ -63,9 +72,9 @@ def genre_addbook(pk):
     return genre_schema.jsonify(genre), 200
 
 
-@app.route("/genre/<pk>", methods=["GET"])
+@app.route("/category/<pk>", methods=["GET"])
 # View books by category
-def genre_detail(pk):
+def genre_detailboks(pk):
     genre = Genre.query.get(pk)
     all_books = genre.books
 

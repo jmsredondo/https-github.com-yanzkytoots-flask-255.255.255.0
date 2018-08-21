@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <style>
+          * {
+              box-sizing: border-box;
+          }
+
+          #myInput {
+              background: url("#") no-repeat 10px 10px;
+              width: 100%;
+              font-size: 16px;
+              padding: 12px 20px 12px 40px;
+              border: 1px solid #ddd;
+              margin-bottom: 12px;
+          }
+
+          #myTable {
+              border-collapse: collapse;
+              width: 100%;
+              border: 1px solid #ddd;
+              font-size: 18px;
+          }
+
+          #myTable th, #myTable td {
+              text-align: left;
+              padding: 12px;
+          }
+
+          #myTable tr {
+              border-bottom: 1px solid #ddd;
+          }
+
+          #myTable tr.header, #myTable tr:hover {
+              background-color: #f1f1f1;
+          }
+      </style>
+
+    <title>Shooked - User Directory</title>
+
+    <!-- Bootstrap core CSS-->
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+
+    <!-- Custom fonts for this template-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/all.min.css') }}" />
+
+    <!-- Page level plugin CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dataTables.bootstrap4.css') }}" />
+
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sb-admin.css') }}" />
+
+
+      <!-- Bootstrap core JavaScript-->
+      <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+      <!-- Core plugin JavaScript-->
+      <script src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
+
+      <!-- Page level plugin JavaScript-->
+      <script src="{{ url_for('static', filename='js/jquery.dataTables.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/dataTables.bootstrap4.js') }}"></script>
+
+      <!-- Custom scripts for all pages-->
+      <script src="{{ url_for('static', filename='js/sb-admin.min.js') }}"></script>
+
+  </head>
+
+  <body id="page-top">
+
+    <nav class="navbar navbar-collapse navbar-dark bg-warning static-top">
+
+      <a class="navbar-brand mr-3" href="/dashboard"><h2>Shooked</h2></a>
+        <i class="fas fa-book-reader"></i>
+
+      <!-- Navbar Search -->
+
+      <!-- Navbar -->
+        <a class="btn btn-dark btn-block" style="width:10%; float: right;" href="/">Username</a>
+    </nav>
+
+    <div id="wrapper">
+
+      <!-- Sidebar -->
+      <ul class="sidebar navbar-nav dropdown">
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/users" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="far fa-address-book"></i>
+            <span>User Lists</span>
+          </a>
+        </li>
+               <li class="nav-item">
+          <a class="nav-link" href="/gen" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Genre</span>
+          </a>
+        </li>
+           <li class="nav-item">
+          <a class="nav-link" href="/libr" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-book-open"></i>
+            <span>Library</span>
+          </a>
+        </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link" href="/boks" id="pagesDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-book-open"></i>
+                  <span>Books</span>
+              </a>
+          </li>
+      </ul>
+
+      <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+          <!-- Breadcrumbs-->
+
+          <!-- DataTables Example -->
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for genre.." title="Type in a name" style="width:25%; float: right;">
+
+            <table id="myTable">
+                <tr class="header">
+                    <th style="width:20%;">User Name</th>
+                    <th style="width:20%;">First Name</th>
+                    <th style="width:20%;">Last Name</th>
+                    <th style="width:20%;">Email</th>
+                    <th style="width:20%;">Phone</th>
+                </tr>
+                <tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>Germany</td>
+                    <td>Germany</td>
+                    <td>Germany</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Berglunds snabbkop</td>
+                    <td>Sweden</td>
+                    <td>Germany</td>
+                    <td>Germany</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Island Trading</td>
+                    <td>UK</td>
+                    <td>Germany</td>
+                    <td>Germany</td>
+                    <td>Germany</td>
+                </tr>
+
+            </table>
+
+            <script>
+                function myFunction() {
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("myTable");
+                    tr = table.getElementsByTagName("tr");
+                    for (i = 0; i < tr.length; i++) {
+                        td = tr[i].getElementsByTagName("td")[0];
+                        if (td) {
+                            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                tr[i].style.display = "";
+                            } else {
+                                tr[i].style.display = "none";
+                            }
+                        }
+                    }
+                }
+            </script>
+        <!-- /.container-fluid -->
+
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright © Shooked E-book 2018</span>
+            </div>
+          </div>
+        </footer>
+
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="../login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </body>
+
+</html>
+<script>
+
+</script>

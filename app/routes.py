@@ -1,6 +1,8 @@
 from flask import jsonify, request, render_template, redirect, session
+from pip._vendor import requests
+from sqlalchemy.dialects.mysql import json
+
 from app import app
-from app import models
 from app.models import *
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -25,6 +27,13 @@ def login():
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
     return render_template('dashboard.html')
+
+
+@app.route('/genre', methods=['GET'])
+def genre():
+    all_genres = requests.get('http://localhost:80/genre').content
+    result = json.loads(all_genres)
+    return render_template('addgenre.html', genres=result)
 
 
 @app.route('/users', methods=['GET'])
@@ -91,4 +100,4 @@ def register():
 
         return redirect('/#success')
 
-    return render_template('register.html')
+    return render_template('registration.html')
