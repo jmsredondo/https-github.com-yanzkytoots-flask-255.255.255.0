@@ -67,14 +67,15 @@ def landing():
 def addgenre():
     return render_template('addgenre.html')
 
+
 @app.route('/addbook', methods=['GET'])
 def addbook():
     return render_template('addbook.html')
 
+
 @app.route('/boks', methods=['GET'])
 def boks():
     return render_template('boks.html')
-
 
 
 @app.route('/register', methods=['POST', 'GET'])

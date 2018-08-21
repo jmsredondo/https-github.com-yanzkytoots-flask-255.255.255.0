@@ -1,10 +1,10 @@
 # Books Controller #
-from flask import request, jsonify, json
+from flask import request, jsonify
 from app.models import *
-from api import mod
+from api import app
 
 
-@mod.route("/book", methods=["POST"])
+@app.route("/book", methods=["POST"])
 # Create a book
 def book_add():
     book_name = request.form.get('book_name')
@@ -15,12 +15,12 @@ def book_add():
     db.session.add(new_book)
     db.session.commit()
 
-    response = jsonify({'message' : 'OK'})
+    response = book_schema.jsonify(new_book)
     response.status_code = 200
     return response
 
 
-@mod.route("/book", methods=["GET"])
+@app.route("/book", methods=["GET"])
 # Get all books
 def book_get():
     all_books = Book.query.all()
@@ -30,7 +30,7 @@ def book_get():
     return response
 
 
-@mod.route("/book/<pk>", methods=["GET"])
+@app.route("/book/<pk>", methods=["GET"])
 # Get a specific book
 def book_detail(pk):
     book = Book.query.get(pk)
@@ -39,7 +39,7 @@ def book_detail(pk):
     return response
 
 
-@mod.route("/book/<pk>", methods=["PUT"])
+@app.route("/book/<pk>", methods=["PUT"])
 # Edit a specific book's details
 def book_update(pk):
     book = Book.query.get(pk)
@@ -58,7 +58,7 @@ def book_update(pk):
     return response
 
 
-@mod.route("/book/<pk>", methods=["DELETE"])
+@app.route("/book/<pk>", methods=["DELETE"])
 # Delete a book
 def book_delete(pk):
     book = Book.query.get(pk)

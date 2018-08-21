@@ -1,10 +1,10 @@
 # Genres Controller #
 from flask import request, jsonify
 from app.models import *
-from api import mod
+from api import app
 
 
-@mod.route("/genre", methods=["POST"])
+@app.route("/genre", methods=["POST"])
 # Add a genre
 def genre_add():
     genre_name = request.form.get('genre')
@@ -17,7 +17,7 @@ def genre_add():
     return jsonify({'message': 'OK'}), 200
 
 
-@mod.route("/genre", methods=["GET"])
+@app.route("/genre", methods=["GET"])
 # Get all genres
 def genre_get():
     all_genres = Genre.query.all()
@@ -25,7 +25,7 @@ def genre_get():
     return jsonify(result.data), 200
 
 
-@mod.route("/genre/<pk>", methods=["PUT"])
+@app.route("/genre/<pk>", methods=["PUT"])
 # Edit a specific genre's details
 def genre_update(pk):
     genre = Genre.query.get(pk)
@@ -39,7 +39,7 @@ def genre_update(pk):
     return genre_schema.jsonify(genre), 200
 
 
-@mod.route("/genre/<pk>", methods=["DELETE"])
+@app.route("/genre/<pk>", methods=["DELETE"])
 # Delete a genre
 def genre_delete(pk):
     genre = Genre.query.get(pk)
@@ -49,7 +49,7 @@ def genre_delete(pk):
     return genre_schema.jsonify(genre), 200
 
 
-@mod.route("/genre/addbook/<pk>", methods=["POST"])
+@app.route("/genre/addbook/<pk>", methods=["POST"])
 # Add a book to a genre
 def genre_addbook(pk):
     genre = Genre.query.get(pk)
@@ -63,7 +63,7 @@ def genre_addbook(pk):
     return genre_schema.jsonify(genre), 200
 
 
-@mod.route("/genre/<pk>", methods=["GET"])
+@app.route("/genre/<pk>", methods=["GET"])
 # View books by category
 def genre_detail(pk):
     genre = Genre.query.get(pk)

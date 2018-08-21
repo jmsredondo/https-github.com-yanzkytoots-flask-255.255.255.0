@@ -73,6 +73,7 @@ class Library(db.Model):
 
 # SCHEMA #
 
+
 class BookSchema(ma.Schema):
     class Meta:
         fields = ('book_name', 'author', 'description')
@@ -98,4 +99,3 @@ class UserSchema(ma.Schema):
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
-
