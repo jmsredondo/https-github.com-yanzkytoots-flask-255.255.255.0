@@ -5,7 +5,7 @@ from app.models import *
 from app import app
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/signin', methods=['GET', 'POST'])
 def login():
     if 'username' in session:
         return redirect('/dashboard')
@@ -24,7 +24,7 @@ def login():
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('Admin/dashboard.html')
 
 
 @app.route('/user', methods=['GET'])
@@ -41,14 +41,14 @@ def book():
     return render_template('Admin/book.html', books=result)
 
 
-@app.route('/logout', methods=['GET'])
+@app.route('/', methods=['GET'])
 def logout():
-    return render_template('index.html')
+    return render_template('Admin/index.html')
 
 
 @app.route('/shookedbtn', methods=['GET'])
 def shookedbtn():
-    return render_template('dashboard.html')
+    return render_template('Admin/dashboard.html')
 
 
 @app.route('/genre', methods=['GET'])
@@ -60,12 +60,12 @@ def genre_get():
 
 @app.route('/library', methods=['GET'])
 def libr():
-    return render_template('libr.html')
+    return render_template('Admin/libr.html')
 
 
-@app.route('/landing', methods=['GET'])
+@app.route('/forgot', methods=['GET'])
 def landing():
-    return render_template('#')
+    return render_template('forgot-password.html')
 
 
 @app.route('/book', methods=['GET'])
