@@ -1,6 +1,5 @@
 import requests
 from flask import jsonify, request, render_template, redirect, session, json
-from werkzeug.security import generate_password_hash, check_password_hash
 
 from app.models import *
 from app import app
@@ -30,9 +29,16 @@ def dashboard():
 
 @app.route('/user', methods=['GET'])
 def users():
-    all_users = User.query.all()
-    result = users_schema.dump(all_users)
-    return jsonify(result.data), 200
+    all_books = requests.get('http://localhost:80/book').content
+    result = json.loads(all_books)
+    return render_template('Admin/book.html', books=result)
+
+
+@app.route('/book', methods=['GET'])
+def book():
+    all_books = requests.get('http://localhost:80/book').content
+    result = json.loads(all_books)
+    return render_template('Admin/book.html', books=result)
 
 
 @app.route('/logout', methods=['GET'])
@@ -63,32 +69,5 @@ def landing():
 
 
 @app.route('/book', methods=['GET'])
-def book():
-    all_books = requests.get('http://localhost:80/book').content
-    result = json.loads(all_books)
-    return render_template('Admin/book.html', books=result)
-
-
-@app.route('/book', methods=['GET'])
 def boks():
     return render_template('Admin/book.html')
-
-
-@app.route('/register', methods=['POST', 'GET'])
-def register():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        hashedpassword = generate_password_hash(password)
-        firstname = request.form.get('firstname')
-        lastname = request.form.get('lastname')
-        phone = request.form.get('phone')
-        email = request.form.get('email')
-
-        new_user = User(username, hashedpassword, firstname, lastname, phone, email)
-        db.session.add(new_user)
-        db.session.commit()
-
-        return redirect('/#success')
-
-    return render_template('registration.html')
