@@ -76,7 +76,7 @@ class Library(db.Model):
 
 class BookSchema(ma.Schema):
     class Meta:
-        fields = ('book_name', 'author', 'description')
+        fields = ('id', 'book_name', 'author', 'description')
 
 
 book_schema = BookSchema()
@@ -85,7 +85,7 @@ books_schema = BookSchema(many=True)
 
 class GenreSchema(ma.Schema):
     class Meta:
-        fields = ('genre', 'type')
+        fields = ('id', 'genre', 'type')
 
 
 genre_schema = GenreSchema()
@@ -94,7 +94,7 @@ genres_schema = GenreSchema(many=True)
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('username', 'firstname', 'lastname', 'phone', 'email')
+        fields = ('id', 'username', 'firstname', 'lastname', 'phone', 'email')
 
 
 user_schema = UserSchema()
