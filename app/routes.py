@@ -1,6 +1,8 @@
 import requests
 from flask import jsonify, request, render_template, redirect, session, json
+from werkzeug.security import generate_password_hash
 
+from api.users import user_add
 from app.models import *
 from app import app
 
@@ -22,7 +24,24 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/dashboard', methods=['GET'])
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        firstname = request.form.get('firstname')
+        lastname = request.form.get('lastname')
+        phone = request.form.get('phone')
+        email = request.form.get('email')
+        user_add(username, password, firstname, lastname, phone, email)
+
+        return redirect('/#success')
+
+    return render_template('registration.html')
+
+
+@app.route('/dashboard', methods=['POST', 'GET'])
 def dashboard():
     return render_template('dashboard.html')
 
