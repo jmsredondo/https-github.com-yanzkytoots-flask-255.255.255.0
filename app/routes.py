@@ -29,9 +29,9 @@ def dashboard():
 
 @app.route('/user', methods=['GET'])
 def users():
-    all_books = requests.get('http://localhost:80/book').content
-    result = json.loads(all_books)
-    return render_template('Admin/book.html', books=result)
+    all_users = requests.get('http://localhost:80/user').content
+    result = json.loads(all_users)
+    return render_template('Admin/user.html', users=result)
 
 
 @app.route('/book', methods=['GET'])
@@ -68,6 +68,4 @@ def landing():
     return render_template('forgot-password.html')
 
 
-@app.route('/book', methods=['GET'])
-def boks():
-    return render_template('Admin/book.html')
+
