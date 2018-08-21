@@ -1,82 +1,89 @@
-from flask import jsonify, request, render_template, redirect
-
+from flask import jsonify, request, render_template, redirect, session
+from pip._vendor import requests
+from sqlalchemy.dialects.mysql import json
 
 from app import app
 from app.models import *
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-def __init__(self, username, password):
-    self.username = username
-    self.password = password
-
-
-@app.route('/signin', methods=['POST', 'GET'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
-    username = request.form.get('username')
-    password = request.form.get('password')
+    if 'username' in session:
+        return redirect('/dashboard')
     if request.method == 'POST':
-
+        username = request.form.get('username')
+        password = request.form.get('password')
         user = User.query.all()
         for u in user:
-            if u.username == username and check_password_hash(u.password, password):
-                return render_template('Admin/dashboard.html', name=username)
-
+            if u.username == username and u.password == password:
+                session['user'] = username
+                return redirect('/dashboard')
         return redirect('/#loginFailed')
+
     return render_template('login.html')
 
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
-    return render_template('Admin/dashboard.html')
+    return render_template('dashboard.html')
+
+
+@app.route('/genre', methods=['GET'])
+def genre():
+    all_genres = requests.get('http://localhost:80/genre').content
+    result = json.loads(all_genres)
+    return render_template('addgenre.html', genres=result)
 
 
 @app.route('/users', methods=['GET'])
 def users():
-    return render_template('Admin/tables.html')
+    all_users = User.query.all()
+    result = users_schema.dump(all_users)
+    return jsonify(result.data), 200
+
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    return render_template('index.html')
 
 
 @app.route('/shookedbtn', methods=['GET'])
 def shookedbtn():
-    return render_template('Admin/index.html')
+    return render_template('dashboard.html')
 
 
 @app.route('/gen', methods=['GET'])
 def gen():
-    return render_template('Admin/gen.html')
+    return render_template('gen.html')
 
 
 @app.route('/libr', methods=['GET'])
 def libr():
-    return render_template('Admin/libr.html')
+    return render_template('libr.html')
 
 
-@app.route('/', methods=['GET'])
-def inde():
-    return render_template('Admin/index.html')
+@app.route('/landing', methods=['GET'])
+def landing():
+    return render_template('#')
 
 
 @app.route('/addgenre', methods=['GET'])
 def addgenre():
-    return render_template('Admin/addgenre.html')
+    return render_template('addgenre.html')
 
 
 @app.route('/addbook', methods=['GET'])
 def addbook():
-    return render_template('Admin/addbook.html')
+    return render_template('addbook.html')
 
 
 @app.route('/boks', methods=['GET'])
 def boks():
-    return render_template('Admin/boks.html')
+    return render_template('boks.html')
 
 
-@app.route('/forgot', methods=['GET'])
-def forgot():
-    return render_template('forgot-password.html')
-
-
-@app.route('/signup', methods=['POST', 'GET'])
+@app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
         username = request.form.get('username')
@@ -93,12 +100,4 @@ def register():
 
         return redirect('/#success')
 
-    return render_template('register.html')
-
-
-@app.route('/book', methods=['GET'])
-def books():
-    all_books = Book.query.all()
-    result = books_schema.dump(all_books)
-
-    return render_template('Admin/tables.html', ha=result)
+    return render_template('registration.html')
