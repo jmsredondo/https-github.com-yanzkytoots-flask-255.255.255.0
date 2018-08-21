@@ -140,22 +140,10 @@
                     <th style="width:50%;">Genre Name</th>
                     <th style="width:50%;">Genre Type</th>
                 </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Berglunds snabbkop</td>
-                    <td>Sweden</td>
-                </tr>
-                <tr>
-                    <td>Island Trading</td>
-                    <td>UK</td>
-                </tr>
-                <tr>
-                    <td>Koniglich Essen</td>
-                    <td>Germany</td>
-                </tr>
+
+                {% for genre in genres %}
+                    <p>{{ genre.id }} {{ genre.genre }} {{ genre.type }}</p>
+                {% endfor %}
 
             </table>
 
