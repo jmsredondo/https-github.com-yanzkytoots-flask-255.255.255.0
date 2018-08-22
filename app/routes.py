@@ -1,32 +1,27 @@
-from flask import render_template
+import requests
+from flask import render_template, request, redirect, session
 
 from app import app
-from forms import RegistrationForm
+from forms import RegistrationForm, LoginForm
 
 
-@app.route('/testing', methods=['GET', 'POST'])
-def testing():
-    form = RegistrationForm()
-    return render_template('register.html', form=form)
-
-"""
-def get_testing():
-    form = RegistrationForm()
-    new_dict = {
-        'username': form.username,
-        'password': form.password,
-        'firstname': form.firstname,
-        'lastname': form.lastname,
-        'phone': form.phone,
-        'email': form.email
-    }
-    print "Hello"
-    print new_dict
-    return new_dict
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
-@app.route('/testing_res', methods=['GET'])
-def res_testing():
-    print "Hi"
-    print get_testing()
-"""
+@app.route('/login', methods=['GET', 'POST'])
+def login_page():
+    form = LoginForm()
+    if form.validate_on_submit():
+        userdict = {
+            "username": form.username.data,
+            "password": form.password.data
+        }
+        print userdict
+        r = requests.post("http://localhost:80/users/login", data=userdict)
+        print r.status_code
+        if r.status_code == 200:
+            return render_template('Admin/dashboard.html', username=form.username.data)
+        return redirect('/login#loginFailed')
+    return render_template('login.html', form=form)
