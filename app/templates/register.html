@@ -31,8 +31,9 @@
       <style>
 
           body {
-              background-image: url("static/images/bookbgo.jpg");
+              background-image: url("static/images/bookbgt.jpg");
           }
+
       </style>
 
 
@@ -46,35 +47,7 @@
         <div class="card-header">Register an Account in Shooked</div>
         <div class="card-body">
 
-            <form action="" method="post" novalidate>
-                {{ form.hidden_tag() }}
-                <p>
-                    {{ form.username.label }}<br>
-                    {{ form.username() }}
-                </p>
-                <p>
-                    {{ form.password.label }}<br>
-                    {{ form.password(size=32) }}
-                </p>
-                <p>
-                    {{ form.firstname.label }}<br>
-                    {{ form.firstname() }}
-                </p>
-                <p>
-                    {{ form.lastname.label }}<br>
-                    {{ form.lastname() }}
-                </p>
-                <p>
-                    {{ form.phone.label }}<br>
-                    {{ form.phone() }}
-                </p>
-                <p>
-                    {{ form.email.label }}<br>
-                    {{ form.email() }}
-                </p>
-                    <p>{{  form.submit() }}</p>
-            </form>
-            <!--
+
           <form action="/register" method="POST">
             <div class="form-group">
               <div class="form-row">
@@ -133,7 +106,7 @@
             </div>
             <input type="submit" class="btn btn-primary btn-block" value="Register">
           </form>
-          -->
+
           <div class="text-center">
             <a class="d-block small mt-3" href="/signin">Login Page</a>
             <a class="d-block small" href="/forgot">Forgot Password?</a>
@@ -142,12 +115,6 @@
       </div>
     </div>
 
- <!-- Bootstrap core JavaScript-->
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
-
-  <!-- Core plugin JavaScript-->
-    <script src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
 
   </body>
 

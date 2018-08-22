@@ -41,3 +41,41 @@ def register():
         }
 
         r = requests.post("http://localhost:80/users", data=reg)
+
+@app.route('/dashboard', methods=['GET'])
+def dashboard():
+    return render_template('Admin/dashboard.html')
+
+
+@app.route('/user', methods=['GET'])
+def user():
+    return render_template('Admin/user.html')
+
+
+@app.route('/genre', methods=['GET'])
+def genre():
+    return render_template('Admin/genre.html')
+
+
+@app.route('/book', methods=['GET'])
+def book():
+    return render_template('Admin/book.html')
+
+
+@app.route('/addgenre', methods=['GET'])
+def addgenre():
+    return render_template('Admin/addgenre.html')
+
+
+@app.route('/addbook', methods=['GET'])
+def addbook():
+    return render_template('Admin/addbook.html')
+
+
+@app.route('/register', methods=['GET'])
+def register():
+    return render_template('register.html')
+
+
+
+
