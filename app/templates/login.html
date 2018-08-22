@@ -27,10 +27,13 @@
     <!-- Core plugin JavaScript-->
     <script src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
 
-    <style>
-
-        body {
-            background-image: url("static/images/bookbgo.jpg");
+    <style type="text/css">
+        html {
+            background: {{ url_for('static', filename='static/images/bookbgo.jpg') }} no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
         }
     </style>
 

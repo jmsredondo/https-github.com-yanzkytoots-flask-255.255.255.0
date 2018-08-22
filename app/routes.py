@@ -59,7 +59,8 @@ def user():
 
 @app.route('/genre', methods=['GET'])
 def genre():
-    return render_template('Admin/genre.html')
+    r = requests.get("http://localhost:80/genre")
+    return render_template('Admin/genre.html', genre=r)
 
 
 @app.route('/book', methods=['GET'])
