@@ -1,4 +1,4 @@
-from resources import db, ma
+from app import db, ma
 from passlib.hash import pbkdf2_sha256 as sha256
 
 
@@ -33,6 +33,10 @@ class User(db.Model):
     @staticmethod
     def verify_hash(password, hash):
         return sha256.verify(password, hash)
+
+    @classmethod
+    def find_by_id(cls, id):
+        return cls.query.filter_by(id=id).first()
 
     @classmethod
     def find_by_username(cls, username):
@@ -82,9 +86,28 @@ class User(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    @classmethod
+    def add_book_to_library(self, book_id, user_id):
+        user = User.query.get(user_id)
+        book = Book.query.get(book_id)
+        user.books.append(book)
+
+        db.session.add(user)
+        db.session.commit()
+
+    @classmethod
+    def get_library(self, user_id):
+        user = User.query.get(user_id)
+
+        all_books = user.books
+        result = books_schema.jsonify(all_books)
+        return result
+
 
 class RevokedTokenModel(db.Model):
+
     __tablename__ = 'revoked_tokens'
+
     id = db.Column(db.Integer, primary_key=True)
     jti = db.Column(db.String(120))
 
@@ -96,14 +119,6 @@ class RevokedTokenModel(db.Model):
     def is_jti_blacklisted(cls, jti):
         query = cls.query.filter_by(jti=jti).first()
         return bool(query)
-
-
-class Category(db.Model):
-    __tablename__ = 'categories'
-
-    id = db.Column(db.Integer, primary_key=True)
-    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
-    genre_id = db.Column(db.Integer, db.ForeignKey('genres.id'), nullable=False)
 
 
 class Book(db.Model):
@@ -270,12 +285,30 @@ class Genre(db.Model):
         db.session.commit()
 
 
+class Category(db.Model):
+    __tablename__ = 'categories'
+
+    id = db.Column(db.Integer, primary_key=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    genre_id = db.Column(db.Integer, db.ForeignKey('genres.id'), nullable=False)
+
+
 class Library(db.Model):
     __tablename__ = 'libraries'
 
     id = db.Column(db.Integer, primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+
+class Feedback(db.Model):
+    __tablename__ = 'feedbacks'
+
+    id = db.Column(db.Integer, primary_key=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    rate = db.Column(db.Integer, nullable=False)
+    comment = db.Column(db.String(1000), nullable=True)
 
 
 # SCHEMA #

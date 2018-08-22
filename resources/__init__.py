@@ -1,23 +1,14 @@
-from flask import Flask
-from config import Config
 from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager
 
-app = Flask(__name__)
-app.config.from_object(Config)
+from app import app, models
+
 api = Api(app)
 
 jwt = JWTManager(app)
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-ma = Marshmallow(app)
-
 from resources import users_resource, books_resource, genres_resource
-import models
+
 
 
 @jwt.token_in_blacklist_loader
@@ -32,6 +23,9 @@ api.add_resource(users_resource.UserLogin, '/users/login')
 api.add_resource(users_resource.UserLogoutAccess, '/users/logout')
 api.add_resource(users_resource.UserLogoutRefresh, '/users/logout/refresh')
 api.add_resource(users_resource.TokenRefresh, '/token/refresh')
+
+api.add_resource(users_resource.LibraryMethods, '/library')
+api.add_resource(users_resource.LibraryDetailMethods, '/library/<pk>')
 
 api.add_resource(books_resource.BookMethods, '/book')
 api.add_resource(books_resource.BookDetailMethods, '/book/<pk>')

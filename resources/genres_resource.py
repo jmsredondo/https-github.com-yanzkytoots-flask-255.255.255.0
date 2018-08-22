@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from models import *
+from app.models import *
 
 genre_parser = reqparse.RequestParser(bundle_errors=True)
 genre_parser.add_argument('genre', help='This field cannot be blank', required=True)
