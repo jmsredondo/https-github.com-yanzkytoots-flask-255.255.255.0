@@ -1,5 +1,5 @@
 import requests
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, json
 
 from app import app
 from forms import RegistrationForm, LoginForm
@@ -59,12 +59,17 @@ def user():
 
 @app.route('/genre', methods=['GET'])
 def genre():
-    return render_template('Admin/genre.html')
+    r = requests.get("http://localhost:80/genre")
+    print r.content
+    result = json.loads(r.content)
+    return render_template('Admin/genre.html', genres=result)
 
 
 @app.route('/book', methods=['GET'])
 def book():
-    return render_template('Admin/book.html')
+    r = requests.get("http://localhost:80/book")
+    result = json.loads(r.content)
+    return render_template('Admin/book.html', books=result)
 
 
 @app.route('/addgenre', methods=['GET'])
