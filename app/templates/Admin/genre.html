@@ -87,7 +87,14 @@
     <!-- Navbar Search -->
 
     <!-- Navbar -->
-    <a class="btn btn-dark btn-block" style="width:10%; float: right;" href="/">Username</a>
+    <div class="dropdown">
+        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            User Name
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/">Logout</a>
+        </div>
+    </div>
 </nav>
 
 <div id="wrapper">
@@ -108,7 +115,7 @@
             </a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="/genre" id="pagesDropdown" role="button" data-toggle="dropdown"
+            <a class="nav-link" href="/genre" id="pagesDropdown" role="button"
                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Genre</span>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,83 +12,100 @@
     <title>Shooked - Login</title>
 
     <!-- Bootstrap core CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
 
     <!-- Custom fonts for this template-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/all.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/all.min.css') }}"/>
 
     <!-- Custom styles for this template-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sb-admin.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sb-admin.css') }}"/>
 
-      <!-- Bootstrap core JavaScript-->
-      <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-      <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 
-      <!-- Core plugin JavaScript-->
-      <script src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
 
-      <style>
+    <style>
 
-          body {
-              background-image: url("static/images/bookbgo.jpg");
-          }
-      </style>
+        body {
+            background-image: url("static/images/bookbgo.jpg");
+        }
+    </style>
 
 
-  </head>
+</head>
 
-  <body class="bg-dark">
-
-    <div class="container">
-      <div class="card card-login mx-auto mt-5">
-        <div class="card-header">Login</div>
+<body class="bg-dark">
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-header text-center">Login</div>
         <div class="card-body">
-          <form action="/signin" method="POST">
-            <div class="form-group">
-              <div class="form-label-group">
-                <input type="text" name="username" id="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus">
-                <label for="inputEmail">User name</label>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-label-group">
-                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
-                <label for="inputPassword">Password</label>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" value="remember-me">
-                  Remember Password
-                </label>
-              </div>
-            </div>
-            <input type="submit" class="btn btn-primary btn-block" value="Login">
-          </form>
-            <div class="text-center">
-              <a class="d-block small mt-3" href="/register">or Register an Account</a>
-          </div>
-          <div class="text-center">
-          </div>
+
+        <!--
+                <form action="/" method="POST">
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <input type="text" name="username" id="inputEmail" class="form-control"
+                                   placeholder="Email address" required="required" autofocus="autofocus">
+                            <label for="inputEmail">User name</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <input type="password" name="password" id="inputPassword" class="form-control"
+                                   placeholder="Password" required="required">
+                            <label for="inputPassword">Password</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="remember-me">
+                                Remember Password
+                            </label>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-primary btn-block" value="Login">
+                </form>
+-->
+
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.username.label }}<br>
+                    {{ form.username(class='form-control') }}
+                </p>
+                <p>
+                    {{ form.password.label }}<br>
+                    {{ form.password(class='form-control') }}
+                </p>
+                    <p>{{  form.submit(class='btn btn-primary btn-block') }}</p>
+            </form>
         </div>
-      </div>
     </div>
+</div>
 
 
-	<!-- Bootstrap core JavaScript-->
-      <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
-      <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
-	  <script src="{{ url_for('static', filename='js/notify.js') }}"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/notify.js') }}"></script>
 
-  </body>
-	<script>
+</body>
+<script>
+
+    
     $(document).ready(function () {
-        if(location.hash === '#success'){
+        if (location.hash === '#success') {
             $.notify({
                 icon: 'glyphicon glyphicon-star',
                 message: "Successfully added a new record!"
-            },{
+            }, {
                 type: 'success',
                 animate: {
                     enter: 'animated fadeInUp',
@@ -96,20 +113,20 @@
                 },
                 placement: {
                     from: "top",
-                    align: "right"
+                    align: "center"
                 },
                 offset: 10,
                 spacing: 10,
                 z_index: 1031,
             });
-            window.location.replace(location.href.split('#')[0]+'#');
+            window.location.replace(location.href.split('#')[0] + '#');
         }
 
-        if(location.hash === '#failed'){
+        if (location.hash === '#failed') {
             $.notify({
                 icon: 'glyphicon glyphicon-star',
                 message: "Failed to add data!,Contact Administrator"
-            },{
+            }, {
                 type: 'danger',
                 animate: {
                     enter: 'animated fadeInUp',
@@ -123,14 +140,14 @@
                 spacing: 10,
                 z_index: 1031,
             });
-            window.location.replace(location.href.split('#')[0]+'#');
+            window.location.replace(location.href.split('#')[0] + '#');
         }
 
-        if(location.hash === '#loginFailed'){
+        if (location.hash === '#loginFailed') {
             $.notify({
                 icon: 'glyphicon glyphicon-star',
                 message: "Wrong Credentials"
-            },{
+            }, {
                 type: 'danger',
                 animate: {
                     enter: 'animated fadeInUp',
@@ -144,7 +161,7 @@
                 spacing: 10,
                 z_index: 1031,
             });
-            window.location.replace(location.href.split('#')[0]+'#');
+            window.location.replace(location.href.split('#')[0] + '#');
         }
 
     })

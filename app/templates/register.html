@@ -1,7 +1,7 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,37 +12,37 @@
     <title>Shooked - Register</title>
 
 
-<!-- Bootstrap core CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    <!-- Bootstrap core CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
 
     <!-- Custom fonts for this template-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/all.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/all.min.css') }}"/>
 
     <!-- Custom styles for this template-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sb-admin.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sb-admin.css') }}"/>
 
-      <!-- Bootstrap core JavaScript-->
-      <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-      <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 
-      <!-- Core plugin JavaScript-->
-      <script src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
 
-      <style>
+    <style>
 
-          body {
-              background-image: url("static/images/bookbgo.jpg");
-          }
-      </style>
+        body {
+            background-image: url("static/images/bookbgt.jpg");
+        }
+
+    </style>
 
 
+</head>
 
-  </head>
+<body class="bg-dark">
 
-  <body class="bg-dark">
-
-    <div class="container">
-      <div class="card card-register mx-auto mt-5">
+<div class="container">
+    <div class="card card-register mx-auto mt-5">
         <div class="card-header">Register an Account in Shooked</div>
         <div class="card-body">
 
@@ -50,105 +50,41 @@
                 {{ form.hidden_tag() }}
                 <p>
                     {{ form.username.label }}<br>
-                    {{ form.username() }}
+                    {{ form.username(class='form-control') }}
                 </p>
                 <p>
                     {{ form.password.label }}<br>
-                    {{ form.password(size=32) }}
+                    {{ form.password(class='form-control') }}
                 </p>
                 <p>
                     {{ form.firstname.label }}<br>
-                    {{ form.firstname() }}
+                    {{ form.firstname(class='form-control') }}
                 </p>
                 <p>
                     {{ form.lastname.label }}<br>
-                    {{ form.lastname() }}
-                </p>
-                <p>
-                    {{ form.phone.label }}<br>
-                    {{ form.phone() }}
+                    {{ form.lastname(class='form-control') }}
                 </p>
                 <p>
                     {{ form.email.label }}<br>
-                    {{ form.email() }}
+                    {{ form.email(class='form-control') }}
                 </p>
-                    <p>{{  form.submit() }}</p>
+                <p>
+                    {{ form.phone.label }}<br>
+                    {{ form.phone(class='form-control') }}
+                </p>
+                <p>{{ form.submit(class='btn btn-primary btn-block') }}</p>
             </form>
-            <!--
-          <form action="/register" method="POST">
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input name="username" type="text" id="userName" class="form-control" placeholder="User name" required="required" autofocus="autofocus">
-                    <label for="userName">User name</label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input name="firstname" type="text" id="firstName" class="form-control" placeholder="Last name" required="required">
-                    <label for="firstName">First name</label>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input name="lastname" type="text" id="lastName" class="form-control" placeholder="Last name" required="required" >
-                    <label for="lastName">Last name</label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input name="phone" type="text" id="phone" class="form-control" placeholder="phone" required="required">
-                    <label for="phone">Phone</label>
-                  </div>
-                </div>
-              </div>
+
+            <div class="text-center">
+                <a class="d-block small mt-3" href="/signin">Login Page</a>
+                <a class="d-block small" href="/forgot">Forgot Password?</a>
             </div>
-            <div class="form-group">
-              <div class="form-label-group">
-                <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required="required">
-                <label for="inputEmail">Email address</label>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
-                    <label for="inputPassword">Password</label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required="required">
-                    <label for="confirmPassword">Confirm password</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <input type="submit" class="btn btn-primary btn-block" value="Register">
-          </form>
-          -->
-          <div class="text-center">
-            <a class="d-block small mt-3" href="/signin">Login Page</a>
-            <a class="d-block small" href="/forgot">Forgot Password?</a>
-          </div>
         </div>
-      </div>
     </div>
+</div>
 
- <!-- Bootstrap core JavaScript-->
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 
-  <!-- Core plugin JavaScript-->
-    <script src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
-
-  </body>
+</body>
 
 </html>

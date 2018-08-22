@@ -55,7 +55,14 @@
       <!-- Navbar Search -->
 
       <!-- Navbar -->
-        <a class="btn btn-dark btn-block" style="width:10%; float: right;" href="/">Username</a>
+        <div class="dropdown">
+            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ session['username'] }}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" size="20" href="/">Logout</a>
+            </div>
+        </div>
 
     </nav>
 

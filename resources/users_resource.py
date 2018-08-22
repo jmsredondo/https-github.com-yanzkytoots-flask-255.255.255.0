@@ -22,7 +22,7 @@ class UserLogin(Resource):
         current_user = User.find_by_username(data['username'])
 
         if not current_user:
-            return {'message': 'User {} doesn\'t exist'.format(data['username'])}
+            return {'message': 'User {} doesn\'t exist'.format(data['username'])}, 400
 
         if User.verify_hash(data['password'], current_user.password):
             access_token = create_access_token(identity=data['username'])
@@ -31,9 +31,9 @@ class UserLogin(Resource):
                 'message': 'Logged in as {}'.format(current_user.username),
                 'access_token': access_token,
                 'refresh_token': refresh_token
-            }
+            }, 200
         else:
-            return {'message': 'Wrong credentials'}
+            return {'message': 'Wrong credentials'}, 400
 
 
 class UserMethods(Resource):
@@ -67,7 +67,7 @@ class UserMethods(Resource):
             new_user.save_to_db()
             return {
                 'message': 'User {} was created'.format(data['username'])
-            }
+            }, 200
 
         except:
             return {'message': 'Something went wrong'}, 500
