@@ -45,6 +45,36 @@
       <div class="card card-register mx-auto mt-5">
         <div class="card-header">Register an Account in Shooked</div>
         <div class="card-body">
+
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.username.label }}<br>
+                    {{ form.username() }}
+                </p>
+                <p>
+                    {{ form.password.label }}<br>
+                    {{ form.password(size=32) }}
+                </p>
+                <p>
+                    {{ form.firstname.label }}<br>
+                    {{ form.firstname() }}
+                </p>
+                <p>
+                    {{ form.lastname.label }}<br>
+                    {{ form.lastname() }}
+                </p>
+                <p>
+                    {{ form.phone.label }}<br>
+                    {{ form.phone() }}
+                </p>
+                <p>
+                    {{ form.email.label }}<br>
+                    {{ form.email() }}
+                </p>
+                    <p>{{  form.submit() }}</p>
+            </form>
+            <!--
           <form action="/register" method="POST">
             <div class="form-group">
               <div class="form-row">
@@ -103,6 +133,7 @@
             </div>
             <input type="submit" class="btn btn-primary btn-block" value="Register">
           </form>
+          -->
           <div class="text-center">
             <a class="d-block small mt-3" href="/signin">Login Page</a>
             <a class="d-block small" href="/forgot">Forgot Password?</a>
