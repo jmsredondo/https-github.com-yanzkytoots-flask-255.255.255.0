@@ -205,6 +205,10 @@ class Genre(db.Model):
         return cls.query.filter_by(type=type).first()
 
     @classmethod
+    def find_by_book(cls, id):
+        pass
+
+    @classmethod
     def update(self, new_genre, id):
         db_genre = Genre.query.get(id)
         db_genre.genre = new_genre.genre
@@ -243,6 +247,23 @@ class Genre(db.Model):
             return {'message': '{} row(s) deleted'.format(num_rows_deleted)}
         except:
             return {'message': 'Something went wrong'}
+
+    @classmethod
+    def add_book(self, book_id, id):
+        genre = Genre.query.get(id)
+        book = Book.query.get(book_id)
+
+        genre.books.append(book)
+        db.session.add(genre)
+        db.session.commit()
+
+    @classmethod
+    def get_all_books(self, id):
+        genre = Genre.query.get(id)
+
+        all_books = genre.books
+        result = books_schema.jsonify(all_books)
+        return result
 
     def save_to_db(self):
         db.session.add(self)

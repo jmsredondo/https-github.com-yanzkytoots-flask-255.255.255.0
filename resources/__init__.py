@@ -38,3 +38,4 @@ api.add_resource(books_resource.BookDetailMethods, '/book/<pk>')
 
 api.add_resource(genres_resource.GenreMethods, '/genre')
 api.add_resource(genres_resource.GenreDetailMethods, '/genre/<pk>')
+api.add_resource(genres_resource.GenreBookMethods, '/genre/addbook/<pk>')
