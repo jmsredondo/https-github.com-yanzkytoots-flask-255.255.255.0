@@ -1,4 +1,5 @@
-from app import db, ma
+from resources import db, ma
+from passlib.hash import pbkdf2_sha256 as sha256
 
 
 # MODELS #
@@ -10,7 +11,7 @@ class User(db.Model):
     password = db.Column(db.String(300), nullable=False)
     firstName = db.Column(db.String(300), nullable=False)
     lastName = db.Column(db.String(300), nullable=False)
-    phone = db.Column(db.Integer, unique=True, nullable=False)
+    phone = db.Column(db.Integer, nullable=False, unique=True)
     email = db.Column(db.String(300), nullable=False, unique=True)
     balance = db.Column(db.Integer, default=0)
     books = db.relationship('Book', secondary='libraries', lazy='subquery',
@@ -24,6 +25,78 @@ class User(db.Model):
         self.phone = phone
         self.email = email
         self.balance = balance
+
+    @staticmethod
+    def generate_hash(password):
+        return sha256.hash(password)
+
+    @staticmethod
+    def verify_hash(password, hash):
+        return sha256.verify(password, hash)
+
+    @classmethod
+    def find_by_username(cls, username):
+        return cls.query.filter_by(username=username).first()
+
+    @classmethod
+    def find_by_email(cls, email):
+        return cls.query.filter_by(email=email).first()
+
+    @classmethod
+    def find_by_phone(cls, phone):
+        return cls.query.filter_by(phone=phone).first()
+
+    @classmethod
+    def get_all(cls):
+        all_users = User.query.all()
+        result = users_schema.dump(all_users)
+        return result
+
+    @classmethod
+    def delete_all(cls):
+        try:
+            num_rows_deleted = db.session.query(cls).delete()
+            db.session.commit()
+            return {'message': '{} row(s) deleted'.format(num_rows_deleted)}
+        except:
+            return {'message': 'Something went wrong'}
+
+
+    @classmethod
+    def detail(cls, id):
+        user = User.query.filter_by(id=id).first()
+        result = user_schema.jsonify(user)
+        return result
+
+    @classmethod
+    def delete(cls, id):
+        try:
+            user = User.query.get(id)
+            db.session.delete(user)
+            db.session.commit()
+            result = user_schema.jsonify(user)
+            return result
+        except:
+            return {'message': 'Something went wrong'}
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+class RevokedTokenModel(db.Model):
+    __tablename__ = 'revoked_tokens'
+    id = db.Column(db.Integer, primary_key=True)
+    jti = db.Column(db.String(120))
+
+    def add(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def is_jti_blacklisted(cls, jti):
+        query = cls.query.filter_by(jti=jti).first()
+        return bool(query)
 
 
 class Category(db.Model):

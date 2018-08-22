@@ -1,8 +1,5 @@
-import requests
-from flask import jsonify, request, render_template, redirect, session, json
-from werkzeug.security import generate_password_hash
+from flask import render_template
 
-from app.models import *
 from app import app
 from forms import RegistrationForm
 

@@ -17,7 +17,7 @@ migrate = Migrate(app, db)
 ma = Marshmallow(app)
 
 from resources import users_resource
-from app import models
+import models
 
 
 @jwt.token_in_blacklist_loader
@@ -26,14 +26,10 @@ def check_if_token_in_blacklist(decrypted_token):
     return models.RevokedTokenModel.is_jti_blacklisted(jti)
 
 
-api.add_resource(users_resource.UserRegistration, '/users')
+api.add_resource(users_resource.UserMethods, '/users')
+api.add_resource(users_resource.UserDetailMethods, '/users/<pk>')
 api.add_resource(users_resource.UserLogin, '/users/login')
 api.add_resource(users_resource.UserLogoutAccess, '/users/logout')
+
 api.add_resource(users_resource.UserLogoutRefresh, '/users/logout/refresh')
 api.add_resource(users_resource.TokenRefresh, '/token/refresh')
-api.add_resource(users_resource.AllUsers, '/users')
-api.add_resource(users_resource.SecretResource, '/secret')
-
-api.add_resource(users_resource.Log, '/signin')
-
-#api.add_resource(books_resource.AddBook, '/books')
