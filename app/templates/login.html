@@ -38,7 +38,9 @@
 </head>
 
 <body class="bg-dark">
-
+<br>
+<br>
+<br>
 <div class="container">
     <div class="card card-login mx-auto mt-5">
         <div class="card-header text-center">Login</div>
@@ -76,13 +78,13 @@
                 {{ form.hidden_tag() }}
                 <p>
                     {{ form.username.label }}<br>
-                    {{ form.username() }}
+                    {{ form.username(class='form-control') }}
                 </p>
                 <p>
                     {{ form.password.label }}<br>
-                    {{ form.password(size=32) }}
+                    {{ form.password(class='form-control') }}
                 </p>
-                    <p>{{  form.submit() }}</p>
+                    <p>{{  form.submit(class='btn btn-primary btn-block') }}</p>
             </form>
         </div>
     </div>
@@ -111,7 +113,7 @@
                 },
                 placement: {
                     from: "top",
-                    align: "right"
+                    align: "center"
                 },
                 offset: 10,
                 spacing: 10,
