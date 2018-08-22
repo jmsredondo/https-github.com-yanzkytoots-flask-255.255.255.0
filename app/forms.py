@@ -18,7 +18,7 @@ class RegistrationForm(FlaskForm):
     phone = StringField('phone')
     confirm = PasswordField('repeat password')
 
-    submit = SubmitField('user_add')
+    submit = SubmitField('Create')
 
 
 class AddBookForm(FlaskForm):

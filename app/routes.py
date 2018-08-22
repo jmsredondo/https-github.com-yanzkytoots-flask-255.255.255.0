@@ -1,5 +1,5 @@
 import requests
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect
 
 from app import app
 from forms import RegistrationForm, LoginForm
@@ -33,14 +33,19 @@ def register():
         reg = {
             "username": form.username.data,
             "password": form.username.data,
-            "firstname": form.username.data,
-            "lastname": form.username.data,
+            "firstName": form.username.data,
+            "lastName": form.username.data,
             "phone": form.username.data,
             "email": form.username.data,
-            "balance":0
+            "balance": 0
         }
 
         r = requests.post("http://localhost:80/users", data=reg)
+        print r.status_code
+        if r.status_code == 200:
+            return redirect('/login#success')
+    return render_template('register.html', form=form)
+
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
@@ -70,12 +75,3 @@ def addgenre():
 @app.route('/addbook', methods=['GET'])
 def addbook():
     return render_template('Admin/addbook.html')
-
-
-@app.route('/register', methods=['GET'])
-def register():
-    return render_template('register.html')
-
-
-
-

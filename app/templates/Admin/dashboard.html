@@ -57,10 +57,10 @@
       <!-- Navbar -->
         <div class="dropdown">
             <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                User Name
+                {{ session['username'] }}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/">Logout</a>
+                <a class="dropdown-item" size="20" href="/">Logout</a>
             </div>
         </div>
 

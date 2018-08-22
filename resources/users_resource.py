@@ -67,7 +67,7 @@ class UserMethods(Resource):
             new_user.save_to_db()
             return {
                 'message': 'User {} was created'.format(data['username'])
-            }
+            }, 200
 
         except:
             return {'message': 'Something went wrong'}, 500
