@@ -2,7 +2,7 @@ import requests
 from flask import jsonify, request, render_template, redirect, session, json
 from werkzeug.security import generate_password_hash
 
-from api.users import user_add
+
 from app.models import *
 from app import app
 
@@ -19,7 +19,7 @@ def login():
             if u.username == username and u.password == password:
                 session['user'] = username
                 return redirect('/dashboard')
-        return redirect('/#loginFailed')
+        return redirect('/signin#loginFailed')
 
     return render_template('login.html')
 
@@ -30,15 +30,21 @@ def register():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        firstname = request.form.get('firstname')
-        lastname = request.form.get('lastname')
+        firstName = request.form.get('firstname')
+        lastName = request.form.get('lastname')
         phone = request.form.get('phone')
         email = request.form.get('email')
-        user_add(username, password, firstname, lastname, phone, email)
+        balance = 0
 
-        return redirect('/#success')
+        hashedpassword = generate_password_hash(password)
 
-    return render_template('registration.html')
+        new_user = User(username, hashedpassword, firstName, lastName, phone, email,balance)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return redirect('/signin#success')
+
+    return render_template('register.html')
 
 
 @app.route('/dashboard', methods=['POST', 'GET'])
@@ -62,7 +68,7 @@ def book():
 
 @app.route('/', methods=['GET'])
 def logout():
-    return render_template('Admin/index.html')
+    return render_template('index.html')
 
 
 @app.route('/shookedbtn', methods=['GET'])
