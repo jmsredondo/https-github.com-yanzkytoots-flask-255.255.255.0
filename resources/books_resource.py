@@ -60,6 +60,9 @@ class BookDetailMethods(Resource):
     def put(self, pk):
         data = book_parser.parse_args()
 
+        if Book.find_by_book_name(data['book_name']) and Book.find_by_author(data['author']):
+            return {'message': 'The book {} already exists'.format(data['book_name'])}
+
         new_book = Book(
             book_name=data['book_name'],
             author=data['author'],
