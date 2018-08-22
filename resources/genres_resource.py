@@ -16,6 +16,9 @@ class GenreMethods(Resource):
     def post(self):
         data = genre_parser.parse_args()
 
+        if Genre.find_by_name(data['genre']) and Genre.find_by_type(data['type']):
+            return {'message': 'The genre {} already exists'.format(data['genre'])}
+
         new_genre = Genre(
             genre=data['genre'],
             type=data['type']
@@ -50,6 +53,9 @@ class GenreDetailMethods(Resource):
 
     def put(self, pk):
         data = genre_parser.parse_args()
+
+        if Genre.find_by_name(data['genre']) and Genre.find_by_type(data['type']):
+            return {'message': 'The genre {} already exists'.format(data['genre'])}
 
         new_genre = Genre(
             genre=data['genre'],

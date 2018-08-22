@@ -197,6 +197,14 @@ class Genre(db.Model):
         return cls.query.filter_by(id=id).first()
 
     @classmethod
+    def find_by_name(cls, genre):
+        return cls.query.filter_by(genre=genre).first()
+
+    @classmethod
+    def find_by_type(cls, type):
+        return cls.query.filter_by(type=type).first()
+
+    @classmethod
     def update(self, new_genre, id):
         db_genre = Genre.query.get(id)
         db_genre.genre = new_genre.genre
