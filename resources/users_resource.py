@@ -2,11 +2,11 @@ from flask_restful import Resource, reqparse
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 from models import *
 
-login_parser = reqparse.RequestParser()
+login_parser = reqparse.RequestParser(bundle_errors=True)
 login_parser.add_argument('username', help='This field cannot be blank', required=True)
 login_parser.add_argument('password', help='This field cannot be blank', required=True)
 
-reg_parser = reqparse.RequestParser()
+reg_parser = reqparse.RequestParser(bundle_errors=True)
 reg_parser.add_argument('username', help='This field cannot be blank', required=True)
 reg_parser.add_argument('password', help='This field cannot be blank', required=True)
 reg_parser.add_argument('firstName', help='This field cannot be blank', required=True)
