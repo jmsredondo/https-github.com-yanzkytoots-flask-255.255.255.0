@@ -1,14 +1,23 @@
+from flask import Flask
+from flask_marshmallow import Marshmallow
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
-from app import app, models
+from config import Config
 
+app = Flask(__name__)
+app.config.from_object(Config)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+ma = Marshmallow(app)
 api = Api(app)
 
 jwt = JWTManager(app)
 
 from resources import users_resource, books_resource, genres_resource
-
+import models
 
 
 @jwt.token_in_blacklist_loader

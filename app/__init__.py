@@ -11,4 +11,4 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 ma = Marshmallow(app)
 
-from app import models, routes
+from app import routes

@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from app.models import *
+from models import *
 
 book_parser = reqparse.RequestParser(bundle_errors=True)
 book_parser.add_argument('book_name', help='This field cannot be blank', required=True)
