@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
-from models import *
+from app.models import *
 
 login_parser = reqparse.RequestParser(bundle_errors=True)
 login_parser.add_argument('username', help='This field cannot be blank', required=True)
@@ -14,6 +14,10 @@ reg_parser.add_argument('lastName', help='This field cannot be blank', required=
 reg_parser.add_argument('phone', help='This field cannot be blank', required=True)
 reg_parser.add_argument('email', help='This field cannot be blank', required=True)
 reg_parser.add_argument('balance', help='This field cannot be blank', required=False)
+
+id_parser = reqparse.RequestParser(bundle_errors=True)
+id_parser.add_argument('book_id', help='This field cannot be blank', required=True)
+id_parser.add_argument('user_id', help='This field cannot be blank', required=True)
 
 
 class UserLogin(Resource):
@@ -111,3 +115,29 @@ class TokenRefresh(Resource):
         current_user = get_jwt_identity()
         access_token = create_access_token(identity = current_user)
         return {'access_token': access_token}
+
+
+class LibraryMethods(Resource):
+    def post(self):
+        data = id_parser.parse_args()
+        """if Genre.find_by_book(data['book_id']):
+            return {'message': 'Book being added already exists in this genre'}"""
+        try:
+            User.add_book_to_library(data['book_id'], data['user_id'])
+            result = Book.detail(data['book_id'])
+            result.content_status = 200
+            return result
+        except:
+            return {
+                'message': 'Authentication information is missing or invalid'
+            }, 401
+
+
+class LibraryDetailMethods(Resource):
+    def get(self, pk):
+        if User.find_by_id(pk):
+            return User.get_library(pk)
+        else:
+            return {
+                'message': 'User not found'
+            }, 404
