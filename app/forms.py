@@ -10,13 +10,13 @@ class LoginForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('username')
-    firstname = StringField('firstname')
-    lastname = StringField('lastname')
-    email = StringField('email address')
-    password = PasswordField('new password')
-    phone = StringField('phone')
-    confirm = PasswordField('repeat password')
+    username = StringField('Username')
+    firstname = StringField('Firstname')
+    lastname = StringField('Lastname')
+    email = StringField('Email Address')
+    phone = StringField('Phone')
+    confirm = PasswordField('Repeat password')
+    password = PasswordField('Password')
 
     submit = SubmitField('Create')
 

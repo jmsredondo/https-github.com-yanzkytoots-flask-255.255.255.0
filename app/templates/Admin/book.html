@@ -86,7 +86,8 @@
 
     <!-- Navbar -->
     <div class="dropdown">
-        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
             User Name
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -106,20 +107,23 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/user" id="pagesDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link" href="/user" id="pagesDropdown" role="button" aria-haspopup="true"
+               aria-expanded="false">
                 <i class="far fa-address-book"></i>
                 <span>User Lists</span>
             </a>
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link" href="/genre" id="pagesDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link" href="/genre" id="pagesDropdown" role="button" aria-haspopup="true"
+               aria-expanded="false">
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Genre</span>
             </a>
         </li>
 
         <li class="nav-item dropdown active">
-            <a class="nav-link" href="/book" id="pagesDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link" href="/book" id="pagesDropdown" role="button" aria-haspopup="true"
+               aria-expanded="false">
                 <i class="fas fa-book-open"></i>
                 <span>Books</span>
             </a>
@@ -151,10 +155,12 @@
                         <td>{{ book.book_name }}</td>
                         <td>{{ book.author }}</td>
                         <td>{{ book.description }}</td>
-                       <td>
-                            <button type="button" class="btn btn-info" data-toggle="modal"
-                                    data-target="#exampleModalCenterr">
-                                <i class="fas fa-trash-alt"></i></button>
+                        <td>
+                            <form action="/deluser" method="post">
+                                <input type="hidden" name="ayd" value="{{ book.id }}">
+                                <button type="submit" class="btn btn-info">
+                                    <i class="fas fa-trash-alt"></i></button>
+                            </form>
                         </td>
 
                     </tr>
@@ -185,7 +191,7 @@
 
             <p class="small text-center text-muted my-5">
 
-                 <a href="/addbook" class="btn btn-info">
+                <a href="/addbook" class="btn btn-info">
                     Add Book
                 </a>
             </p>
@@ -235,7 +241,7 @@
 
     <!-- Modal -->
 
-<!-- Delete Genre entry Modal -->
+    <!-- Delete Genre entry Modal -->
     <div class="modal fade" id="exampleModalCenterr" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -251,14 +257,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-info">Yes</button>
+                    <a class="btn btn-info" href="/deleleteUser">Yes</a>
 
                 </div>
             </div>
         </div>
     </div>
 
-
+</div>
 </body>
-
 </html>
