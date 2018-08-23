@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:background="http://www.w3.org/1999/xhtml">
 
   <head>
 
@@ -29,47 +29,33 @@
       <script src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
 
 
+
   </head>
 
-  <body class="bg-warning">
+  <body background="static/images/bookbgo.jpg">
 
     <div class="container">
       <div class="card card-register mx-auto mt-5">
         <div class="card-header">Add a book in Shooked</div>
         <div class="card-body">
-          <form>
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input type="text" id="bookname" class="form-control" placeholder="book name" required="required" autofocus="autofocus">
-                    <label for="bookname">Book Name</label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input type="text" id="authorname" class="form-control" placeholder="author name" required="required">
-                    <label for="authorname">Author Name</label>
-                  </div>
-                </div>
-              </div>
-            </div>
+           <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
 
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input type="text" id="description" class="form-control" placeholder="description" required="required" autofocus="autofocus">
-                    <label for="lastName">Description</label>
-                  </div>
-                </div> 
-              </div>
-            </div>
-            <a class="btn btn-primary btn-block" href="/addbook">Add Book</a>
-          </form>
-          <div class="text-center">
-            <a class="d-block small mt-3" href="/dashboard">Dashboard</a>
-          </div>
+                <p>
+                    {{ form.book_name.label }}<br>
+                    {{ form.book_name(class='form-control') }}
+                </p>
+              <p>
+                    {{ form.author.label }}<br>
+                    {{ form.author(class='form-control') }}
+                </p>
+               <p>
+                    {{ form.description.label }}<br>
+                    {{ form.description(class='form-control') }}
+                </p>
+                    <p>{{  form.submit(class='btn btn-primary btn-block') }}</p>
+            </form><div class="text-center">
+
         </div>
       </div>
     </div>

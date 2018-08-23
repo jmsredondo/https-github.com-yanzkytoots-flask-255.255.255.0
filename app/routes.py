@@ -2,7 +2,7 @@ import requests
 from flask import render_template, request, redirect, json
 
 from app import app
-from forms import RegistrationForm, LoginForm
+from forms import RegistrationForm, LoginForm, AddGenreForm, AddBookForm
 
 
 @app.route('/')
@@ -65,18 +65,44 @@ def genre():
     return render_template('Admin/genre.html', genres=result)
 
 
+@app.route('/addgenre', methods=['GET', 'POST'])
+def genre_add():
+    form = AddGenreForm()
+    if form.validate_on_submit():
+        reg = {
+            "genre": form.genre.data,
+            "type": form.type.data,
+
+        }
+
+        r = requests.post("http://localhost:80/genre", data=reg)
+        print r.status_code
+        if r.status_code == 200:
+            return redirect('/genre')
+    return render_template('Admin/addgenre.html', form=form)
+
+
 @app.route('/book', methods=['GET'])
 def book():
     r = requests.get("http://localhost:80/book")
+    print r.content
     result = json.loads(r.content)
     return render_template('Admin/book.html', books=result)
 
 
-@app.route('/addgenre', methods=['GET'])
-def addgenre():
-    return render_template('Admin/addgenre.html')
+@app.route('/addbook', methods=['GET', 'POST'])
+def book_add():
+    form = AddBookForm()
+    if form.validate_on_submit():
+        reg = {
+            "book_name": form.book_name.data,
+            "author": form.author.data,
+            "description": form.description.data,
 
+        }
 
-@app.route('/addbook', methods=['GET'])
-def addbook():
-    return render_template('Admin/addbook.html')
+        r = requests.post("http://localhost:80/book", data=reg)
+        print r.status_code
+        if r.status_code == 200:
+            return redirect('/book')
+    return render_template('Admin/addbook.html', form=form)
