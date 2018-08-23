@@ -17,7 +17,7 @@ api = Api(app)
 jwt = JWTManager(app)
 
 from resources import users_resource, books_resource, genres_resource
-import models
+from app import models
 
 
 @jwt.token_in_blacklist_loader

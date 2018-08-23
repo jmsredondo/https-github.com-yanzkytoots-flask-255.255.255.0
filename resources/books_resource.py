@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from models import *
+from app.models import *
 
 book_parser = reqparse.RequestParser(bundle_errors=True)
 book_parser.add_argument('book_name', help='This field cannot be blank', required=True)
@@ -78,4 +78,29 @@ class BookDetailMethods(Resource):
         except:
             return {
                 'message': 'Authentication information is missing or invalid'
+            }, 401
+
+
+class BookFeedbackMethods(Resource):
+    def get(self, pk):
+        if Book.find_by_id(pk):
+            return Book.get_all_feedback(pk)
+        else:
+            return {
+                'message': 'Book not found'
+            }, 404
+
+    def post(self, pk):
+        data = id_parser.parse_args()
+        """if Genre.find_by_book(data['book_id']):
+            return {'message': 'Book being added already exists in this genre'}"""
+        try:
+            Book.add_feedback(data['user_id'], pk)
+            return{
+                'genre_id': '{}'.format(pk),
+                'book_id': '{}'.format(data['book_id']),
+            }, 200
+        except:
+            return {
+                'message'   : 'Authentication information is missing or invalid'
             }, 401

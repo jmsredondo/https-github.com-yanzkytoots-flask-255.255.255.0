@@ -129,7 +129,7 @@ class Book(db.Model):
     book_name = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000))
-    # image
+    #image
 
     def __init__(self, book_name, author, description):
         self.book_name = book_name
@@ -294,6 +294,7 @@ class Category(db.Model):
 
 
 class Library(db.Model):
+
     __tablename__ = 'libraries'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -302,7 +303,8 @@ class Library(db.Model):
 
 
 class Feedback(db.Model):
-    __tablename__ = 'feedbacks'
+
+    __tablename__ = 'feedback'
 
     id = db.Column(db.Integer, primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
