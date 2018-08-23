@@ -156,14 +156,14 @@ class Book(db.Model):
 
     @classmethod
     def delete(cls, id):
-        try:
+        #try:
             book = Book.query.get(id)
             db.session.delete(book)
             db.session.commit()
             result = book_schema.jsonify(book)
             return result
-        except:
-            return {'message': 'Something went wrong'}
+        #except:
+            #return {'message': 'Something went wrong'}
 
     @classmethod
     def get_all(cls):

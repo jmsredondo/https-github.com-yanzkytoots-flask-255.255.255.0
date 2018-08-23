@@ -10,6 +10,25 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/deluser', methods=['POST'])
+def delusers():
+    if request.method == 'POST':
+        ayd = request.form.get('ayd')
+        aydd = int(ayd)
+        print type(aydd)
+        d = {
+            "book_id": ayd
+        }
+        r = requests.delete("http://localhost:80/book/<pk>", data=d)
+        print r.content
+        if r.status_code == 200:
+            return redirect('/book#success')
+
+    #elif request.method =='DELETE':
+
+    return redirect('/book')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()
@@ -32,11 +51,11 @@ def register():
     if form.validate_on_submit():
         reg = {
             "username": form.username.data,
-            "password": form.username.data,
-            "firstName": form.username.data,
-            "lastName": form.username.data,
-            "phone": form.username.data,
-            "email": form.username.data,
+            "password": form.password.data,
+            "firstName": form.firstname.data,
+            "lastName": form.lastname.data,
+            "phone": form.phone.data,
+            "email": form.email.data,
             "balance": 0
         }
 
@@ -54,7 +73,10 @@ def dashboard():
 
 @app.route('/user', methods=['GET'])
 def user():
-    return render_template('Admin/user.html')
+    r = requests.get("http://localhost:80/users")
+    print r.content
+    result = json.loads(r.content)
+    return render_template('Admin/user.html', users=result)
 
 
 @app.route('/genre', methods=['GET'])
