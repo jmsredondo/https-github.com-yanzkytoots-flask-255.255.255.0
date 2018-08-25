@@ -1,9 +1,12 @@
 from flask_restful import Resource, reqparse
-from models import *
+from app.models import *
 
 genre_parser = reqparse.RequestParser(bundle_errors=True)
 genre_parser.add_argument('genre', help='This field cannot be blank', required=True)
 genre_parser.add_argument('type', help='This field cannot be blank', required=True)
+
+id_parser = reqparse.RequestParser()
+id_parser.add_argument('book_id', required=True)
 
 
 class GenreMethods(Resource):
@@ -72,3 +75,27 @@ class GenreDetailMethods(Resource):
                 'message': 'Authentication information is missing or invalid'
             }, 401
 
+
+class GenreBookMethods(Resource):
+    def get(self, pk):
+        if Genre.find_by_id(pk):
+            return Genre.get_all_books(pk)
+        else:
+            return {
+                'message': 'Genre not found'
+            }, 404
+
+    def post(self, pk):
+        data = id_parser.parse_args()
+        """if Genre.find_by_book(data['book_id']):
+            return {'message': 'Book being added already exists in this genre'}"""
+        try:
+            Genre.add_book(data['book_id'], pk)
+            return{
+                'genre_id': '{}'.format(pk),
+                'book_id': '{}'.format(data['book_id']),
+            }, 200
+        except:
+            return {
+                'message': 'Authentication information is missing or invalid'
+            }, 401

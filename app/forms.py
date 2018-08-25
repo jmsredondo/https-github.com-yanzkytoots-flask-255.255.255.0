@@ -10,25 +10,25 @@ class LoginForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('username')
-    firstname = StringField('firstname')
-    lastname = StringField('lastname')
-    email = StringField('email address')
-    password = PasswordField('new password')
-    phone = StringField('phone')
-    confirm = PasswordField('repeat password')
+    username = StringField('Username')
+    firstname = StringField('Firstname')
+    lastname = StringField('Lastname')
+    email = StringField('Email Address')
+    phone = StringField('Phone')
+    confirm = PasswordField('Repeat password')
+    password = PasswordField('Password')
 
     submit = SubmitField('Create')
 
 
 class AddBookForm(FlaskForm):
-    bookname = StringField('book_name', validators=[DataRequired()])
-    authorname = StringField('author', validators=[DataRequired()])
+    book_name = StringField('book_name', validators=[DataRequired()])
+    author = StringField('author', validators=[DataRequired()])
     description = StringField('description', validators=[DataRequired()])
-    submit = SubmitField('book_add')
+    submit = SubmitField('Add')
 
 
 class AddGenreForm(FlaskForm):
-    typename = StringField('type', validators=[DataRequired()])
-    genreid = StringField('genre', validators=[DataRequired()])
-    submit = SubmitField('genre_add')
+    genre = StringField('genre', validators=[DataRequired()])
+    type = StringField('type', validators=[DataRequired()])
+    submit = SubmitField('Add')
