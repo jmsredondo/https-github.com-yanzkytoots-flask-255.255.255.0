@@ -2,7 +2,7 @@ from app import db, ma
 from passlib.hash import pbkdf2_sha256 as sha256
 
 
-# MODELS #
+# ------------------------------ MODELS ------------------------------ #
 class User(db.Model):
     __tablename__ = 'users'
 
@@ -50,6 +50,10 @@ class User(db.Model):
     def find_by_phone(cls, phone):
         return cls.query.filter_by(phone=phone).first()
 
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
     @classmethod
     def get_all(cls):
         all_users = User.query.all()
@@ -58,12 +62,9 @@ class User(db.Model):
 
     @classmethod
     def delete_all(cls):
-        try:
-            num_rows_deleted = db.session.query(cls).delete()
-            db.session.commit()
-            return {'message': '{} row(s) deleted'.format(num_rows_deleted)}
-        except:
-            return {'message': 'Something went wrong'}
+        num_rows_deleted = db.session.query(cls).delete()
+        db.session.commit()
+        return {'message': '{} row(s) deleted'.format(num_rows_deleted)}
 
     @classmethod
     def detail(cls, id):
@@ -73,17 +74,21 @@ class User(db.Model):
 
     @classmethod
     def delete(cls, id):
-        try:
-            user = User.query.get(id)
-            db.session.delete(user)
-            db.session.commit()
-            result = user_schema.jsonify(user)
-            return result
-        except:
-            return {'message': 'Something went wrong'}
+        user = User.query.get(id)
+        db.session.delete(user)
+        db.session.commit()
 
-    def save_to_db(self):
-        db.session.add(self)
+    @classmethod
+    def update(self, new_user, id):
+        user = User.query.get(id)
+        user.username = user.username
+        user.password = new_user.password
+        user.firstName = new_user.firstName
+        user.lastName = new_user.lastName
+        user.email = new_user.email
+        user.phone = new_user.phone
+        user.balance = new_user.balance
+        db.session.add(user)
         db.session.commit()
 
     @classmethod
@@ -91,7 +96,6 @@ class User(db.Model):
         user = User.query.get(user_id)
         book = Book.query.get(book_id)
         user.books.append(book)
-
         db.session.add(user)
         db.session.commit()
 
@@ -105,7 +109,6 @@ class User(db.Model):
 
 
 class RevokedTokenModel(db.Model):
-
     __tablename__ = 'revoked_tokens'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -122,14 +125,15 @@ class RevokedTokenModel(db.Model):
 
 
 class Book(db.Model):
-
     __tablename__ = 'books'
 
     id = db.Column(db.Integer, primary_key=True)
     book_name = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000))
-    #image
+    # image
+    ratings = db.relationship('Rating', lazy='select',
+                              backref=db.backref('books', lazy='joined'))
 
     def __init__(self, book_name, author, description):
         self.book_name = book_name
@@ -148,22 +152,9 @@ class Book(db.Model):
     def find_by_author(cls, author):
         return cls.query.filter_by(author=author).first()
 
-    @classmethod
-    def detail(cls, id):
-        book = Book.query.filter_by(id=id).first()
-        result = book_schema.jsonify(book)
-        return result
-
-    @classmethod
-    def delete(cls, id):
-        #try:
-            book = Book.query.get(id)
-            db.session.delete(book)
-            db.session.commit()
-            result = book_schema.jsonify(book)
-            return result
-        #except:
-            #return {'message': 'Something went wrong'}
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
 
     @classmethod
     def get_all(cls):
@@ -173,15 +164,20 @@ class Book(db.Model):
 
     @classmethod
     def delete_all(cls):
-        try:
-            num_rows_deleted = db.session.query(cls).delete()
-            db.session.commit()
-            return {'message': '{} row(s) deleted'.format(num_rows_deleted)}
-        except:
-            return {'message': 'Something went wrong'}
+        num_rows_deleted = db.session.query(cls).delete()
+        db.session.commit()
+        return {'message': '{} row(s) deleted'.format(num_rows_deleted)}
 
-    def save_to_db(self):
-        db.session.add(self)
+    @classmethod
+    def detail(cls, id):
+        book = Book.query.filter_by(id=id).first()
+        result = book_schema.jsonify(book)
+        return result
+
+    @classmethod
+    def delete(cls, id):
+        book = Book.query.get(id)
+        db.session.delete(book)
         db.session.commit()
 
     @classmethod
@@ -192,6 +188,14 @@ class Book(db.Model):
         db_book.description = new_book.description
         db.session.add(db_book)
         db.session.commit()
+
+    @classmethod
+    def get_all_ratings(self, id):
+        book = Book.query.get(id)
+
+        all_rating = book.ratings
+        result = ratings_schema.jsonify(all_rating)
+        return result
 
 
 class Genre(db.Model):
@@ -232,23 +236,6 @@ class Genre(db.Model):
         db.session.commit()
 
     @classmethod
-    def detail(cls, id):
-        genre = Genre.query.filter_by(id=id).first()
-        result = genre_schema.jsonify(genre)
-        return result
-
-    @classmethod
-    def delete(cls, id):
-        try:
-            genre = Genre.query.get(id)
-            db.session.delete(genre)
-            db.session.commit()
-            result = genre_schema.jsonify(genre)
-            return result
-        except:
-            return {'message': 'Something went wrong'}
-
-    @classmethod
     def get_all(cls):
         all_genres = Genre.query.all()
         result = genres_schema.dump(all_genres)
@@ -256,12 +243,21 @@ class Genre(db.Model):
 
     @classmethod
     def delete_all(cls):
-        try:
-            num_rows_deleted = db.session.query(cls).delete()
-            db.session.commit()
-            return {'message': '{} row(s) deleted'.format(num_rows_deleted)}
-        except:
-            return {'message': 'Something went wrong'}
+        num_rows_deleted = db.session.query(cls).delete()
+        db.session.commit()
+        return {'message': '{} row(s) deleted'.format(num_rows_deleted)}
+
+    @classmethod
+    def detail(cls, id):
+        genre = Genre.query.filter_by(id=id).first()
+        result = genre_schema.jsonify(genre)
+        return result
+
+    @classmethod
+    def delete(cls, id):
+        genre = Genre.query.get(id)
+        db.session.delete(genre)
+        db.session.commit()
 
     @classmethod
     def add_book(self, book_id, id):
@@ -289,48 +285,57 @@ class Category(db.Model):
     __tablename__ = 'categories'
 
     id = db.Column(db.Integer, primary_key=True)
-    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
-    genre_id = db.Column(db.Integer, db.ForeignKey('genres.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
+    genre_id = db.Column(db.Integer, db.ForeignKey('genres.id'))
+
+    @classmethod
+    def find_by_book(cls, book_id):
+        return cls.query.filter_by(book_id=book_id).first()
+
+    @classmethod
+    def find_by_genre(cls, genre_id):
+        return cls.query.filter_by(genre_id=genre_id).first()
 
 
 class Library(db.Model):
-
     __tablename__ = 'libraries'
 
     id = db.Column(db.Integer, primary_key=True)
-    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    @classmethod
+    def find_by_book(cls, book_id):
+        return cls.query.filter_by(book_id=book_id).first()
+
+    @classmethod
+    def find_by_user(cls, user_id):
+        return cls.query.filter_by(user_id=user_id).first()
 
 
-class Feedback(db.Model):
-
-    __tablename__ = 'feedback'
+class Rating(db.Model):
+    __tablename__ = 'ratings'
 
     id = db.Column(db.Integer, primary_key=True)
-    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     rate = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.String(1000), nullable=True)
 
+    @classmethod
+    def find_by_book(cls, book_id):
+        return cls.query.filter_by(book_id=book_id).first()
 
-# SCHEMA #
-class BookSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'book_name', 'author', 'description')
+    @classmethod
+    def find_by_user(cls, user_id):
+        return cls.query.filter_by(user_id=user_id).first()
 
-
-class UserSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'username', 'firstname', 'lastname', 'phone', 'email')
-
-
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
-
-book_schema = BookSchema()
-books_schema = BookSchema(many=True)
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
 
 
+# ------------------------------ SCHEMAS ------------------------------ #
 class GenreSchema(ma.Schema):
     class Meta:
         fields = ('id', 'genre', 'type')
@@ -340,6 +345,17 @@ genre_schema = GenreSchema()
 genres_schema = GenreSchema(many=True)
 
 
+class BookSchema(ma.Schema):
+    genres = ma.Nested(GenreSchema, many=True)
+
+    class Meta:
+        fields = ('id', 'book_name', 'author', 'description', 'genres')
+
+
+book_schema = BookSchema()
+books_schema = BookSchema(many=True)
+
+
 class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'username', 'firstName', 'lastName', 'phone', 'email', 'balance', 'password')
@@ -347,3 +363,12 @@ class UserSchema(ma.Schema):
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
+
+
+class RatingSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'book_id', 'user_id', 'rate', 'comment')
+
+
+rating_schema = RatingSchema()
+ratings_schema = RatingSchema(many=True)
