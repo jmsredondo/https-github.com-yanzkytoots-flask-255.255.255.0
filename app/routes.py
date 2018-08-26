@@ -95,7 +95,6 @@ def register():
         return redirect('/#success')
 
     return render_template('registration.html')
-<<<<<<< HEAD
 
 
 # Books Controller #
@@ -239,5 +238,4 @@ def library_get():
     user = User.query.get(1)
     library = User.books
     return book_schema.jsonify(library)"""
-=======
->>>>>>> fe972578f02771f530e5ee3b7b1a3a1e18f00a2e
+
