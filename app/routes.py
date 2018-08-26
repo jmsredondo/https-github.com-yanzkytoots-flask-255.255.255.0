@@ -1,48 +1,36 @@
 import requests
-from flask import render_template, request, redirect, json
+from flask import render_template, request, redirect, json, session
 
 from app import app
-from forms import RegistrationForm, LoginForm, AddGenreForm, AddBookForm
+from forms import RegistrationForm, LoginForm, AddGenreForm, AddBookForm, DeleteBook
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
-@app.route('/deluser', methods=['POST'])
-def delusers():
-    if request.method == 'POST':
-        ayd = request.form.get('ayd')
-        aydd = int(ayd)
-        print type(aydd)
-        d = {
-            "book_id": ayd
-        }
-        r = requests.delete("http://localhost:80/book/<pk>", data=d)
-        print r.content
-        if r.status_code == 200:
-            return redirect('/book#success')
-
-    #elif request.method =='DELETE':
-
-    return redirect('/book')
-
-
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()
-    if form.validate_on_submit():
-        userdict = {
-            "username": form.username.data,
-            "password": form.password.data
-        }
+    if request.method == 'POST':
 
-        r = requests.post("http://localhost:80/users/login", data=userdict)
-        if r.status_code == 200:
-            return render_template('Admin/dashboard.html', username=form.username.data)
-        return redirect('/login#loginFailed')
+        if form.validate_on_submit():
+            userdict = {
+                "username": form.username.data,
+                "password": form.password.data
+            }
+
+            r = requests.post("http://localhost:80/users/login", data=userdict)
+            print r.status_code
+            print r.content
+            if r.status_code == 200:
+                session['username'] = form.username.data
+                return render_template('Admin/dashboard.html', username=form.username.data)
+            return redirect('/#loginFailed')
+
     return render_template('login.html', form=form)
+
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.pop('username', None)
+    return redirect('/')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -61,14 +49,56 @@ def register():
 
         r = requests.post("http://localhost:80/users", data=reg)
         print r.status_code
+        print r.content
         if r.status_code == 200:
-            return redirect('/login#success')
+            return redirect('/#success')
     return render_template('register.html', form=form)
+
+
+@app.route('/delbook/<id>', methods=['POST'])
+def delbook(id):
+    print id
+    r = requests.delete("http://localhost:80/book/" + id)
+    print r.status_code
+    print r.content
+    if r.status_code == 200:
+        return str(r.status_code)
+    return str(r.status_code)
+
+
+@app.route('/addbook', methods=['POST'])
+def addbook():
+    a = request.form
+    print a['description']
+    print id
+    r = requests.post("http://localhost:80/book", json=a)
+    print r.status_code
+    print r.content
+    if r.status_code == 200:
+        return str(r.status_code)
+    return str(r.status_code)
 
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
     return render_template('Admin/dashboard.html')
+
+
+@app.route('/book', methods=['GET', 'POST'])
+def book():
+    r = requests.get("http://localhost:80/book")
+    result = json.loads(r.content)
+    return render_template('Admin/books.html', books=result)
+
+
+@app.route('/bookaddsuccess', methods=['GET', 'POST'])
+def bookaddsuccess():
+    return redirect('/book#bookadd')
+
+
+@app.route('/bookdelsuccess', methods=['GET', 'POST'])
+def bookdelsuccess():
+    return redirect('/book#bookdelete')
 
 
 @app.route('/user', methods=['GET'])
@@ -79,7 +109,44 @@ def user():
     return render_template('Admin/user.html', users=result)
 
 
-@app.route('/genre', methods=['GET'])
+@app.route('/deluser/<id>', methods=['POST'])
+def deluser(id):
+    print id
+    r = requests.delete("http://localhost:80/users/" + id)
+    print r.status_code
+    print r.content
+    if r.status_code == 200:
+        return str(r.status_code)
+    return str(r.status_code)
+
+
+@app.route('/userdelsuccess', methods=['GET'])
+def delusersuccess(id):
+    return redirect('/user#userdelete')
+
+
+@app.route('/delgenre/<id>', methods=['POST'])
+def delgenre(id):
+    print id
+    r = requests.delete("http://localhost:80/genre/" + id)
+    print r.status_code
+    print r.content
+    if r.status_code == 200:
+        return str(r.status_code)
+    return str(r.status_code)
+
+
+@app.route('/genredelsuccess', methods=['GET', 'POST'])
+def genredelsuccess():
+    return redirect('/genre#genredelete')
+
+
+@app.route('/genreaddsuccess', methods=['GET', 'POST'])
+def genreaddsuccess():
+    return redirect('/genre#genreadd')
+
+
+@app.route('/genre', methods=['GET', 'POST'])
 def genre():
     r = requests.get("http://localhost:80/genre")
     print r.content
@@ -87,44 +154,12 @@ def genre():
     return render_template('Admin/genre.html', genres=result)
 
 
-@app.route('/addgenre', methods=['GET', 'POST'])
-def genre_add():
-    form = AddGenreForm()
-    if form.validate_on_submit():
-        reg = {
-            "genre": form.genre.data,
-            "type": form.type.data,
-
-        }
-
-        r = requests.post("http://localhost:80/genre", data=reg)
-        print r.status_code
-        if r.status_code == 200:
-            return redirect('/genre')
-    return render_template('Admin/addgenre.html', form=form)
-
-
-@app.route('/book', methods=['GET'])
-def book():
-    r = requests.get("http://localhost:80/book")
+@app.route('/addgenre', methods=['POST'])
+def addgenre():
+    a = request.form
+    r = requests.post("http://localhost:80/genre", json=a)
+    print r.status_code
     print r.content
-    result = json.loads(r.content)
-    return render_template('Admin/book.html', books=result)
-
-
-@app.route('/addbook', methods=['GET', 'POST'])
-def book_add():
-    form = AddBookForm()
-    if form.validate_on_submit():
-        reg = {
-            "book_name": form.book_name.data,
-            "author": form.author.data,
-            "description": form.description.data,
-
-        }
-
-        r = requests.post("http://localhost:80/book", data=reg)
-        print r.status_code
-        if r.status_code == 200:
-            return redirect('/book')
-    return render_template('Admin/addbook.html', form=form)
+    if r.status_code == 200:
+        return str(r.status_code)
+    return str(r.status_code)

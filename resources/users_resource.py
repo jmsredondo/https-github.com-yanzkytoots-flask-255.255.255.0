@@ -1,3 +1,4 @@
+from flask import session
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required,
                                 get_jwt_identity, get_raw_jwt)
@@ -37,9 +38,14 @@ class UserLogin(Resource):
         if User.verify_hash(data['password'], current_user.password):
             access_token = create_access_token(identity=data['username'])
             # refresh_token = create_refresh_token(identity=data['username'])
+            session['username'] = data['username']
             return {
                        'message': 'Logged in as {}'.format(current_user.username),
                        'access_token': access_token,
+
+
+
+
                        # 'refresh_token': refresh_token
                    }, 200
         else:
@@ -168,8 +174,8 @@ class UserDetailMethods(Resource):
                        }, 401
         else:
             return {
-                        'message': 'User not found'
-                    }, 404
+                       'message': 'User not found'
+                   }, 404
 
     # Update an existing user's information
     def put(self, pk):

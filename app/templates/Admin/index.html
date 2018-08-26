@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#4188c9">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <!-- Generated: 2018-04-16 09:29:05 +0200 -->
+    <title>Shooked - Homepage</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
+
+    <!-- Dashboard Core -->
+    <link href="{{ url_for('static', filename='css/dashboard.css') }}" rel="stylesheet"/>
+
+  </head>
+  <body class="">
+    <div class="page">
+      <div class="page-main">
+        <div class="header py-4">
+          <div class="container">
+            <div class="d-flex">
+              <a class="header-brand" href="./index.html">
+              </a>
+              <div class="d-flex order-lg-2 ml-auto">
+                <div class="dropdown">
+                  <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
+                    <span class="avatar" style="background-image: url(./demo/faces/female/25.jpg)"></span>
+                    <span class="ml-2 d-none d-lg-block">
+                      <span class="text-default">Shooked</span>
+                      <small class="text-muted d-block mt-1">Administrator</small>
+                    </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                    <a class="dropdown-item" href="#">
+                      <i class="dropdown-icon fe fe-user"></i> Profile
+                    </a>
+                    <a class="dropdown-item" href="#">
+                      <i class="dropdown-icon fe fe-settings"></i> Settings
+                    </a>
+                    <a class="dropdown-item" href="#">
+                      <span class="float-right"><span class="badge badge-primary">6</span></span>
+                      <i class="dropdown-icon fe fe-mail"></i> Inbox
+                    </a>
+                    <a class="dropdown-item" href="#">
+                      <i class="dropdown-icon fe fe-send"></i> Message
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                      <i class="dropdown-icon fe fe-help-circle"></i> Need help?
+                    </a>
+                    <a class="dropdown-item" href="#">
+                      <i class="dropdown-icon fe fe-log-out"></i> Sign out
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse" data-target="#headerMenuCollapse">
+                <span class="header-toggler-icon"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-lg order-lg-first">
+                <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                  <li class="nav-item">
+                    <a href="./index.html" class="nav-link active"><i class="fe fe-home"></i> Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i>Users</a>
+                    <div class="dropdown-menu dropdown-menu-arrow">
+                      <a href="./users-list.html" class="dropdown-item ">Users List</a>
+                    </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-calendar"></i>Book</a>
+                    <div class="dropdown-menu dropdown-menu-arrow">
+                      <a href="./booklist.html" class="dropdown-item ">List of Books</a>
+                      <a href="./addbook.html" class="dropdown-item ">Add Book</a>
+                      <a href="./delete.html" class="dropdown-item ">Delete Book</a>
+                      <a href="./users-list.html" class="dropdown-item ">Upload Book Cover</a>
+                    </div>
+                  </li>
+
+                 <li class="nav-item dropdown">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-calendar"></i>Genre</a>
+                    <div class="dropdown-menu dropdown-menu-arrow">
+                      <a href="./genrelist.html" class="dropdown-item ">Genre</a>
+                      <a href="./addgenre.html" class="dropdown-item ">Add Genre</a>
+						<a href="./deletegenre.html" class="dropdown-item ">Delete Genre</a>
+
+                  <li class="nav-item">
+                    <a href="./gallery.html" class="nav-link"><i class="fe fe-image"></i>Book Gallery</a>
+                  </li>
+
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+                <script>
+                  require(['c3', 'jquery'], function(c3, $) {
+                  	$(document).ready(function(){
+                  		var chart = c3.generate({
+                  			bindto: '#chart-development-activity', // id of chart wrapper
+                  			data: {
+                  				columns: [
+                  				    // each columns data
+                  					['data1', 0, 5, 1, 2, 7, 5, 6, 8, 24, 7, 12, 5, 6, 3, 2, 2, 6, 30, 10, 10, 15, 14, 47, 65, 55]
+                  				],
+                  				type: 'area', // default type of chart
+                  				groups: [
+                  					[ 'data1', 'data2', 'data3']
+                  				],
+                  				colors: {
+                  					'data1': tabler.colors["blue"]
+                  				},
+                  				names: {
+                  				    // name of each serie
+                  					'data1': 'Purchases'
+                  				}
+                  			},
+                  			axis: {
+                  				y: {
+                  					padding: {
+                  						bottom: 0,
+                  					},
+                  					show: false,
+                  						tick: {
+                  						outer: false
+                  					}
+                  				},
+                  				x: {
+                  					padding: {
+                  						left: 0,
+                  						right: 0
+                  					},
+                  					show: false
+                  				}
+                  			},
+                  			legend: {
+                  				position: 'inset',
+                  				padding: 0,
+                  				inset: {
+                                      anchor: 'top-left',
+                  					x: 20,
+                  					y: 8,
+                  					step: 10
+                  				}
+                  			},
+                  			tooltip: {
+                  				format: {
+                  					title: function (x) {
+                  						return '';
+                  					}
+                  				}
+                  			},
+                  			padding: {
+                  				bottom: 0,
+                  				left: -1,
+                  				right: -1
+                  			},
+                  			point: {
+                  				show: false
+                  			}
+                  		});
+                  	});
+                  });
+                </script>
+              </div>
+
+                  </div>
+
+            <div class="row row-cards row-deck">
+              <div class="col-12">
+                <div class="card">
+                  <div class="table-responsive">
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Best Sellers</h4>
+                  </div>
+                  <table class="table card-table">
+                    <tr>
+                      <td width="1"><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>Fire and Fury: Inside the Trump White House by Michael Wolff (Holt)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>Magnolia Table by Joanna Gaines (Harper)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>A Higher Loyalty by James Comey (Flatiron)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>A Wrinkle in Time by Madeleine L’Engle (Macmillan)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>	Dog Man and Cat Kid by Dav Pilkey (Scholastic)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>A Day in the Life of Marlon Bundo by Marlon Bundo (Chronicle)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h2 class="card-title">Recommended</h2>
+                  </div>
+                  <table class="table card-table">
+                    <tr>
+                      <td>Cherry by Nico Walker</td>
+                      <td class="text-right">
+                        <span class="fa fa-book" aria-hidden="true"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Katerina by James Frey</td>
+                      <td class="text-right">
+                        <span class="fa fa-book" aria-hidden="true"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>French Exit by Patrick Dewitt</td>
+                      <td class="text-right">
+                        <span class="fa fa-book" aria-hidden="true"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>How to be Famous by Caitlin Moran</td>
+                      <td class="text-right">
+                        <span class="fa fa-book" aria-hidden="true"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>A Terrible Country by Keith Gessen</td>
+                      <td class="text-right">
+                        <span class="fa fa-book" aria-hidden="true"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Brother by David Chariandy</td>
+                      <td class="text-right">
+                        <span class="fa fa-book" aria-hidden="true"></span>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+
+				<div class="page">
+      <div class="page-single">
+        <div class="container">
+          <div class="row">
+            <div class="col col-login mx-auto">
+              <div class="text-center mb-6">
+              </div>
+              <form class="card" action="" method="post">
+                <div class="card-body p-6">
+                  <div class="card-title">Login to your account</div>
+                  <div class="form-group">
+                    <label class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">
+                      Password
+                      <a href="./forgot-password.html" class="float-right small">I forgot password</a>
+                    </label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  </div>
+                  <div class="form-footer">
+                    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                  </div>
+                </div>
+              </form>
+              <div class="text-center text-muted">
+                Don't have account yet? <a href="./register.html">Sign up</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+              <div class="col-md-6 col-lg-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Top 6 E-Book</h3>
+                  </div>
+
+					 <table class="table card-table">
+                    <tr>
+                      <td width="1"><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>Fire and Fury: Inside the Trump White House by Michael Wolff (Holt)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>The Woman in the Window by A.J. Finn (Morrow)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>	The Fallen by David Baldacci (Grand Central)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>The Great Alone by Kristin Hannah (St. Martin’s)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>The 17th Suspect by James Patterson & Maxine Paetro (Little, Brown)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>The President Is Missing by Bill Clinton & James Patterson (L,B/Knopf)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+						 <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>Sweet Little Lies by Caz Frear</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+						 <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>Meet Me at the Museum by Anne Youngson</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                  </table>
+
+                            </div>
+                          </div>
+
+
+				 <div class="col-md-6 col-lg-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Trend Lists</h3>
+                  </div>
+
+					 <table class="table card-table">
+                    <tr>
+                      <td width="1"><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>Fire and Fury: Inside the Trump White House by Michael Wolff (Holt)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>The English Wife by Lauren Willig</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>The Chalk Man by C.J. Tudor</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>Iron Gold by Pierce Brown</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>Sisters Like Us by Susan Mallery</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>The Great Alone by Kristin Hannah</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+						 <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>White Chrysanthemum by Mary Lynn Bracht</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+						 <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>Hellbent by Gregg Hurwitz</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+
+						 <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>Dark in Death by J.D. Robb</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+						 <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>The Atomic City Girls by Janet Beard</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+						 <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>As You Wish by Jude Deveraux</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+						 <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>My Dear Hamilton by Laura Kamoie and Stephanie Dray</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+						 <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>The Perfect Mother by Aimee Molloy</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+
+                  </table>
+
+                            </div>
+                          </div>
+
+<div class="page">
+      <div class="page-single">
+        <div class="container">
+          <div class="row">
+            <div class="col col-login mx-auto">
+              <form class="card" action="" method="post">
+                <div class="card-body p-6">
+                  <div class="card-title">Create new account</div>
+                  <div class="form-group">
+                    <label class="form-label">User Name</label>
+                    <input type="text" class="form-control" placeholder="Enter name">
+                  </div>
+					<div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <input type="text" class="form-control" placeholder="Enter name">
+                  </div>
+					<div class="form-group">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" class="form-control" placeholder="Enter name">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Email address</label>
+                    <input type="email" class="form-control" placeholder="Enter email">
+                  </div>
+					<div class="form-group">
+                    <label class="form-label">Phone</label>
+                    <input type="text" class="form-control" placeholder="Enter phone">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" placeholder="Password">
+                  </div>
+
+                  <div class="form-footer">
+                    <button type="submit" class="btn btn-primary btn-block">Create new account</button>
+                  </div>
+                </div>
+              </form>
+              <div class="text-center text-muted">
+                Already have account? <a href="./login.html">Sign in</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+                  </div>
+
+
+
+
+      <div class="footer">
+
+                </div>
+
+      <footer class="footer">
+        <div class="container">
+
+            <div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
+              Copyright © 2018 <a href=".">Shooked E-Book</a><a href="https://codecalm.net" target="_blank"></a> All rights reserved.
+            </div>
+          </div>
+        </div>
+      </footer>
+
+  </body>
+</html>

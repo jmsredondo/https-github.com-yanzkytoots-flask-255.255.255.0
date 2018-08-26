@@ -9,6 +9,10 @@ class LoginForm(FlaskForm):
     submit = SubmitField('sign in')
 
 
+class DeleteBook(FlaskForm):
+    bookid = StringField('bookid', validators=[DataRequired()])
+
+
 class RegistrationForm(FlaskForm):
     username = StringField('Username')
     firstname = StringField('Firstname')
@@ -17,8 +21,6 @@ class RegistrationForm(FlaskForm):
     phone = StringField('Phone')
     confirm = PasswordField('Repeat password')
     password = PasswordField('Password')
-
-    submit = SubmitField('Create')
 
 
 class AddBookForm(FlaskForm):
