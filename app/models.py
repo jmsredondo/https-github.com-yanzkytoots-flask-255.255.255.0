@@ -7,12 +7,12 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(300), nullable=False, unique=True)
-    password = db.Column(db.String(300), nullable=False)
-    firstName = db.Column(db.String(300), nullable=False)
-    lastName = db.Column(db.String(300), nullable=False)
+    username = db.Column(db.String(30), nullable=False, unique=True)
+    password = db.Column(db.String(100), nullable=False)
+    firstName = db.Column(db.String(50), nullable=False)
+    lastName = db.Column(db.String(50), nullable=False)
     phone = db.Column(db.Integer, nullable=False, unique=True)
-    email = db.Column(db.String(300), nullable=False, unique=True)
+    email = db.Column(db.String(50), nullable=False, unique=True)
     balance = db.Column(db.Integer, default=0)
     books = db.relationship('Book', secondary='libraries', lazy='subquery',
                             backref=db.backref('users', lazy=True))
@@ -128,17 +128,18 @@ class Book(db.Model):
     __tablename__ = 'books'
 
     id = db.Column(db.Integer, primary_key=True)
-    book_name = db.Column(db.String(120), nullable=False)
+    book_name = db.Column(db.String(150), nullable=False)
     author = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000))
-    # image
+    image = db.Column(db.String(100))
     ratings = db.relationship('Rating', lazy='select',
                               backref=db.backref('books', lazy='joined'))
 
-    def __init__(self, book_name, author, description):
+    def __init__(self, book_name, author, description, image):
         self.book_name = book_name
         self.author = author
         self.description = description
+        self.image = image
 
     @classmethod
     def find_by_id(cls, id):

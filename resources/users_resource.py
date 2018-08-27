@@ -37,16 +37,11 @@ class UserLogin(Resource):
 
         if User.verify_hash(data['password'], current_user.password):
             access_token = create_access_token(identity=data['username'])
-            # refresh_token = create_refresh_token(identity=data['username'])
-            session['username'] = data['username']
+            refresh_token = create_refresh_token(identity=data['username'])
             return {
                        'message': 'Logged in as {}'.format(current_user.username),
                        'access_token': access_token,
-
-
-
-
-                       # 'refresh_token': refresh_token
+                       'refresh_token': refresh_token
                    }, 200
         else:
             return {
@@ -57,7 +52,7 @@ class UserLogin(Resource):
 # ------------------------------ ROUTE: /users/logout ------------------------------ #
 class UserLogout(Resource):
     # Logout user and add access token to banlist #
-    # @jwt_required
+    @jwt_required
     def post(self):
         jti = get_raw_jwt()['jti']
         try:
@@ -72,10 +67,9 @@ class UserLogout(Resource):
                    }, 400
 
 
-"""
 # ------------------------------ ROUTE: /users/logout/refresh ------------------------------ #
 class UserLogoutRefresh(Resource):
-	# Logout user and add refresh token to banlist #
+    # Logout user and add refresh token to banlist #
     @jwt_refresh_token_required
     def post(self):
         jti = get_raw_jwt()['jti']
@@ -97,7 +91,6 @@ class TokenRefresh(Resource):
         current_user = get_jwt_identity()
         access_token = create_access_token(identity = current_user)
         return {'access_token': access_token}
-"""
 
 
 # ------------------------------ ROUTE: /users ------------------------------ #
@@ -180,16 +173,16 @@ class UserDetailMethods(Resource):
     # Update an existing user's information
     def put(self, pk):
         data = reg_parser.parse_args()
-
-        if not Genre.find_by_id(pk):
+        user = User.find_by_id(pk)
+        if not user:
             return {
                        'message': 'User not found'
                    }, 404
-        elif User.find_by_email(data['email']):
+        elif User.find_by_email(data['email']) and user.email != data['email']:
             return {
                        'message': 'User email already exists'
                    }, 202
-        elif User.find_by_phone(data['phone']):
+        elif User.find_by_phone(data['phone'] and user.phone != data['phone']):
             return {
                        'message': 'User phone already exists'
                    }, 202

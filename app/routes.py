@@ -1,9 +1,13 @@
 import random
 
 import requests
-from flask import render_template, request, redirect, json, session, jsonify, make_response
-
+<<<<<<< HEAD
 from app import app, photos
+from flask import render_template, request, redirect, json, session
+=======
+from flask import render_template, request, redirect, json, session, jsonify, make_response
+>>>>>>> 44e987836ac506afc169ce815f640f7ef3839d6b
+
 from forms import RegistrationForm, LoginForm
 
 
@@ -64,24 +68,24 @@ def login_page():
             return render_template('Admin/dashboard.html', username=session['username'])
         return render_template('User/userdashboard.html', username=session['username'])
     if request.method == 'POST':
-
         if form.validate_on_submit():
             userdict = {
                 "username": form.username.data,
                 "password": form.password.data
             }
-
             r = requests.post("http://localhost:80/users/login", data=userdict)
 
             if r.status_code == 200:
                 session['username'] = form.username.data
+<<<<<<< HEAD
+=======
 
+>>>>>>> 44e987836ac506afc169ce815f640f7ef3839d6b
                 if form.username.data == 'admin':
                     return render_template('Admin/dashboard.html', username=form.username.data)
                 else:
                     return render_template('User/userdashboard.html', username=form.username.data)
             return redirect('/#loginFailed')
-
     return render_template('login.html', form=form)
 
 
@@ -233,6 +237,9 @@ def addgenre():
     print r.content
     if r.status_code == 200:
         return str(r.status_code)
+<<<<<<< HEAD
+    return str(r.status_code)
+=======
     return str(r.status_code)
 
 
@@ -264,3 +271,4 @@ def userlibrary():
 @app.route('/userlanding', methods=['GET'])
 def userlanding():
     return render_template('User/userlanding.html')
+>>>>>>> 44e987836ac506afc169ce815f640f7ef3839d6b

@@ -36,6 +36,7 @@
             <div class="row">
                 <div class="col col-login mx-auto">
                     <!--Registration Form-->
+                    <img class="card-img-top" src="{{url_for('static', filename='images/shookedin.jpg')}}" />
                     <form action="" class="card" method="post" required name="RegForm" onsubmit="return validation()">
                         {{ form.hidden_tag() }}
                         <div class="card-body">
@@ -43,6 +44,7 @@
                             <div class="form-group">
                                 <label class="form-label">User Name</label>
                                 {{ form.username(class='form-control') }}
+                                <label class="form-sm-text"><h8>(Username must at least 6 characters)</h8></label>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">First Name</label>
@@ -56,6 +58,7 @@
                             <div class="form-group">
                                 <label class="form-label">Email address</label>
                                 {{ form.email(class='form-control') }}
+                                <label class="form-sm-text"><h8>(Email Address must at least 6 characters)</h8></label>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Phone</label>
@@ -64,6 +67,7 @@
                             <div class="form-group">
                                 <label class="form-label">Password</label>
                                 {{ form.password(class='form-control') }}
+                                <label class="form-sm-text"><h8>(The password is at least 8 characters, at least 1 uppercase letters, 1 lowercase letters, 1 numbers and 1 special characters.)</h8></label>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Confirm Password</label>
