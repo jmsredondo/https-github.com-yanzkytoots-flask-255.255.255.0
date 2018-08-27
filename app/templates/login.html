@@ -23,14 +23,14 @@
     <!-- Dashboard Core -->
     <link href="{{ url_for('static', filename='css/dashboard.css') }}" rel="stylesheet"/>
 </head>
-<body class="">
+<body onload="checkSession();" class="">
 <div class="page">
     <div class="page-single">
         <div class="container">
             <div class="row">
                 <div class="col col-login mx-auto">
                     <div class="text-center mb-6">
-                        <!-- <img src="{{url_for('static', filename='images/shookedin.jpg')}}" /> -->
+                        <img class="card-img-top" src="{{url_for('static', filename='images/shookedin.jpg')}}" />
                     </div>
                     <form action="" class="card" method="post" novalidate>
                         {{ form.hidden_tag() }}
@@ -66,6 +66,8 @@
 </div>
 </body>
 
+<script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/notify.js') }}"></script>
 <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
 
 </html>

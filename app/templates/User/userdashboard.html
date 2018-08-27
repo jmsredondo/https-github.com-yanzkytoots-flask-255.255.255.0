@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>
+        Shooked
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+          name='viewport'/>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+
+    <link href="{{ url_for('static', filename='css/material-dashboard.css') }}" rel="stylesheet"/>
+</head>
+
+<body class="">
+<div class="wrapper ">
+    <div class="sidebar" data-color="green" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+        <!--
+          Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+          Tip 2: you can also add an image using data-image tag
+      -->
+        <div class="logo">
+            <a href="#" class="simple-text logo-normal">
+                <img class="card-img-top" src="{{url_for('static', filename='images/shookedin.jpg')}}" />
+                {{ username }}
+            </a>
+        </div>
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li class="nav-item active  ">
+                    <a class="nav-link" href="/userdash">
+                        <i class="material-icons">dashboard</i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/userbook">
+                        <i class="material-icons">library_books</i>
+                        <p>Books</p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/usergenre">
+                        <i class="material-icons">library_books</i>
+                        <p>Genre</p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/userlibrary">
+                        <i class="material-icons">library_books</i>
+                        <p>Library</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="navbar-toggler-icon icon-bar"></span>
+                    <span class="navbar-toggler-icon icon-bar"></span>
+                    <span class="navbar-toggler-icon icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end">
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">person</i>
+                                <p class="d-lg-none d-md-block">
+                                    Some Actions
+                                </p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="/logout">Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+
+        <div class="container">
+           <div class="row row-cards">
+              <div class="col-sm-6 col-lg-4">
+                <div class="card p-3">
+                  <a href="/userbook" class="mb-3">
+                    <img class="card-img-top" src="http://harrypotterfanzone.com/wp-content/2009/06/olly-moss-philosophers-stone-cover.jpg">
+                  </a>
+                  <div class="d-flex align-items-center px-2">
+                    <div class="avatar avatar-md mr-3" style="background-image: url('#')"></div>
+                    <div>
+                      <div>Philosopher's Stone</div>
+                      <small class="d-block text-muted">12 days ago</small>
+                    </div>
+                    <div class="ml-auto text-muted">
+                      <a href="javascript:void(0)" class="icon"><i class="fe fe-eye mr-1"></i> 112</a>
+                      <a href="javascript:void(0)" class="icon d-none d-md-inline-block ml-3"><i class="fe fe-heart mr-1"></i> 42</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <div class="card p-3">
+                  <a href="/userbook" class="mb-3">
+                    <img class="card-img-top" src="http://harrypotterfanzone.com/wp-content/2009/06/olly-moss-prisoner-of-azkaban-cover.jpg">
+                  </a>
+                  <div class="d-flex align-items-center px-2">
+                    <div class="avatar avatar-md mr-3" style="background-image: url('#')"></div>
+                    <div>
+                      <div>Prisoner of Azkaban</div>
+                      <small class="d-block text-muted">12 days ago</small>
+                    </div>
+                    <div class="ml-auto text-muted">
+                      <a href="javascript:void(0)" class="icon"><i class="fe fe-eye mr-1"></i> 70</a>
+                      <a href="javascript:void(0)" class="icon d-none d-md-inline-block ml-3"><i class="fe fe-heart mr-1"></i> 0</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <div class="card p-3">
+                  <a href="/userbook" class="mb-3">
+                    <img class="card-img-top" src="http://harrypotterfanzone.com/wp-content/2009/06/olly-moss-goblet-of-fire-cover.jpg">
+                  </a>
+                  <div class="d-flex align-items-center px-2">
+                    <div class="avatar avatar-md mr-3" style="background-image: url('#')"></div>
+                    <div>
+                      <div>Goblet of Fire</div>
+                      <small class="d-block text-muted">4 days ago</small>
+                    </div>
+                    <div class="ml-auto text-muted">
+                      <a href="javascript:void(0)" class="icon"><i class="fe fe-eye mr-1"></i> 166</a>
+                      <a href="javascript:void(0)" class="icon d-none d-md-inline-block ml-3"><i class="fe fe-heart mr-1"></i> 96</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <div class="card p-3">
+                  <a href="/userbook" class="mb-3">
+                    <img class="card-img-top" src="http://harrypotterfanzone.com/wp-content/2009/06/olly-moss-order-of-the-phoenix-cover.jpg">
+                  </a>
+                  <div class="d-flex align-items-center px-2">
+                    <div class="avatar avatar-md mr-3" style="background-image: url('#')"></div>
+                    <div>
+                      <div>Order of the Phoenix</div>
+                      <small class="d-block text-muted">18 days ago</small>
+                    </div>
+                    <div class="ml-auto text-muted">
+                      <a href="javascript:void(0)" class="icon"><i class="fe fe-eye mr-1"></i> 76</a>
+                      <a href="javascript:void(0)" class="icon d-none d-md-inline-block ml-3"><i class="fe fe-heart mr-1"></i> 6</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <div class="card p-3">
+                  <a href="/userbook" class="mb-3">
+                    <img class="card-img-top" src="http://harrypotterfanzone.com/wp-content/2009/06/olly-moss-half-blood-prince-cover.jpg">
+                  </a>
+                  <div class="d-flex align-items-center px-2">
+                    <div class="avatar avatar-md mr-3" style="background-image: url('#')"></div>
+                    <div>
+                      <div>The Half Blood Prince</div>
+                      <small class="d-block text-muted">16 days ago</small>
+                    </div>
+                    <div class="ml-auto text-muted">
+                      <a href="javascript:void(0)" class="icon"><i class="fe fe-eye mr-1"></i> 106</a>
+                      <a href="javascript:void(0)" class="icon d-none d-md-inline-block ml-3"><i class="fe fe-heart mr-1"></i> 36</a>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+                             <div class="col-sm-6 col-lg-4">
+                <div class="card p-3">
+                  <a href="/userbook" class="mb-3">
+                    <img class="card-img-top" src="http://harrypotterfanzone.com/wp-content/2009/06/olly-moss-deathly-hallows-cover.jpg">
+                  </a>
+                  <div class="d-flex align-items-center px-2">
+                    <div class="avatar avatar-md mr-3" style="background-image: url('#')"></div>
+                    <div>
+                      <div>Deathly Hallows</div>
+                      <small class="d-block text-muted">4 days ago</small>
+                    </div>
+                    <div class="ml-auto text-muted">
+                      <a href="javascript:void(0)" class="icon"><i class="fe fe-eye mr-1"></i> 77</a>
+                      <a href="javascript:void(0)" class="icon d-none d-md-inline-block ml-3"><i class="fe fe-heart mr-1"></i> 7</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              </div>
+
+                       <div class="row row-cards row-deck">
+              <div class="col-12">
+                <div class="card">
+                  <div class="table-responsive">
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Best Sellers</h4>
+                  </div>
+                  <table class="table card-table">
+                    <tr>
+                      <td width="1"><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>Fire and Fury: Inside the Trump White House by Michael Wolff (Holt)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>Magnolia Table by Joanna Gaines (Harper)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>A Higher Loyalty by James Comey (Flatiron)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>A Wrinkle in Time by Madeleine L’Engle (Macmillan)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>	Dog Man and Cat Kid by Dav Pilkey (Scholastic)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>A Day in the Life of Marlon Bundo by Marlon Bundo (Chronicle)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Recommended</h4>
+                  </div>
+                  <table class="table card-table">
+                    <tr>
+                      <td>Cherry by Nico Walker</td>
+                      <td class="text-right">
+                        <span class="fa fa-book" aria-hidden="true"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Katerina by James Frey</td>
+                      <td class="text-right">
+                        <span class="fa fa-book" aria-hidden="true"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>French Exit by Patrick Dewitt</td>
+                      <td class="text-right">
+                        <span class="fa fa-book" aria-hidden="true"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>How to be Famous by Caitlin Moran</td>
+                      <td class="text-right">
+                        <span class="fa fa-book" aria-hidden="true"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>A Terrible Country by Keith Gessen</td>
+                      <td class="text-right">
+                        <span class="fa fa-book" aria-hidden="true"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Brother by David Chariandy</td>
+                      <td class="text-right">
+                        <span class="fa fa-book" aria-hidden="true"></span>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+
+                           <div class="col-md-6 col-lg-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Top 6 E-Book</h4>
+                  </div>
+
+					 <table class="table card-table">
+                    <tr>
+                      <td width="1"><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>Fire and Fury: Inside the Trump White House by Michael Wolff (Holt)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>The Woman in the Window by A.J. Finn (Morrow)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>	The Fallen by David Baldacci (Grand Central)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>The Great Alone by Kristin Hannah (St. Martin’s)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>The 17th Suspect by James Patterson & Maxine Paetro (Little, Brown)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fa fa-book" aria-hidden="true"></i></td>
+                      <td>The President Is Missing by Bill Clinton & James Patterson (L,B/Knopf)</td>
+                      <td class="text-right"><span class="text-muted"></span></td>
+                    </tr>
+<!--   Core JS Files   -->
+
+<script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/core/popper.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='js/core/bootstrap-material-design.min.js') }}"
+        type="text/javascript"></script>
+<!--  Notifications Plugin    -->
+<script src="{{ url_for('static', filename='js/bootstrap-notify.js') }}"></script>
+
+
+</body>
+
+</html>

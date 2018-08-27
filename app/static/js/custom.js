@@ -1,4 +1,23 @@
-
+// function setSession(){
+//     var sess = $('#sess').val();
+//
+//     if (sessionStorage.getItem('admin')) {
+//
+//     }else if(!sess){
+//         window.location.href ='/#loginFirst';
+//     }else {
+//         sessionStorage.setItem('session',sess)
+//     }
+//
+//
+// }
+//
+// function checkSession(){
+//     if (sessionStorage.getItem('admin')){
+//         window.location.href ='/dashboard';
+//     }
+//
+// }
 
 $(document).ready(function () {
 
@@ -41,6 +60,27 @@ $(document).ready(function () {
             $.notify({
                 icon: '<i class="material-icons">grade</i>',
                 message: "Success!"
+            }, {
+                type: 'success',
+                animate: {
+                    enter: 'animated fadeInUp',
+                    exit: 'animated fadeOutRight'
+                },
+                placement: {
+                    from: "top",
+                    align: "center"
+                },
+                offset: 10,
+                spacing: 10,
+                z_index: 1031,
+            });
+            window.location.replace(location.href.split('#')[0] + '#');
+        }
+
+        if (location.hash === '#loginFirst') {
+            $.notify({
+                icon: '<i class="material-icons">grade</i>',
+                message: "Login First!"
             }, {
                 type: 'success',
                 animate: {

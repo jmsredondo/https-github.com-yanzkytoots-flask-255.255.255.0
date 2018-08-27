@@ -1,4 +1,6 @@
 # coding=utf-8
+import os
+
 from flask import Flask
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
@@ -14,7 +16,7 @@ migrate = Migrate(app, db)
 ma = Marshmallow(app)
 photos = UploadSet('photos', IMAGES)
 
-app.config['UPLOADED_PHOTOS_DEST'] = 'app/static/images/upload'
+app.config['UPLOADED_PHOTOS_DEST'] = 'static/images'
 configure_uploads(app, photos)
 
 from app import routes, models

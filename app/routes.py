@@ -1,6 +1,12 @@
+import random
+
 import requests
+<<<<<<< HEAD
 from app import app, photos
 from flask import render_template, request, redirect, json, session
+=======
+from flask import render_template, request, redirect, json, session, jsonify, make_response
+>>>>>>> 44e987836ac506afc169ce815f640f7ef3839d6b
 
 from forms import RegistrationForm, LoginForm
 
@@ -8,14 +14,59 @@ from forms import RegistrationForm, LoginForm
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST' and 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        return filename
+        photos.save(request.files['photo'])
+        return None
     return render_template('upload.html')
+
+
+@app.route('/uploadpic/<id>/', methods=['GET', 'POST'])
+def uploadpic(id):
+    r = requests.get("http://localhost:80/book/" + id)
+    print r.status_code
+    print r.content
+
+    return render_template('upload.html', id=id, data=r.content)
+
+
+@app.route('/getGenre', methods=['GET'])
+def getGenre():
+    r = requests.get("http://localhost:80/genre")
+    print r.status_code
+    result = r.json()
+    return jsonify(result)
+
+
+@app.route('/addGenreToBook/<genreid>/<bookid>', methods=['GET'])
+def addGenreToBook2(genreid, bookid):
+    print genreid, bookid
+
+    r = requests.post("http://localhost:80/genre/addbook/" + genreid, json={'book_id': bookid})
+    print r.status_code
+    return str(r.status_code)
+
+
+@app.route('/addBookToGenre', methods=['GET'])
+def addBookToGenre():
+    reg = {
+        "book_id": request.form('')
+    }
+    r = requests.post("http://localhost:80/genre/addbook/", data=reg)
+    print r.status_code
+    print r.content
+    if r.status_code == 200:
+        return redirect('/book')
+
+    return redirect('/book')
 
 
 @app.route('/', methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()
+    if 'username' in session:
+        print session['username']
+        if session['username'] == 'admin':
+            return render_template('Admin/dashboard.html',username=session['username'])
+        return  render_template('User/userdashboard.html', username=session['username'])
     if request.method == 'POST':
         if form.validate_on_submit():
             userdict = {
@@ -23,21 +74,24 @@ def login_page():
                 "password": form.password.data
             }
             r = requests.post("http://localhost:80/users/login", data=userdict)
-            print r.status_code
-            print r.content
+
             if r.status_code == 200:
                 session['username'] = form.username.data
+<<<<<<< HEAD
+=======
+
+>>>>>>> 44e987836ac506afc169ce815f640f7ef3839d6b
                 if form.username.data == 'admin':
                     return render_template('Admin/dashboard.html', username=form.username.data)
                 else:
-                    return render_template('Admin/dashboard.html', username=form.username.data)
+                    return render_template('User/userdashboard.html', username=form.username.data)
             return redirect('/#loginFailed')
     return render_template('login.html', form=form)
 
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    session.pop('username', None)
+    session.clear()
     return redirect('/')
 
 
@@ -170,4 +224,38 @@ def addgenre():
     print r.content
     if r.status_code == 200:
         return str(r.status_code)
+<<<<<<< HEAD
     return str(r.status_code)
+=======
+    return str(r.status_code)
+
+
+@app.route('/userdash', methods=['GET'])
+def userdash():
+    return render_template('User/userdashboard.html')
+
+
+@app.route('/userbook', methods=['GET'])
+def userbook():
+    r = requests.get("http://localhost:80/book")
+    result = json.loads(r.content)
+    return render_template('User/userbooklist.html', books=result)
+
+
+@app.route('/usergenre', methods=['GET'])
+def usergenre():
+    r = requests.get("http://localhost:80/genre")
+    print r.content
+    result = json.loads(r.content)
+    return render_template('User/usergenrelist.html', genres=result)
+
+
+@app.route('/userlibrary', methods=['GET'])
+def userlibrary():
+    return render_template('User/userlibrary.html')
+
+
+@app.route('/userlanding', methods=['GET'])
+def userlanding():
+    return render_template('User/userlanding.html')
+>>>>>>> 44e987836ac506afc169ce815f640f7ef3839d6b

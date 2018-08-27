@@ -28,7 +28,7 @@
       -->
         <div class="logo">
             <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-                Creative Tim
+                {{ username }}
             </a>
         </div>
         <div class="sidebar-wrapper">
@@ -72,7 +72,6 @@
                     <span class="navbar-toggler-icon icon-bar"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end">
-
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -108,6 +107,8 @@
                                             <th>Book</th>
                                             <th>Author</th>
                                             <th>Description</th>
+                                            <th>Genre/s</th>
+                                            <th>Image</th>
                                             <th></th>
                                         </tr>
                                         </thead>
@@ -118,8 +119,22 @@
                                                 <td>{{ book.author }}</td>
                                                 <td>{{ book.description }}</td>
 
+                                                <td>
+                                                    {% for genre in book.genres %}
+                                                        {{ genre.genre }} ,
+                                                    {% endfor %}
+                                                </td>
+                                                <td>
+                                                    <a href="/uploadpic/{{ book.id }}" class="btn btn-success">Upload</a>
+                                                </td>
                                                 <td class="text-center">
-                                                    <button  value="{{ book.id }}" class="btn btn-danger btnn"><i
+                                                    <button id="bookid" value="{{ book.id }}"
+                                                            class="btn btnnn btn-success"
+                                                            data-toggle="modal"
+                                                            data-target="#exampleModal2"><i
+                                                            class="material-icons">library_add</i></button>
+
+                                                    <button value="{{ book.id }}" class="btn btn-danger btnn"><i
                                                             class="material-icons">delete</i></button>
                                                 </td>
 
@@ -183,6 +198,34 @@
                         </button>
                     </div>
                 </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Add to Genre</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    <label class="form-label"> Genre</label>
+                    <select name="genreid" id="genreid" class="form-control">
+                    </select>
+
+
+                    <div class="float-right">
+                        <button id="genrebtn" type="button" class="btn btn-success">Add
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -201,19 +244,62 @@
 <script>
     $(document).ready(function () {
         $('#example').DataTable();
-        $('.btnn').on('click',function () {
+        $('.btnn').on('click', function () {
             var ayd = $(this).val();
             $.ajax({
                 method: "POST",
                 url: '/delbook/' + ayd,
                 success: function (data) {
                     if (data === '200') {
-                        window.location.replace('/bookdelsuccess')
+                        window.location.replace('/upload')
                     }
                 },
             });
 
         })
+
+        $('#genrebtn').click(function () {
+
+            var bookid = $('#bookid').val()
+            var genreid = $('#genreid').val()
+
+            $.ajax({
+                    url: '/addGenreToBook/' + genreid + '/' + bookid,
+                    success: function (data) {
+                        window.location.replace('/book')
+                    }
+
+                },
+            );
+
+
+        })
+
+
+        $('.btnnn').on('click', function () {
+            $.ajax({
+                url: '/getGenre',
+                success: function (data) {
+                    var genre = [];
+                    var type = [];
+
+
+                    console.log(bookid)
+
+                    for (var i = 0; i < data.length; i++) {
+                        genre.push('<option value = ' + data[i]['id'] + '>' + data[i]['genre'] + '</option>');
+                        type.push('<option value = ' + data[i]['id'] + '>' + data[i]['type'] + '</option>');
+
+                    }
+
+                    $('#genreid').html(genre);
+                    $('#ikaw').html(type);
+                },
+            });
+
+        })
+
+
     });
 </script>
 </html>
