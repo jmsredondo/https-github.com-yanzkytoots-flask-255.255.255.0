@@ -1,36 +1,30 @@
-import os
 import unittest
 import requests
-from flask import Flask, json
-from flask_sqlalchemy import SQLAlchemy
+from flask import json
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-app = Flask(__name__)
-db = SQLAlchemy(app)
-app.config['TESTING'] = True
-app.config['WTF_CSRF_ENABLED'] = False
-app.config['DEBUG'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test.db')
+from tests import app, db
 
 
 class BookTestCase(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
-        self.client = self.app.test_client()
+        self.app = app
+        self.app.testing = True
+        self.client = self.app.test_client
         self.assertEqual(app.debug, False)
-        self.host = 'http://localhost:5000'
+        self.host = 'http://localhost:80'
         self.sample_book = {'book_name': 'Noli Me Tangere', 'author': 'Jose Rizal',
-                            'description': ' '}
+                            'description': ' ', 'image': ' '}
+
+        # binds the app to the current context
         with self.app.app_context():
             # create all tables
             db.create_all()
 
     def test_book_add(self):
         """Test add a book"""
-        result = requests.post(self.host + '/api/book', data=self.sample_book)
+        result = requests.post(self.host + '/book', data=self.sample_book)
         self.assertEqual(result.status_code, 200)
-        result = requests.get(self.host + '/api/book')
+        result = requests.get(self.host + '/book')
         self.assertEqual(result.status_code, 200)
         self.assertIn('Noli Me Tangere', str(result.text))
 
@@ -90,14 +84,14 @@ class BookTestCase(unittest.TestCase):
 
 class GenreTestCase(unittest.TestCase):
     def setUp(self):
-        self.host = 'http://localhost:5000'
+        self.host = 'http://localhost:80'
         self.sample_genre = {'genre': 'Tragedy', 'type': 'Fiction'}
 
     def test_genre_add(self):
         """Test add a genre"""
-        result = requests.post(self.host + '/api/genre', data=self.sample_genre)
+        result = requests.post(self.host + '/genre', data=self.sample_genre)
         self.assertEqual(result.status_code, 200)
-        result = requests.get(self.host + '/api/genre')
+        result = requests.get(self.host + '/genre')
         self.assertEqual(result.status_code, 200)
         self.assertIn('Tragedy', str(result.text))
 

@@ -223,6 +223,14 @@ class LibraryMethods(Resource):
             return {
                        'message': 'Book already exists in user library'
                    }, 202
+        elif not Book.find_by_id(data['book_id']):
+            return {
+                       'message': 'Book not found'
+                   }, 404
+        elif not User.find_by_id(data['user_id']):
+            return {
+                       'message': 'User not found'
+                   }, 404
         try:
             User.add_book_to_library(data['book_id'], data['user_id'])
             return {
