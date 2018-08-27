@@ -61,8 +61,8 @@ def login_page():
     if 'username' in session:
         print session['username']
         if session['username'] == 'admin':
-            return render_template('Admin/dashboard.html',username=session['username'])
-        return  render_template('User/userdashboard.html', username=session['username'])
+            return render_template('Admin/dashboard.html', username=session['username'])
+        return render_template('User/userdashboard.html', username=session['username'])
     if request.method == 'POST':
 
         if form.validate_on_submit():
@@ -139,14 +139,24 @@ def addbook():
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
-    return render_template('Admin/dashboard.html')
+    if 'username' not in session:
+        return render_template('login.html')
+    if 'username' in session:
+        if session['username'] == 'admin':
+            return render_template('Admin/dashboard.html', username=session['username'])
+        return render_template('login.html', username=session['username'])
+    return render_template('login.html')
 
 
 @app.route('/book', methods=['GET', 'POST'])
 def book():
-    r = requests.get("http://localhost:80/book")
-    result = json.loads(r.content)
-    return render_template('Admin/books.html', books=result)
+    if 'username' in session:
+        if session['username'] == 'admin':
+            r = requests.get("http://localhost:80/book")
+            result = json.loads(r.content)
+            return render_template('Admin/books.html', books=result)
+        return render_template('login.html')
+    return render_template('login.html')
 
 
 @app.route('/bookaddsuccess', methods=['GET', 'POST'])
@@ -206,10 +216,13 @@ def genreaddsuccess():
 
 @app.route('/genre', methods=['GET', 'POST'])
 def genre():
-    r = requests.get("http://localhost:80/genre")
-    print r.content
-    result = json.loads(r.content)
-    return render_template('Admin/genre.html', genres=result)
+    if 'username' in session:
+        if session['username'] == 'admin':
+            r = requests.get("http://localhost:80/genre")
+            result = json.loads(r.content)
+            return render_template('Admin/genre.html', genres=result)
+        return render_template('login.html')
+    return render_template('login.html')
 
 
 @app.route('/addgenre', methods=['POST'])

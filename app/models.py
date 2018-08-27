@@ -349,7 +349,7 @@ class BookSchema(ma.Schema):
     genres = ma.Nested(GenreSchema, many=True)
 
     class Meta:
-        fields = ('id', 'book_name', 'author', 'description', 'genres', 'image')
+        fields = ('id', 'book_name', 'author', 'description', 'genres','image')
 
 
 book_schema = BookSchema()
