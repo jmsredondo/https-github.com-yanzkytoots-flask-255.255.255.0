@@ -1,4 +1,6 @@
 # coding=utf-8
+import os
+
 from flask import Flask
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
@@ -8,7 +10,6 @@ from flask_uploads import UploadSet, IMAGES, configure_uploads
 from config import Config
 
 app = Flask(__name__)
-app.secret_key = "Random String"
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

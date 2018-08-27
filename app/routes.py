@@ -1,5 +1,7 @@
+import random
+
 import requests
-from flask import render_template, request, redirect, json, session, jsonify
+from flask import render_template, request, redirect, json, session, jsonify, make_response
 
 from app import app, photos
 from forms import RegistrationForm, LoginForm
@@ -53,18 +55,14 @@ def addBookToGenre():
     return redirect('/book')
 
 
-@app.route('/sess', methods=['GET'])
-def asda():
-    print session['admin']
-
-    return "wahha"
-
-
 @app.route('/', methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()
-    if 'admin' in session:
-        print "yeh"
+    if 'username' in session:
+        print session['username']
+        if session['username'] == 'admin':
+            return render_template('Admin/dashboard.html',username=session['username'])
+        return  render_template('User/userdashboard.html', username=session['username'])
     if request.method == 'POST':
 
         if form.validate_on_submit():
@@ -74,15 +72,14 @@ def login_page():
             }
 
             r = requests.post("http://localhost:80/users/login", data=userdict)
-            print r.status_code
-            print r.content
+
             if r.status_code == 200:
+                session['username'] = form.username.data
 
                 if form.username.data == 'admin':
-
-                    return render_template('Admin/dashboard.html', username=form.username.data, sess=form.username.data)
-                else:
                     return render_template('Admin/dashboard.html', username=form.username.data)
+                else:
+                    return render_template('User/userdashboard.html', username=form.username.data)
             return redirect('/#loginFailed')
 
     return render_template('login.html', form=form)
@@ -90,7 +87,7 @@ def login_page():
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    session.pop('username', None)
+    session.clear()
     return redirect('/')
 
 
