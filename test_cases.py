@@ -1,68 +1,156 @@
-import os
 import unittest
 import requests
-<<<<<<< HEAD:tests/app_tests.py
-
-from app import app
-=======
-from flask import Flask, json
-from flask_sqlalchemy import SQLAlchemy
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-app = Flask(__name__)
-db = SQLAlchemy(app)
-app.config['TESTING'] = True
-app.config['WTF_CSRF_ENABLED'] = False
-app.config['DEBUG'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test.db')
->>>>>>> 7d58554477288213ff9701237f20c6795d6dfec3:test_cases.py
 
 
-class BookTestCase(unittest.TestCase):
+class TestCase(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
-        self.client = self.app.test_client()
-        self.assertEqual(app.debug, False)
-        self.host = 'http://localhost:5000'
+        self.host = 'http://localhost:80'
         self.sample_book = {'book_name': 'Noli Me Tangere', 'author': 'Jose Rizal',
-<<<<<<< HEAD:tests/app_tests.py
                             'description': ' ', 'image': ' '}
+        self.sample_genre = {'genre': 'Tragedy', 'type': 'Fiction'}
+        self.sample_user = \
+            {
+                'username': 'username',
+                'firstName': 'Bob',
+                'lastName': 'Stewart',
+                'password': 'password',
+                'email': 'bob_stewart@gmail.com',
+                'phone': '64756000',
+                'balance': 0
+            }
 
+    # CREATE RESOURCES #
     def test01_test_book_add(self):
         """Test add a book"""
         requests.delete(self.host + '/book')
         rv = requests.post(self.host + '/book', data=self.sample_book)
         self.assertEqual(rv.status_code, 200)
         result = requests.get(self.host + '/book')
-=======
-                            'description': ' '}
-        with self.app.app_context():
-            # create all tables
-            db.create_all()
-
-    def test_book_add(self):
-        """Test add a book"""
-        result = requests.post(self.host + '/api/book', data=self.sample_book)
-        self.assertEqual(result.status_code, 200)
-        result = requests.get(self.host + '/api/book')
->>>>>>> 7d58554477288213ff9701237f20c6795d6dfec3:test_cases.py
         self.assertEqual(result.status_code, 200)
         self.assertIn('Noli Me Tangere', str(result.text))
 
-    def test02_test_book_get_all(self):
+    def test02_test_user_add(self):
+        """Test add a user"""
+        requests.delete(self.host + '/users')
+        result = requests.post(self.host + '/users', data=self.sample_user)
+        self.assertEqual(result.status_code, 200)
+        result = requests.get(self.host + '/users')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('Bob', str(result.text))
+
+    def test03_test_genre_add(self):
+        """Test add a genre"""
+        requests.delete(self.host + '/genre')
+        result = requests.post(self.host + '/genre', data=self.sample_genre)
+        self.assertEqual(result.status_code, 200)
+        result = requests.get(self.host + '/genre')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('Tragedy', str(result.text))
+
+    # RETRIEVE RESOURCES #
+    def test04_test_book_get_all(self):
         """Test get all books"""
         result = requests.get(self.host + '/book')
         self.assertEqual(result.status_code, 200)
         self.assertIn('Noli Me Tangere', str(result.text))
 
-    def test03_test_book_detail(self):
+    def test05_test_book_detail(self):
         """Test get a specific book"""
         result = requests.get(self.host + '/book/1')
         self.assertEqual(result.status_code, 200)
         self.assertIn('Noli Me Tangere', str(result.text))
 
-    def test04_test_book_update(self):
+    def test06_test_user_get_all(self):
+        """Test get all users"""
+        result = requests.get(self.host + '/users')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('Bob', str(result.text))
+
+    def test07_test_user_detail(self):
+        """Test get a specific user"""
+        result = requests.get(self.host + '/users/1')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('Bob', str(result.text))
+
+    def test08_test_genre_get_all(self):
+        """Test get all genres"""
+        result = requests.get(self.host + '/genre')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('Tragedy', str(result.text))
+
+    def test09_test_genre_detail(self):
+        """Test get a specific genre"""
+        result = requests.get(self.host + '/genre/1')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('Tragedy', str(result.text))
+
+    # CATEGORY #
+    def test10_test_add_book_to_genre(self):
+        """Test add book to a genre"""
+        rv = requests.post(
+            self.host + '/genre/addbook/1',
+            data={'book_id': '1'}
+        )
+        self.assertEqual(rv.status_code, 200)
+        result = requests.get(self.host + '/book/1')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('Tragedy', str(result.text))
+
+    def test11_test_get_genres_books(self):
+        """Test get all books from a genre"""
+        result = requests.get(self.host + '/genre/addbook/1')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('Noli Me Tangere', str(result.text))
+
+    # LIBRARY #
+    def test12_test_add_book_to_library(self):
+        """Test add book to a user library"""
+        rv = requests.post(
+            self.host + '/library',
+            data=
+            {
+                'book_id': '1',
+                'user_id': '1'
+            }
+        )
+        self.assertEqual(rv.status_code, 200)
+        result = requests.get(self.host + '/library/1')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('Noli Me Tangere', str(result.text))
+
+    # def test013_test_get_books_from_library(self):
+    #     """Test get all books from user library"""
+    #     result = requests.get(self.host + '/library/1')
+    #     self.assertEqual(result.status_code, 200)
+    #     self.assertIn('Noli Me Tangere', str(result.text))
+
+    # RATING #
+
+    def test14_test_add_rating(self):
+        """Test add rating to a book"""
+        rv = requests.post(
+            self.host + '/rate',
+            data=
+            {
+                'book_id': '1',
+                'user_id': '1',
+                'rate': '1',
+                'comment': 'Good book'
+            }
+        )
+        self.assertEqual(rv.status_code, 200)
+        result = requests.get(self.host + '/rate/1')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('Good book', str(result.text))
+
+    def test15_test_get_book_rating(self):
+        """Test get all books from user library"""
+        result = requests.get(self.host + '/rate/1')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('Good book', str(result.text))
+
+    # UPDATE #
+    def test16_test_book_update(self):
         """Test update a book"""
         rv = requests.put(
             self.host + '/book/1',
@@ -72,28 +160,55 @@ class BookTestCase(unittest.TestCase):
         result = requests.get(self.host + '/book/1')
         self.assertIn('El Filibusterismo', str(result.text))
 
-    def test05_test_book_delete(self):
+    def test17_test_user_update(self):
+        """Test update a user"""
+        rv = requests.put(
+            self.host + '/users/1',
+            data=
+            {
+                'username': 'username',
+                'firstName': 'Howard',
+                'lastName': 'Stewart',
+                'password': 'password',
+                'email': 'bob_stewart@gmail.com',
+                'phone': '64756000',
+                'balance': 0
+            }
+        )
+        self.assertEqual(rv.status_code, 200)
+        result = requests.get(self.host + '/users/1')
+        self.assertIn('Howard', str(result.text))
+
+    def test18_test_genre_update(self):
+        """Test update a book"""
+        rv = requests.put(
+            self.host + '/genre/1',
+            data={'genre': 'Comedy', 'type': 'Fiction'}
+        )
+        self.assertEqual(rv.status_code, 200)
+        result = requests.get(self.host + '/genre/1')
+        self.assertIn('Comedy', str(result.text))
+
+    def test19_test_genre_delete(self):
+        """Test delete a genre"""
+        rv = requests.delete(self.host + '/genre/1')
+        self.assertEqual(rv.status_code, 200)
+        result = requests.get(self.host + '/genre/1')
+        self.assertEqual(result.status_code, 404)
+
+    def test20_test_book_delete(self):
         """Test delete a book"""
         rv = requests.delete(self.host + '/book/1')
         self.assertEqual(rv.status_code, 200)
         result = requests.get(self.host + '/book/1')
         self.assertEqual(result.status_code, 404)
 
-
-class GenreTestCase(unittest.TestCase):
-    def setUp(self):
-        self.host = 'http://localhost:5000'
-        self.sample_genre = {'genre': 'Tragedy', 'type': 'Fiction'}
-        requests.delete(self.host + '/genre')
-
-    def test_genre_add(self):
-        """Test add a genre"""
-        result = requests.post(self.host + '/api/genre', data=self.sample_genre)
-        self.assertEqual(result.status_code, 200)
-        result = requests.get(self.host + '/api/genre')
-        self.assertEqual(result.status_code, 200)
-        self.assertIn('Tragedy', str(result.text))
-
+    def test21_test_user_delete(self):
+        """Test delete a user"""
+        rv = requests.delete(self.host + '/users/1')
+        self.assertEqual(rv.status_code, 200)
+        result = requests.get(self.host + '/users/1')
+        self.assertEqual(result.status_code, 404)
 
 if __name__ == "__main__":
     unittest.main()
