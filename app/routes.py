@@ -74,6 +74,7 @@ def login_page():
 
             if r.status_code == 200:
                 session['username'] = form.username.data
+                session['ayd'] = form.username.data
                 result = json.loads(r.content)
                 token = result['access_token']
                 session['access_token'] = token
