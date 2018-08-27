@@ -15,7 +15,7 @@ migrate = Migrate(app, db)
 ma = Marshmallow(app)
 photos = UploadSet('photos', IMAGES)
 
-app.config['UPLOADED_PHOTOS_DEST'] = 'app/static/images/upload'
+app.config['UPLOADED_PHOTOS_DEST'] = 'static/images'
 configure_uploads(app, photos)
 
 from app import routes, models

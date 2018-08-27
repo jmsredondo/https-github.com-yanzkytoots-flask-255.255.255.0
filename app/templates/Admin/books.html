@@ -108,6 +108,7 @@
                                             <th>Author</th>
                                             <th>Description</th>
                                             <th>Genre/s</th>
+                                            <th>Image</th>
                                             <th></th>
                                         </tr>
                                         </thead>
@@ -117,13 +118,18 @@
                                                 <td>{{ book.book_name }}</td>
                                                 <td>{{ book.author }}</td>
                                                 <td>{{ book.description }}</td>
+
                                                 <td>
-                                                {% for genre in book.genres %}
-                                                    {{ genre.genre }} ,
-                                                {% endfor %}
+                                                    {% for genre in book.genres %}
+                                                        {{ genre.genre }} ,
+                                                    {% endfor %}
+                                                </td>
+                                                <td>
+                                                    <a href="/uploadpic/{{ book.id }}" class="btn btn-success">Upload</a>
                                                 </td>
                                                 <td class="text-center">
-                                                    <button id="bookid" value="{{ book.id }}" class="btn btnnn btn-success"
+                                                    <button id="bookid" value="{{ book.id }}"
+                                                            class="btn btnnn btn-success"
                                                             data-toggle="modal"
                                                             data-target="#exampleModal2"><i
                                                             class="material-icons">library_add</i></button>
@@ -192,6 +198,7 @@
                         </button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
@@ -213,8 +220,6 @@
                     <select name="genreid" id="genreid" class="form-control">
                     </select>
 
-                    <select disabled="" id="ikaw" class="form-control">
-                    </select>
 
                     <div class="float-right">
                         <button id="genrebtn" type="button" class="btn btn-success">Add
@@ -246,7 +251,7 @@
                 url: '/delbook/' + ayd,
                 success: function (data) {
                     if (data === '200') {
-                        window.location.replace('/bookdelsuccess')
+                        window.location.replace('/upload')
                     }
                 },
             });
@@ -259,8 +264,8 @@
             var genreid = $('#genreid').val()
 
             $.ajax({
-                url: '/addGenreToBook/'+genreid +'/' + bookid,
-                success: function (data) {
+                    url: '/addGenreToBook/' + genreid + '/' + bookid,
+                    success: function (data) {
                         window.location.replace('/book')
                     }
 
@@ -269,7 +274,6 @@
 
 
         })
-
 
 
         $('.btnnn').on('click', function () {

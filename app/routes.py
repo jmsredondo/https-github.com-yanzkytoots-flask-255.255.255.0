@@ -8,9 +8,18 @@ from forms import RegistrationForm, LoginForm
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST' and 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        return filename
+        photos.save(request.files['photo'])
+        return None
     return render_template('upload.html')
+
+
+@app.route('/uploadpic/<id>/', methods=['GET', 'POST'])
+def uploadpic(id):
+    r = requests.get("http://localhost:80/book/" + id)
+    print r.status_code
+    print r.content
+
+    return render_template('upload.html', id=id, data=r.content)
 
 
 @app.route('/getGenre', methods=['GET'])
@@ -44,9 +53,18 @@ def addBookToGenre():
     return redirect('/book')
 
 
+@app.route('/sess', methods=['GET'])
+def asda():
+    print session['admin']
+
+    return "wahha"
+
+
 @app.route('/', methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()
+    if 'admin' in session:
+        print "yeh"
     if request.method == 'POST':
 
         if form.validate_on_submit():
@@ -59,10 +77,10 @@ def login_page():
             print r.status_code
             print r.content
             if r.status_code == 200:
-                session['username'] = "game"
+
                 if form.username.data == 'admin':
 
-                    return render_template('Admin/dashboard.html', username=form.username.data)
+                    return render_template('Admin/dashboard.html', username=form.username.data, sess=form.username.data)
                 else:
                     return render_template('Admin/dashboard.html', username=form.username.data)
             return redirect('/#loginFailed')
@@ -206,6 +224,7 @@ def addgenre():
     if r.status_code == 200:
         return str(r.status_code)
     return str(r.status_code)
+
 
 @app.route('/userdash', methods=['GET'])
 def userdash():

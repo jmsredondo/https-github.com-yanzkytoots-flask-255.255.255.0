@@ -18,7 +18,8 @@
     <link href="{{ url_for('static', filename='css/material-dashboard.css') }}" rel="stylesheet"/>
 </head>
 
-<body class="">
+<body onload="setSession();">
+<input id="sess" type="hidden" value="{{ sess }}">
 <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
         <!--
@@ -215,6 +216,7 @@
         type="text/javascript"></script>
 <!--  Notifications Plugin    -->
 <script src="{{ url_for('static', filename='js/bootstrap-notify.js') }}"></script>
+<script src="{{ url_for('static', filename='js/custom.js') }}"></script>
 </body>
 
 </html>
