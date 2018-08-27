@@ -206,3 +206,32 @@ def addgenre():
     if r.status_code == 200:
         return str(r.status_code)
     return str(r.status_code)
+
+@app.route('/userdash', methods=['GET'])
+def userdash():
+    return render_template('User/userdashboard.html')
+
+
+@app.route('/userbook', methods=['GET'])
+def userbook():
+    r = requests.get("http://localhost:80/book")
+    result = json.loads(r.content)
+    return render_template('User/userbooklist.html', books=result)
+
+
+@app.route('/usergenre', methods=['GET'])
+def usergenre():
+    r = requests.get("http://localhost:80/genre")
+    print r.content
+    result = json.loads(r.content)
+    return render_template('User/usergenrelist.html', genres=result)
+
+
+@app.route('/userlibrary', methods=['GET'])
+def userlibrary():
+    return render_template('User/userlibrary.html')
+
+
+@app.route('/userlanding', methods=['GET'])
+def userlanding():
+    return render_template('User/userlanding.html')
