@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from app.models import *
+from flask_jwt_extended import (jwt_required)
 
 # ------------------------------ PARSE INPUTS ------------------------------ #
 genre_parser = reqparse.RequestParser(bundle_errors=True)
@@ -16,10 +17,12 @@ class GenreMethods(Resource):
         # Retrieve all genres #
         return Genre.get_all()
 
+    @jwt_required
     def delete(self):
         # Delete all genres #
         return Genre.delete_all()
 
+    @jwt_required
     def post(self):
         # Create a genre #
         data = genre_parser.parse_args()
@@ -58,6 +61,7 @@ class GenreDetailMethods(Resource):
                    }, 404
 
     # Delete a genre #
+    @jwt_required
     def delete(self, pk):
         if Genre.find_by_id(pk):
             try:
@@ -76,6 +80,7 @@ class GenreDetailMethods(Resource):
                    }, 404
 
     # Update an existing genre's information #
+    @jwt_required
     def put(self, pk):
         data = genre_parser.parse_args()
 
@@ -115,8 +120,8 @@ class GenreBookMethods(Resource):
                        'message': 'Genre not found'
                    }, 404
 
-        # Add a book to a genre #
-
+    # Add a book to a genre #
+    @jwt_required
     def post(self, pk):
         data = id_parser.parse_args()
         if Category.find_by_book(data['book_id']) and Category.find_by_genre(pk):

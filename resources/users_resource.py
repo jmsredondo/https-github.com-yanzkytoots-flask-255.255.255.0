@@ -1,4 +1,3 @@
-from flask import session
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required,
                                 get_jwt_identity, get_raw_jwt)
@@ -154,6 +153,7 @@ class UserDetailMethods(Resource):
                    }, 404
 
     # Delete a user #
+    @jwt_required
     def delete(self, pk):
         if User.find_by_id(pk):
             try:
@@ -171,6 +171,7 @@ class UserDetailMethods(Resource):
                    }, 404
 
     # Update an existing user's information
+    @jwt_required
     def put(self, pk):
         data = reg_parser.parse_args()
         user = User.find_by_id(pk)
@@ -210,6 +211,7 @@ class UserDetailMethods(Resource):
 
 class LibraryMethods(Resource):
     # Add a book to user library #
+    @jwt_required
     def post(self):
         data = id_parser.parse_args()
         if Library.find_by_user(data['user_id']) and Library.find_by_book(data['book_id']):
