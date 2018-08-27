@@ -35,9 +35,10 @@
         <div class="container">
             <div class="row">
                 <div class="col col-login mx-auto">
-                    <form action="" class="card" method="post" novalidate>
+                    <--Registration Form-->
+                    <form action="" class="card" method="post" required name="RegForm" onsubmit="return validation()">
                         {{ form.hidden_tag() }}
-                        <div class="card-body ">
+                        <div class="card-body">
                             <div class="card-title text-center">Create new account</div>
                             <div class="form-group">
                                 <label class="form-label">User Name</label>
@@ -65,7 +66,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Confirm Password</label>
-                                <input type="text" class="form-control">
+                                <input type="password" id ="password2" class="form-control" name="password2" value>
                             </div>
 
                             <div class="form-footer">
@@ -81,7 +82,89 @@
         </div>
     </div>
 
+    <-- Validation Script-->
+    <script>
+    function validation()
+    {
+        var uname = document.forms["RegForm"]["username"];
+        var fname = document.forms["RegForm"]["firstname"];
+        var lname = document.forms["RegForm"]["lastname"];
+        var email = document.forms["RegForm"]["email"];
+        var phone = document.forms["RegForm"]["phone"];
+        var pass1 = document.forms["RegForm"]["password"];
+        var pass2 = document.forms["RegForm"]["password2"];
 
+
+
+        if(uname.value=="")
+            {
+            window.alert("Please enter username");
+            name.focus();
+            return false;
+            }
+        if((fname.value==""))
+        {
+            window.alert("Please enter First name");
+            fname.focus();
+            return false;
+        }
+        if(lname.value=="")
+        {
+            window.alert("Please enter your Last name");
+            lname.focus()
+            return false;
+        }
+        if (email.value == "")
+    {
+        window.alert("Please enter a valid e-mail address.");
+        email.focus();
+        return false;
+    }
+
+    if (email.value.indexOf("@", 0) < 0)
+    {
+        window.alert("Please enter a valid e-mail address.");
+        email.focus();
+        return false;
+    }
+
+    if (email.value.indexOf(".", 0) < 0)
+    {
+        window.alert("Please enter a valid e-mail address.");
+        email.focus();
+        return false;
+    }
+    if (phone.value=="")
+    {
+        window.alert("Please enter phone number");
+        phone.focus();
+        return false;
+    }
+
+    /*if(phone.isInteger(0-999))
+    {
+        window.alert("Please enter number");
+        phone.focus();
+        return false;
+    }*/
+
+    if (pass1.value == "")
+    {
+        window.alert("Please enter your password");
+        pass1.focus();
+        return false;
+    }
+    if (pass1.value!=pass2.value)
+    {
+        window.alert("Passwords don't match")
+        pass1.focus();
+        return false;
+    }
+
+        return true;
+    }
+</script>
+    <-- End of Validation Script-->
 </div>
 </div>
 </body>
