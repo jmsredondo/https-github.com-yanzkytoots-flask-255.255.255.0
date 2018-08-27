@@ -4,7 +4,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
-    # Parent configuration class #
+    """Parent configuration class."""
     DEBUG = False
     CSRF_ENABLED = True
     JWT_SECRET_KEY = 'jwt-secret-string'

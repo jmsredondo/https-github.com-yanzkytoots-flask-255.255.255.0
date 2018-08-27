@@ -6,7 +6,6 @@ book_parser = reqparse.RequestParser(bundle_errors=True)
 book_parser.add_argument('book_name', help='This field cannot be blank', required=True)
 book_parser.add_argument('author', help='This field cannot be blank', required=True)
 book_parser.add_argument('description', required=False)
-book_parser.add_argument('image', required=False)
 
 rating_parser = reqparse.RequestParser(bundle_errors=True)
 rating_parser.add_argument('book_id', help='This field cannot be blank', required=True)
@@ -37,8 +36,7 @@ class BookMethods(Resource):
         new_book = Book(
             book_name=data['book_name'],
             author=data['author'],
-            description=data['description'],
-            image=data['image']
+            description=data['description']
         )
 
         try:
@@ -97,8 +95,7 @@ class BookDetailMethods(Resource):
         new_book = Book(
             book_name=data['book_name'],
             author=data['author'],
-            description=data['description'],
-            image=data['image']
+            description=data['description']
         )
 
         try:

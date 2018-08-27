@@ -131,15 +131,14 @@ class Book(db.Model):
     book_name = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000))
-    image = db.Column(db.String(100))
+    # image
     ratings = db.relationship('Rating', lazy='select',
                               backref=db.backref('books', lazy='joined'))
 
-    def __init__(self, book_name, author, description, image):
+    def __init__(self, book_name, author, description):
         self.book_name = book_name
         self.author = author
         self.description = description
-        self.image = image
 
     @classmethod
     def find_by_id(cls, id):
@@ -183,12 +182,11 @@ class Book(db.Model):
 
     @classmethod
     def update(self, new_book, id):
-        book = Book.query.get(id)
-        book.book_name = new_book.book_name
-        book.author = new_book.author
-        book.description = new_book.description
-        book.image = new_book.image
-        db.session.add(book)
+        db_book = Book.query.get(id)
+        db_book.book_name = new_book.book_name
+        db_book.author = new_book.author
+        db_book.description = new_book.description
+        db.session.add(db_book)
         db.session.commit()
 
     @classmethod

@@ -123,14 +123,6 @@ class GenreBookMethods(Resource):
             return {
                        'message': 'Book being added already exists in this genre'
                    }, 202
-        elif not Book.find_by_id(data['book_id']):
-            return {
-                       'message': 'Book not found'
-                   }, 404
-        elif not Genre.find_by_id(pk):
-            return {
-                       'message': 'Genre not found'
-                   }, 404
         try:
             Genre.add_book(data['book_id'], pk)
             return {
