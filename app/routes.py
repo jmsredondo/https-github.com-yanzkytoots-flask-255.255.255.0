@@ -1,8 +1,16 @@
 import requests
 from flask import render_template, request, redirect, json, session
 
-from app import app
-from forms import RegistrationForm, LoginForm, AddGenreForm, AddBookForm, DeleteBook
+from app import app, photos
+from forms import RegistrationForm, LoginForm
+
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if request.method == 'POST' and 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        return filename
+    return render_template('upload.html')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -20,8 +28,12 @@ def login_page():
             print r.status_code
             print r.content
             if r.status_code == 200:
-                session['username'] = form.username.data
-                return render_template('Admin/dashboard.html', username=form.username.data)
+                session['username'] = "game"
+                if form.username.data == 'admin':
+
+                    return render_template('Admin/dashboard.html', username=form.username.data)
+                else:
+                    return render_template('Admin/dashboard.html', username=form.username.data)
             return redirect('/#loginFailed')
 
     return render_template('login.html', form=form)
