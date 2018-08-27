@@ -1,5 +1,5 @@
 import requests
-from flask import render_template, request, redirect, json, session
+from flask import render_template, request, redirect, json, session, jsonify
 
 from app import app, photos
 from forms import RegistrationForm, LoginForm
@@ -11,6 +11,37 @@ def upload():
         filename = photos.save(request.files['photo'])
         return filename
     return render_template('upload.html')
+
+
+@app.route('/getGenre', methods=['GET'])
+def getGenre():
+    r = requests.get("http://localhost:80/genre")
+    print r.status_code
+    result = r.json()
+    return jsonify(result)
+
+
+@app.route('/addGenreToBook/<genreid>/<bookid>', methods=['GET'])
+def addGenreToBook2(genreid, bookid):
+    print genreid, bookid
+
+    r = requests.post("http://localhost:80/genre/addbook/" + genreid, json={'book_id': bookid})
+    print r.status_code
+    return str(r.status_code)
+
+
+@app.route('/addBookToGenre', methods=['GET'])
+def addBookToGenre():
+    reg = {
+        "book_id": request.form('')
+    }
+    r = requests.post("http://localhost:80/genre/addbook/", data=reg)
+    print r.status_code
+    print r.content
+    if r.status_code == 200:
+        return redirect('/book')
+
+    return redirect('/book')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -43,8 +74,6 @@ def login_page():
 def logout():
     session.pop('username', None)
     return redirect('/')
-<<<<<<< HEAD
-=======
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -177,4 +206,3 @@ def addgenre():
     if r.status_code == 200:
         return str(r.status_code)
     return str(r.status_code)
->>>>>>> 7d58554477288213ff9701237f20c6795d6dfec3
