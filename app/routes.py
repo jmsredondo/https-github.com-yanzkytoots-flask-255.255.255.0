@@ -1,5 +1,7 @@
+import random
+
 import requests
-from flask import render_template, request, redirect, json, session, jsonify
+from flask import render_template, request, redirect, json, session, jsonify, make_response
 
 from app import app, photos
 from forms import RegistrationForm, LoginForm
@@ -8,9 +10,18 @@ from forms import RegistrationForm, LoginForm
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST' and 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        return filename
+        photos.save(request.files['photo'])
+        return None
     return render_template('upload.html')
+
+
+@app.route('/uploadpic/<id>/', methods=['GET', 'POST'])
+def uploadpic(id):
+    r = requests.get("http://localhost:80/book/" + id)
+    print r.status_code
+    print r.content
+
+    return render_template('upload.html', id=id, data=r.content)
 
 
 @app.route('/getGenre', methods=['GET'])
@@ -47,6 +58,11 @@ def addBookToGenre():
 @app.route('/', methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()
+    if 'username' in session:
+        print session['username']
+        if session['username'] == 'admin':
+            return render_template('Admin/dashboard.html',username=session['username'])
+        return  render_template('User/userdashboard.html', username=session['username'])
     if request.method == 'POST':
 
         if form.validate_on_submit():
@@ -56,15 +72,14 @@ def login_page():
             }
 
             r = requests.post("http://localhost:80/users/login", data=userdict)
-            print r.status_code
-            print r.content
-            if r.status_code == 200:
-                session['username'] = "game"
-                if form.username.data == 'admin':
 
+            if r.status_code == 200:
+                session['username'] = form.username.data
+
+                if form.username.data == 'admin':
                     return render_template('Admin/dashboard.html', username=form.username.data)
                 else:
-                    return render_template('Admin/dashboard.html', username=form.username.data)
+                    return render_template('User/userdashboard.html', username=form.username.data)
             return redirect('/#loginFailed')
 
     return render_template('login.html', form=form)
@@ -72,7 +87,7 @@ def login_page():
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    session.pop('username', None)
+    session.clear()
     return redirect('/')
 
 
@@ -206,6 +221,7 @@ def addgenre():
     if r.status_code == 200:
         return str(r.status_code)
     return str(r.status_code)
+
 
 @app.route('/userdash', methods=['GET'])
 def userdash():
