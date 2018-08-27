@@ -1,7 +1,7 @@
 import requests
+from app import app, photos
 from flask import render_template, request, redirect, json, session
 
-from app import app, photos
 from forms import RegistrationForm, LoginForm
 
 
@@ -17,25 +17,21 @@ def upload():
 def login_page():
     form = LoginForm()
     if request.method == 'POST':
-
         if form.validate_on_submit():
             userdict = {
                 "username": form.username.data,
                 "password": form.password.data
             }
-
             r = requests.post("http://localhost:80/users/login", data=userdict)
             print r.status_code
             print r.content
             if r.status_code == 200:
-                session['username'] = "game"
+                session['username'] = form.username.data
                 if form.username.data == 'admin':
-
                     return render_template('Admin/dashboard.html', username=form.username.data)
                 else:
                     return render_template('Admin/dashboard.html', username=form.username.data)
             return redirect('/#loginFailed')
-
     return render_template('login.html', form=form)
 
 
@@ -43,8 +39,6 @@ def login_page():
 def logout():
     session.pop('username', None)
     return redirect('/')
-<<<<<<< HEAD
-=======
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -177,4 +171,3 @@ def addgenre():
     if r.status_code == 200:
         return str(r.status_code)
     return str(r.status_code)
->>>>>>> 7d58554477288213ff9701237f20c6795d6dfec3

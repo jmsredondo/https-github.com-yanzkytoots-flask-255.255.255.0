@@ -6,6 +6,7 @@ book_parser = reqparse.RequestParser(bundle_errors=True)
 book_parser.add_argument('book_name', help='This field cannot be blank', required=True)
 book_parser.add_argument('author', help='This field cannot be blank', required=True)
 book_parser.add_argument('description', required=False)
+book_parser.add_argument('image', required=False)
 
 rating_parser = reqparse.RequestParser(bundle_errors=True)
 rating_parser.add_argument('book_id', help='This field cannot be blank', required=True)
@@ -36,7 +37,8 @@ class BookMethods(Resource):
         new_book = Book(
             book_name=data['book_name'],
             author=data['author'],
-            description=data['description']
+            description=data['description'],
+            image=data['image']
         )
 
         try:
@@ -82,12 +84,13 @@ class BookDetailMethods(Resource):
     # Update an existing book's information #
     def put(self, pk):
         data = book_parser.parse_args()
+        book = Book.find_by_id(pk)
 
-        if not Book.find_by_id(pk):
+        if not book:
             return {
                        'message': 'Book not found'
                    }, 404
-        elif Book.find_by_book_name(data['book_name']) and Book.find_by_author(data['author']):
+        elif Book.find_by_book_name(data['book_name']) and Book.find_by_author(data['author']) and book.book_name != data['book_name']:
             return {
                        'message': 'This book already exists in the database'
                    }, 202
@@ -95,7 +98,8 @@ class BookDetailMethods(Resource):
         new_book = Book(
             book_name=data['book_name'],
             author=data['author'],
-            description=data['description']
+            description=data['description'],
+            image=data['image']
         )
 
         try:
