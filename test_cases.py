@@ -3,7 +3,7 @@ import unittest, requests, json
 
 class TestCase(unittest.TestCase):
     def setUp(self):
-        self.host = 'http://localhost:80'
+        self.host = 'http://localhost:9100'
         self.sample_book = \
             {
                 'book_name': 'Noli Me Tangere',

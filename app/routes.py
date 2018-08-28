@@ -15,7 +15,7 @@ def upload():
 
 @app.route('/uploadpic/<id>/', methods=['GET', 'POST'])
 def uploadpic(id):
-    r = requests.get("http://localhost:80/book/" + id)
+    r = requests.get("http://localhost:9100/book/" + id)
     print r.status_code
     print r.content
 
@@ -24,7 +24,7 @@ def uploadpic(id):
 
 @app.route('/getGenre', methods=['GET'])
 def getGenre():
-    r = requests.get("http://localhost:80/genre")
+    r = requests.get("http://localhost:9100/genre")
     print r.status_code
     result = r.json()
     return jsonify(result)
@@ -34,7 +34,7 @@ def getGenre():
 def addGenreToBook2(genreid, bookid):
     print genreid, bookid
     headers = {'Authorization': 'Bearer ' + session['access_token']}
-    r = requests.post("http://localhost:80/genre/addbook/" + genreid, json={'book_id': bookid}, headers=headers)
+    r = requests.post("http://localhost:9100/genre/addbook/" + genreid, json={'book_id': bookid}, headers=headers)
     print r.status_code
     return str(r.status_code)
 
@@ -45,7 +45,7 @@ def addBookToGenre():
     reg = {
         "book_id": request.form('')
     }
-    r = requests.post("http://localhost:80/genre/addbook/", data=reg, headers=headers)
+    r = requests.post("http://localhost:9100/genre/addbook/", data=reg, headers=headers)
     print r.status_code
     print r.content
     if r.status_code == 200:
@@ -60,7 +60,7 @@ def addBookToLibrary(uid,bookid):
         "user_id": uid,
         "book_id": bookid
     }
-    r = requests.post("http://localhost:80/library", data=reg, headers=headers)
+    r = requests.post("http://localhost:9100/library", data=reg, headers=headers)
     print r.status_code
     print r.content
     if r.status_code == 200:
@@ -83,7 +83,7 @@ def login_page():
                 "username": form.username.data,
                 "password": form.password.data
             }
-            r = requests.post("http://localhost:80/users/login", data=userdict)
+            r = requests.post("http://localhost:9100/users/login", data=userdict)
 
             if r.status_code == 200:
                 temp = json.loads(r.content)
@@ -102,7 +102,7 @@ def login_page():
 @app.route('/logout', methods=['GET'])
 def logout():
     headers = {'Authorization': 'Bearer '+session['access_token']}
-    r = requests.post("http://localhost:80/users/logout", headers=headers)
+    r = requests.post("http://localhost:9100/users/logout", headers=headers)
     session.clear()
     print r.status_code
     print r.content
@@ -124,7 +124,7 @@ def register():
             "balance": 0
         }
 
-        r = requests.post("http://localhost:80/users", data=reg)
+        r = requests.post("http://localhost:9100/users", data=reg)
         print r.status_code
         print r.content
         if r.status_code == 200:
@@ -135,7 +135,7 @@ def register():
 @app.route('/delbook/<id>', methods=['POST'])
 def delbook(id):
     print id
-    r = requests.delete("http://localhost:80/book/" + id)
+    r = requests.delete("http://localhost:9100/book/" + id)
     print r.status_code
     print r.content
     if r.status_code == 200:
@@ -149,7 +149,7 @@ def addbook():
     a = request.form
     print a['description']
     print id
-    r = requests.post("http://localhost:80/book", json=a, headers=headers)
+    r = requests.post("http://localhost:9100/book", json=a, headers=headers)
     print r.status_code
     print r.content
     if r.status_code == 200:
@@ -172,7 +172,7 @@ def dashboard():
 def book():
     if 'username' in session:
         if session['username'] == 'admin':
-            r = requests.get("http://localhost:80/book")
+            r = requests.get("http://localhost:9100/book")
             result = json.loads(r.content)
             return render_template('Admin/books.html', books=result)
         return render_template('login.html')
@@ -191,7 +191,7 @@ def bookdelsuccess():
 
 @app.route('/user', methods=['GET'])
 def user():
-    r = requests.get("http://localhost:80/users")
+    r = requests.get("http://localhost:9100/users")
     print r.content
     result = json.loads(r.content)
     return render_template('Admin/user.html', users=result)
@@ -201,7 +201,7 @@ def user():
 def deluser(id):
     headers = {'Authorization': 'Bearer ' + session['access_token']}
     print id
-    r = requests.delete("http://localhost:80/users/" + id, headers=headers)
+    r = requests.delete("http://localhost:9100/users/" + id, headers=headers)
     print r.status_code
     print r.content
     if r.status_code == 200:
@@ -218,7 +218,7 @@ def delusersuccess(id):
 def delgenre(id):
     headers = {'Authorization': 'Bearer ' + session['access_token']}
     print id
-    r = requests.delete("http://localhost:80/genre/" + id, headers=headers)
+    r = requests.delete("http://localhost:9100/genre/" + id, headers=headers)
     print r.status_code
     print r.content
     if r.status_code == 200:
@@ -240,7 +240,7 @@ def genreaddsuccess():
 def genre():
     if 'username' in session:
         if session['username'] == 'admin':
-            r = requests.get("http://localhost:80/genre")
+            r = requests.get("http://localhost:9100/genre")
             result = json.loads(r.content)
             return render_template('Admin/genre.html', genres=result)
         return render_template('login.html')
@@ -251,7 +251,7 @@ def genre():
 def addgenre():
     headers = {'Authorization': 'Bearer ' + session['access_token']}
     a = request.form
-    r = requests.post("http://localhost:80/genre", json=a, headers=headers)
+    r = requests.post("http://localhost:9100/genre", json=a, headers=headers)
     print r.status_code
     print r.content
     if r.status_code == 200:
@@ -266,14 +266,14 @@ def userdash():
 
 @app.route('/userbook', methods=['GET'])
 def userbook():
-    r = requests.get("http://localhost:80/book")
+    r = requests.get("http://localhost:9100/book")
     result = json.loads(r.content)
     return render_template('User/userbooklist.html', books=result)
 
 
 @app.route('/usergenre', methods=['GET'])
 def usergenre():
-    r = requests.get("http://localhost:80/genre")
+    r = requests.get("http://localhost:9100/genre")
     print r.content
     result = json.loads(r.content)
     return render_template('User/usergenrelist.html', genres=result)
