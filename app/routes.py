@@ -1,8 +1,6 @@
-import random
-
 import requests
 from app import app, photos
-from flask import render_template, request, redirect, json, session, jsonify
+from flask import render_template, request, redirect, json, session, jsonify, make_response
 
 from forms import RegistrationForm, LoginForm
 
@@ -55,6 +53,20 @@ def addBookToGenre():
 
     return redirect('/book')
 
+@app.route('/addBookToLibrary', methods=['GET'])
+def addBookToLibrary():
+    headers = {'Authorization': 'Bearer ' + session['access_token']}
+    reg = {
+        "book_id": request.form('')
+    }
+    r = requests.post("http://localhost:80/genre/addbook/", data=reg, headers=headers)
+    print r.status_code
+    print r.content
+    if r.status_code == 200:
+        return redirect('/book')
+
+    return redirect('/book')
+
 
 @app.route('/', methods=['GET', 'POST'])
 def login_page():
@@ -74,10 +86,6 @@ def login_page():
 
             if r.status_code == 200:
                 session['username'] = form.username.data
-                session['ayd'] = form.username.data
-                result = json.loads(r.content)
-                token = result['access_token']
-                session['access_token'] = token
 
                 if form.username.data == 'admin':
                     return render_template('Admin/dashboard.html', username=form.username.data)

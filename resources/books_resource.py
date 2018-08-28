@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from app.models import *
+from flask_jwt_extended import (jwt_required)
 
 # ------------------------------ PARSE INPUTS ------------------------------ #
 book_parser = reqparse.RequestParser(bundle_errors=True)
@@ -22,10 +23,12 @@ class BookMethods(Resource):
         return Book.get_all()
 
     # Delete all books #
+    @jwt_required
     def delete(self):
         return Book.delete_all()
 
     # Create a book #
+    @jwt_required
     def post(self):
         data = book_parser.parse_args()
 
@@ -65,6 +68,7 @@ class BookDetailMethods(Resource):
                    }, 404
 
     # Delete a book #
+    @jwt_required
     def delete(self, pk):
         if Book.find_by_id(pk):
             try:
@@ -82,6 +86,7 @@ class BookDetailMethods(Resource):
                     }, 404
 
     # Update an existing book's information #
+    @jwt_required
     def put(self, pk):
         data = book_parser.parse_args()
         book = Book.find_by_id(pk)
@@ -90,7 +95,11 @@ class BookDetailMethods(Resource):
             return {
                        'message': 'Book not found'
                    }, 404
-        elif Book.find_by_book_name(data['book_name']) and Book.find_by_author(data['author']) and book.book_name != data['book_name']:
+        elif book.book_name != data['book_name'] and book.author != data['author']:
+            return {
+                       'message': 'This book already exists in the database'
+                   }, 202
+        elif Book.find_by_book_name(data['book_name']) and Book.find_by_author(data['author']):
             return {
                        'message': 'This book already exists in the database'
                    }, 202
@@ -117,6 +126,7 @@ class BookDetailMethods(Resource):
 # ------------------------------ ROUTE: /rate ------------------------------ #
 class BookRateMethods(Resource):
     # Rate a book #
+    @jwt_required
     def post(self):
         data = rating_parser.parse_args()
 

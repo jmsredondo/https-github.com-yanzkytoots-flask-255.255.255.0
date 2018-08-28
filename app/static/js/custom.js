@@ -1,23 +1,3 @@
-// function setSession(){
-//     var sess = $('#sess').val();
-//
-//     if (sessionStorage.getItem('admin')) {
-//
-//     }else if(!sess){
-//         window.location.href ='/#loginFirst';
-//     }else {
-//         sessionStorage.setItem('session',sess)
-//     }
-//
-//
-// }
-//
-// function checkSession(){
-//     if (sessionStorage.getItem('admin')){
-//         window.location.href ='/dashboard';
-//     }
-//
-// }
 
 $(document).ready(function () {
 

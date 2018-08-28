@@ -121,9 +121,8 @@
                                                 </td>
 
                                                 <td class="text-center">
-                                                    <button value="{{ book.id }}" class="btn btnnn btn-success"
-                                                            data-toggle="modal"
-                                                            data-target="#exampleModal2"><i
+                                                    <input id="userid" type="hidden" value="{{ session['ayd'] }}">
+                                                    <button id="bbtn" value="{{ book.id }}" class="btn btnnn btn-success"><i
                                                             class="material-icons">library_add</i></button>
                                                 </td>
 
@@ -160,34 +159,24 @@
 <!--  Notifications Plugin    -->
 <script src="{{ url_for('static', filename='js/bootstrap-notify.js') }}"></script>
 
-<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Add to Library</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="/addBookToGenre" method="post">
-                    <label class="form-label">Book</label>
-                    <select name="bookid" id="ako" class="form-control">
-                    </select>
 
-                    <select disabled="" id="ikaw" class="form-control">
-                    </select>
-
-                    <div class="float-right">
-                        <button type="submit" class="btn btn-success">Add
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
+<script>
+    $('#bbtn').click(function () {
 
+            var bookid = $(this).val()
+            var userid = $('#userid').val()
+
+            $.ajax({
+                    url: '/addGenreToBook/' + genreid + '/' + bookid,
+                    success: function (data) {
+                        window.location.replace('/book')
+                    }
+
+                },
+            );
+
+
+        })
+</script>
 </html>
