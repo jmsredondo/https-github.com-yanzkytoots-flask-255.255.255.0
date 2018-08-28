@@ -53,13 +53,14 @@ def addBookToGenre():
 
     return redirect('/book')
 
-@app.route('/addBookToLibrary', methods=['GET'])
-def addBookToLibrary():
+@app.route('/addBookToLibrary/<uid>/<bookid>', methods=['GET'])
+def addBookToLibrary(uid,bookid):
     headers = {'Authorization': 'Bearer ' + session['access_token']}
     reg = {
-        "book_id": request.form('')
+        "user_id": uid,
+        "book_id": bookid
     }
-    r = requests.post("http://localhost:80/genre/addbook/", data=reg, headers=headers)
+    r = requests.post("http://localhost:80/library", data=reg, headers=headers)
     print r.status_code
     print r.content
     if r.status_code == 200:
@@ -85,7 +86,10 @@ def login_page():
             r = requests.post("http://localhost:80/users/login", data=userdict)
 
             if r.status_code == 200:
+                temp = json.loads(r.content)
+                token = temp['access_token']
                 session['username'] = form.username.data
+                session['access_token'] = token
 
                 if form.username.data == 'admin':
                     return render_template('Admin/dashboard.html', username=form.username.data)

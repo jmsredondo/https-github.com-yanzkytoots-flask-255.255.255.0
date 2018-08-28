@@ -168,7 +168,8 @@
             var userid = $('#userid').val()
 
             $.ajax({
-                    url: '/addGenreToBook/' + genreid + '/' + bookid,
+                    method:'POST',
+                    url: '/addBookToLibrary/'+userid+'/'+bookid,
                     success: function (data) {
                         window.location.replace('/book')
                     }
