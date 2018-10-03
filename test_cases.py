@@ -1,7 +1,7 @@
-import unittest, requests, json
+import unitTest, requests, json
 
 
-class TestCase(unittest.TestCase):
+class TestCase(unitTest.TestCase):
     def setUp(self):
         self.host = 'http://localhost:9100'
         self.sample_book = \
@@ -280,4 +280,4 @@ class TestCase(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unitTest.main()
